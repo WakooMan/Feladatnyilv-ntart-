@@ -52,5 +52,8 @@ public class TimeMeasure {
         int days = hours / 24;
         return days + " d," + hours +" h," + mins +" m";
     }
-
+    
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

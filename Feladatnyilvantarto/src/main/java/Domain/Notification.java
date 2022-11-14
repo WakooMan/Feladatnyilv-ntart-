@@ -1,4 +1,12 @@
 package Domain;
 
-public class Notification {
+public interface Notification {
+
+    public String getMessage();
+
+    public void setMessage();
+
+    public NotificationType getType();
+
+
 }
