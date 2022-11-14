@@ -18,6 +18,11 @@ public class User
         this.groups = new ArrayList<Group>();
     }
 
+    public String getName()
+    {
+        return credentials.getLoginName();
+    }
+
     public int getId()
     {
         return id;

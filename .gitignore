@@ -24,6 +24,7 @@ hs_err_pid*
 
 ### Gradle ###
 .gradle
+/Feladatnyilvantarto/.idea/
 /Feladatnyilvantarto/build/
 
 # Ignore Gradle GUI config
