@@ -5,9 +5,10 @@ import java.util.ArrayList;
 
 public class Group {
     private ArrayList<Ticket> tickets;
+    private String groupName;
     private User leader;
     private ArrayList<User> workers;
-    public Group(User leader)
+    public Group(String groupName,User leader)
     {
         if(leader.getUserType() != UserType.Leader)
         {
@@ -16,11 +17,21 @@ public class Group {
         this.leader = leader;
         workers = new ArrayList<User>();
         tickets = new ArrayList<Ticket>();
+        this.groupName = groupName;
     }
 
     public User getLeader()
     {
         return leader;
+    }
+    public String getGroupName()
+    {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName)
+    {
+        this.groupName = groupName;
     }
 
     public ArrayList<User> getWorkers()
