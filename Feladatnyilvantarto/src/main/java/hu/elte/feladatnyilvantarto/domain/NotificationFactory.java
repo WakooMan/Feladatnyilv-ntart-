@@ -1,4 +1,4 @@
-package Domain;
+package hu.elte.feladatnyilvantarto.domain;
 
 public class NotificationFactory {
 

@@ -1,4 +1,4 @@
-package Domain;
+package hu.elte.feladatnyilvantarto.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

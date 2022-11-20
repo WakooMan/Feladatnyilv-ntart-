@@ -1,4 +1,4 @@
-package Domain;
+package hu.elte.feladatnyilvantarto.domain;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;

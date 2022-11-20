@@ -1,4 +1,4 @@
-package Domain;
+package hu.elte.feladatnyilvantarto.domain;
 
 import java.util.ArrayList;
 
