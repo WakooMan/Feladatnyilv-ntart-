@@ -1,18 +1,42 @@
 package hu.elte.feladatnyilvantarto.domain;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Entity
+@Table(name="NOTIFICATION")
 public class GroupNotification implements Notification {
 
+    @Id
+    @GeneratedValue
+    private int id;
+    @Enumerated(EnumType.STRING)
     private static final NotificationType NOTIFICATION_TYPE = NotificationType.GROUP;
     private final LocalDateTime date;
+
+    @ManyToOne
     private Group group;
+    @ManyToOne
+    private User user;
     private String message;
 
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
     public GroupNotification(Group group) {
         this.group = group;
+        date = LocalDateTime.now();
+        setMessage();
+    }
+
+    public GroupNotification() {
         date = LocalDateTime.now();
     }
 
@@ -27,7 +51,7 @@ public class GroupNotification implements Notification {
 
     public void setMessage() {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-        message = "New group activity in Group '"
+        message = "You were added to Group '"
                 + group.getGroupName() +
                 "'. "
                 + date.format(formatter);
@@ -38,4 +62,7 @@ public class GroupNotification implements Notification {
         return NOTIFICATION_TYPE;
     }
 
+    public int getId() {
+        return id;
+    }
 }

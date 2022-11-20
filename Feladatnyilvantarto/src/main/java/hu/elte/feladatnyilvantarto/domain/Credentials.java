@@ -1,17 +1,23 @@
 package hu.elte.feladatnyilvantarto.domain;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity
+@Embeddable
 public class Credentials {
-
-    @Id
-    @GeneratedValue
-    private int id;
     private String loginName;
     private String password;
+
+    public Credentials(String login, String pwd){
+        this.loginName=login;
+        this.password =pwd;
+    }
+
+    public Credentials() {
+
+    }
 
     public void setPassword(String pw)
     {
@@ -32,3 +38,4 @@ public class Credentials {
         this.loginName = loginName;
     }
 }
+

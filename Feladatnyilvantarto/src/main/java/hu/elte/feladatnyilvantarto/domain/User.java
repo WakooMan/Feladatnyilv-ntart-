@@ -1,25 +1,64 @@
 package hu.elte.feladatnyilvantarto.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
-
-public class User {
+@Entity
+@Table(name = "USERS")
+public class User
+{
+    @Id
+    @GeneratedValue
     private int id;
+    private String name;
+    @Embedded
     private Credentials credentials;
-    private ArrayList<Group> groups;
+    @OneToMany
+    private List<Group> groups;
+    @OneToMany(mappedBy = "leader", cascade = {CascadeType.MERGE})
+    private List<Group> groupsLed;
     private UserType userType;
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE})
+    private List<TimeMeasure> userTimeMeasures;
 
-    public User(int id,Credentials credentials,UserType userType)
+    public User(String name, Credentials credentials,String userType)
     {
-        this.id = id;
+        this.name = name;
         this.credentials = credentials;
-        this.userType = userType;
+        this.userType = UserType.valueOf(userType);
         this.groups = new ArrayList<Group>();
+    }
+
+    public User() {
+
+    }
+
+    public List<Group> getGroupsLed() {
+        return groupsLed;
+    }
+
+    public void setGroupsLed(List<Group> groupsLed) {
+        this.groupsLed = groupsLed;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+    public void setUserType(String userType) {
+        this.userType = UserType.valueOf(userType);
     }
 
     public String getName()
     {
-        return credentials.getLoginName();
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId()
@@ -40,18 +79,27 @@ public class User {
     {
         this.credentials = cred;
     }
-    public ArrayList<Group> getGroups()
+    public List<Group> getGroups()
     {
         return groups;
     }
 
-    public ArrayList<Ticket> getAssignedTickets()
+    public List<Ticket> getAssignedTickets()
     {
-        ArrayList<Ticket> result = new ArrayList<Ticket>();
+        List<Ticket> result = new ArrayList<Ticket>();
         for(Group group:groups)
         {
             result.addAll(group.getTickets().stream().filter((t) -> (userType == UserType.Worker)?t.getAssignees().contains(this):t.getAssigner().equals(this)).collect(Collectors.toList()));
         }
         return result;
     }
+
+    public List<TimeMeasure> getUserTimeMeasures() {
+        return userTimeMeasures;
+    }
+
+    public void setUserTimeMeasures(List<TimeMeasure> userTimeMeasures) {
+        this.userTimeMeasures = userTimeMeasures;
+    }
+
 }
