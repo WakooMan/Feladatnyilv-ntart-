@@ -1,55 +1,72 @@
 package hu.elte.feladatnyilvantarto.domain;
 
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
+@Entity
 public class Comment {
-    private User from;
-    private Ticket in;
+    @Id
+    @GeneratedValue
+    private int id;
+    @ManyToOne
+    private User userFrom;
+    @ManyToOne
+    private Ticket ticketIn;
     private String message;
     private LocalDateTime date;
 
-
-    public Comment(User from,Ticket in,String message)
-    {
-        this.from = from;
-        this.in = in;
+    public Comment(User from, Ticket in, String message) {
+        this.userFrom = from;
+        this.ticketIn = in;
         this.message = message;
         date = LocalDateTime.now();
     }
 
-    public User getFrom()
-    {
-        return from;
-    }
-    public void setFrom(User usr)
-    {
-        from = usr;
+    public Comment() {
+
     }
 
-    public Ticket getIn()
-    {
-        return in;
-    }
-    public void setIn(Ticket tck)
-    {
-        in = tck;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getMessage()
-    {
+    public int getId() {
+        return id;
+    }
+
+    public User getFrom() {
+        return userFrom;
+    }
+
+    public void setFrom(User usr) {
+        userFrom = usr;
+    }
+
+    public Ticket getIn() {
+        return ticketIn;
+    }
+
+    public void setIn(Ticket tck) {
+        ticketIn = tck;
+    }
+
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(String msg)
-    {
+    public void setMessage(String msg) {
         message = msg;
     }
-    public LocalDateTime getDate()
-    {
+
+    public LocalDateTime getDate() {
         return date;
     }
-    public void setDate(LocalDateTime date)
-    {
+
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
 }
+

@@ -1,29 +1,55 @@
 package hu.elte.feladatnyilvantarto.domain;
 
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
-@SuppressWarnings("unused")
+@Entity
 public class Ticket {
-
+    @Id
+    @GeneratedValue
+    private int id;
     private String name;
     private String description;
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private User assigner;
-    private ArrayList<User> assignees;
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    private List<User> assignees;
     private final LocalDateTime date;
     private LocalDateTime deadline;
     private boolean checkbox;
-    private final Group group;
-    private final Priority priority;
-    private final ArrayList<Comment> comments;
-    private final ArrayList<TimeMeasure> timeMeasures;
-    public Ticket(Group group, Priority priority) {
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    private  Group group;
+    private Priority priority;
+    @OneToMany(orphanRemoval = true, mappedBy = "ticketIn")
+    private  List<Comment> comments;
+    @OneToMany(orphanRemoval = true, mappedBy="ticket")
+    private List<TimeMeasure> timeMeasures;
+    public Ticket(Group group, String priority) {
         this.group= group;
-        this.priority=priority;
+        this.priority=Priority.valueOf(priority);
         this.comments = new ArrayList<>();
         this.timeMeasures = new ArrayList<>();
+        this.assignees = new ArrayList<>();
         this.date=LocalDateTime.now();
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Ticket() {
+        this.date=LocalDateTime.now(); this.assignees = new ArrayList<>();
     }
 
     public Group getGroup() {
@@ -34,7 +60,10 @@ public class Ticket {
         return priority;
     }
 
-    public ArrayList<Comment> getComments() {
+    public void setPriority(String priority){
+        this.priority= Priority.valueOf(priority);
+    }
+    public List<Comment> getComments() {
         return comments;
     }
 
@@ -73,7 +102,7 @@ public class Ticket {
         this.assigner = assigner;
     }
 
-    public ArrayList<User> getAssignees() {
+    public List<User> getAssignees() {
         return assignees;
     }
     public void setAssignees(ArrayList<User> assignees) {
@@ -100,11 +129,11 @@ public class Ticket {
         this.checkbox = checkbox;
     }
 
-    public ArrayList<TimeMeasure> getTimeMeasures(){
+    public List<TimeMeasure> getTimeMeasures(){
         return timeMeasures;
     }
-    public ArrayList<TimeMeasure> getUserTimeMeasures(User user){
-        ArrayList<TimeMeasure> userTimeMeasure = new ArrayList<>();
+    public List<TimeMeasure> getUserTimeMeasures(User user){
+        List<TimeMeasure> userTimeMeasure = new ArrayList<>();
         for (TimeMeasure time : getTimeMeasures()){
             if (time.getUser().equals(user)){
                 userTimeMeasure.add(time);
@@ -114,10 +143,10 @@ public class Ticket {
     }
 
     public void addAssignee(User assignee){
-        getAssignees().add(assignee);
+        assignees.add(assignee);
     }
     public void deleteAssignee(User assignee){
-        getAssignees().remove(assignee);
+        assignees.remove(assignee);
     }
 
 

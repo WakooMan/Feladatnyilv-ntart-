@@ -1,14 +1,35 @@
 package hu.elte.feladatnyilvantarto.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity
 public class TimeMeasure {
+    @Id
+    @GeneratedValue
+    public int id;
     private WorkState workState;
-    private ArrayList<WorkTime> workTimes;
+    @OneToMany(mappedBy = "timeMeasure", orphanRemoval = true)
+    private List<WorkTime> workTimes;
+    @ManyToOne
     private User user;
+    @ManyToOne
     private Ticket ticket;
 
-    public ArrayList<WorkTime> getWorkTimes() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    public List<WorkTime> getWorkTimes() {
         return workTimes;
     }
 
@@ -52,7 +73,7 @@ public class TimeMeasure {
         int days = hours / 24;
         return days + " d," + hours +" h," + mins +" m";
     }
-    
+
     public void setUser(User user) {
         this.user = user;
     }

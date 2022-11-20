@@ -1,12 +1,20 @@
 package hu.elte.feladatnyilvantarto.domain;
 
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-
+@Entity
 public class WorkTime {
+    @Id
+    @GeneratedValue
+    public int id;
     private final ZonedDateTime startDate;
     private ZonedDateTime endDate;
+    @ManyToOne
     private TimeMeasure timeMeasure;
     private int timeWorked;
 
@@ -14,6 +22,19 @@ public class WorkTime {
         this.timeMeasure=timeMeasure;
         startDate= ZonedDateTime.now();
     }
+
+    public WorkTime() {
+        startDate= ZonedDateTime.now();
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public ZonedDateTime getStartDate() {
         return startDate;
     }
