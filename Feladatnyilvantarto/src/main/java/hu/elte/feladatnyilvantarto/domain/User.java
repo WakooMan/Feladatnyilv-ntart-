@@ -9,9 +9,8 @@ public class User {
     private ArrayList<Group> groups;
     private UserType userType;
 
-    public User(int id,Credentials credentials,UserType userType)
+    public User(Credentials credentials,UserType userType)
     {
-        this.id = id;
         this.credentials = credentials;
         this.userType = userType;
         this.groups = new ArrayList<Group>();
