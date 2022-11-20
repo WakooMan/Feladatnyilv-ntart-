@@ -1,10 +1,9 @@
-package Domain;
+package hu.elte.feladatnyilvantarto.domain;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class User
-{
+public class User {
     private int id;
     private Credentials credentials;
     private ArrayList<Group> groups;
