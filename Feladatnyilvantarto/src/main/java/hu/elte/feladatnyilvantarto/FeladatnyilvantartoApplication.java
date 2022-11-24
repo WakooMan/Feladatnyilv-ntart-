@@ -22,9 +22,7 @@ public class FeladatnyilvantartoApplication {
 
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> {
-            addUserTest.AddUsers();
-        };
+        return args -> addUserTest.AddUsers();
     }
 
     public static void main(String[] args) {

@@ -23,7 +23,7 @@ public class Ticket {
     @ManyToOne(cascade = {CascadeType.MERGE})
     private  Group group;
     private Priority priority;
-    @OneToMany(orphanRemoval = true, mappedBy = "ticketIn")
+    @OneToMany(orphanRemoval = true, mappedBy = "ticket")
     private  List<Comment> comments;
     @OneToMany(orphanRemoval = true, mappedBy="ticket")
     private List<TimeMeasure> timeMeasures;

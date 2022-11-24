@@ -3,6 +3,7 @@ package hu.elte.feladatnyilvantarto.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -13,13 +14,15 @@ public class Comment {
     @ManyToOne
     private User userFrom;
     @ManyToOne
-    private Ticket ticketIn;
+    private Ticket ticket;
     private String message;
     private LocalDateTime date;
+    @OneToMany
+    private List<User> taggedUsers;
 
     public Comment(User from, Ticket in, String message) {
         this.userFrom = from;
-        this.ticketIn = in;
+        this.ticket = in;
         this.message = message;
         date = LocalDateTime.now();
     }
@@ -35,6 +38,9 @@ public class Comment {
     public int getId() {
         return id;
     }
+    public Ticket getTicket(){
+        return ticket;
+    }
 
     public User getFrom() {
         return userFrom;
@@ -45,13 +51,20 @@ public class Comment {
     }
 
     public Ticket getIn() {
-        return ticketIn;
+        return ticket;
     }
 
     public void setIn(Ticket tck) {
-        ticketIn = tck;
+        ticket = tck;
     }
 
+    public void setUserFrom(User userFrom) {
+        this.userFrom = userFrom;
+    }
+
+    public void setTicket(Ticket ticketIn) {
+        this.ticket = ticketIn;
+    }
     public String getMessage() {
         return message;
     }
@@ -67,6 +80,14 @@ public class Comment {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+    public List<User> getTaggedUsers() {
+        return taggedUsers;
+    }
+
+    public void setTaggedUsers(List<User> taggedUsers) {
+        this.taggedUsers = taggedUsers;
+    }
+
 
 }
 

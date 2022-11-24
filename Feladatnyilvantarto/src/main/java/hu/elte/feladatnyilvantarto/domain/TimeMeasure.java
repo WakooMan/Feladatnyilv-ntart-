@@ -1,7 +1,6 @@
 package hu.elte.feladatnyilvantarto.domain;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -52,8 +51,7 @@ public class TimeMeasure {
         return ticket;
     }
 
-    /* Ezek lehet nem ide kellenek majd: */
-    public int sumWorkTimesInMinutes(ArrayList<WorkTime> worklist){
+    public int sumWorkTimesInMinutes(List<WorkTime> worklist){
         int sum=0;
         for (WorkTime time : worklist){
             sum+=time.getTimeWorked();
@@ -61,18 +59,6 @@ public class TimeMeasure {
         return sum;
     }
 
-    public String convertMinutesToHoursAndMinutes(int minutes){
-        int hours = minutes / 60;
-        int mins = minutes % 60;
-        return hours + " h, " + mins + " m";
-    }
-
-    public String convertMinutesToDaysHoursAndMinutes(int minutes){
-        int hours = minutes / 60;
-        int mins = minutes % 60;
-        int days = hours / 24;
-        return days + " d," + hours +" h," + mins +" m";
-    }
 
     public void setUser(User user) {
         this.user = user;

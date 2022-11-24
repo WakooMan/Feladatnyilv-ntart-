@@ -5,24 +5,26 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
-@Table(name = "NOTIFICATION")
-public class CommentNotification implements Notification {
+public class CommentNotification extends Notification {
 
-    @Id
-    @GeneratedValue
-    private int id;
     @Enumerated(EnumType.STRING)
     private static final NotificationType NOTIFICATION_TYPE = NotificationType.COMMENT;
 
     @ManyToOne
     private Comment comment;
     private String message;
+
+    @Override
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     private LocalDateTime date;
-    @ManyToOne
-    private User user;
+
 
     public CommentNotification(Comment comm) {
         this.comment = comm;
+        date=comm.getDate();
     }
 
     public CommentNotification() {
@@ -45,7 +47,6 @@ public class CommentNotification implements Notification {
                 + comment.getIn().getName() +
                 "'. "
                 + comment.getDate().format(formatter);
-        this.message = message;
     }
 
     public LocalDateTime getDate() {
@@ -60,17 +61,6 @@ public class CommentNotification implements Notification {
         return NOTIFICATION_TYPE;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public int getId() {
-        return id;
-    }
 
     public void setComment(Comment comment) {
         this.comment = comment;

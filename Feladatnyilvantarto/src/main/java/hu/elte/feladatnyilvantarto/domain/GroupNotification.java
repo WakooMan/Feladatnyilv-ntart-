@@ -5,12 +5,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
-@Table(name="NOTIFICATION")
-public class GroupNotification implements Notification {
+public class GroupNotification extends Notification {
 
-    @Id
-    @GeneratedValue
-    private int id;
     @Enumerated(EnumType.STRING)
     private static final NotificationType NOTIFICATION_TYPE = NotificationType.GROUP;
     private final LocalDateTime date;
@@ -62,7 +58,4 @@ public class GroupNotification implements Notification {
         return NOTIFICATION_TYPE;
     }
 
-    public int getId() {
-        return id;
-    }
 }
