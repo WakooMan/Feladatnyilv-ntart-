@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class LogInController {
+public class SignInController {
 
-@RequestMapping("login")
-public String login()
+@RequestMapping("signin")
+public String signIn()
 {
-    return "login";
+    return "signin";
 }
 }
