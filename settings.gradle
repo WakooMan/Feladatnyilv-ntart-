@@ -1,0 +1,4 @@
+rootProject.name = 'feladatnyilvantarto'
+
+include ':feladatnyilvantarto-domain'
+include ':feladatnyilvantarto-application'
