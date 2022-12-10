@@ -5,10 +5,10 @@ import hu.elte.feladatnyilvantarto.domain.TimeMeasure;
 import hu.elte.feladatnyilvantarto.domain.User;
 import hu.elte.feladatnyilvantarto.repository.TimeMeasureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Component
+@Service
 public class TimeMeasureService {
     @Autowired
     private TimeMeasureRepository timeMeasureRepository;

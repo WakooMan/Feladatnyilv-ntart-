@@ -1,15 +1,27 @@
 package hu.elte.feladatnyilvantarto.service;
 
 import hu.elte.feladatnyilvantarto.domain.Credentials;
+import hu.elte.feladatnyilvantarto.domain.User;
+import hu.elte.feladatnyilvantarto.repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SignUpService {
 
-
-    public void signUp(String name, String password, String email,String code){
-        Credentials cred = new Credentials();
-        cred.setPassword(name);
-        cred.setLoginName(name);
-        //ezt át kell beszélni
-        //User user = new User();
+    @Autowired
+    private UsersRepository usersRepository;
+    public void signUp(String name, String password,String userName){
+        Credentials cred = new Credentials(name,password);
+        for(User usr : usersRepository.findAll()){
+            if(usr.getCredentials().getLoginName().equals(cred.getLoginName()))
+            {
+                throw new SignUpException();
+            }
+        }
+        User user = new User();
+        user.setCredentials(cred);
+        user.setName(userName);
+        usersRepository.save(user);
     }
 }

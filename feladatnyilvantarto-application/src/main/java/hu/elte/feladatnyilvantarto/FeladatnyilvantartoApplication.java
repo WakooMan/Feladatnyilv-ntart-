@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class FeladatnyilvantartoApplication {
@@ -17,7 +19,10 @@ public class FeladatnyilvantartoApplication {
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
        return args -> addUserTest.AddUsers();
     }
-	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		 return new BCryptPasswordEncoder(12);
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(FeladatnyilvantartoApplication.class, args);
 	}

@@ -2,13 +2,26 @@ package hu.elte.feladatnyilvantarto.service;
 
 import hu.elte.feladatnyilvantarto.domain.Credentials;
 import hu.elte.feladatnyilvantarto.domain.User;
+import hu.elte.feladatnyilvantarto.repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SignInService {
 
+    @Autowired
+    private UsersRepository usersRepository;
     public User signIn(Credentials credentials){
-        // meg kell írni még (java security videó kell hozzá
-        //és nem itt lesz a login osztály, autorizáció...
-        //domain osztály még nem tökéletes, ezért ez se jó még
-        return null;
+        User user = null;
+        for(User usr : usersRepository.findAll()) {
+            if(usr.getCredentials().equals(credentials))
+            {
+                user = usr;
+            }
+        }
+        if(user == null) {
+            throw new SignInException();
+        }
+        return user;
     }
 }
