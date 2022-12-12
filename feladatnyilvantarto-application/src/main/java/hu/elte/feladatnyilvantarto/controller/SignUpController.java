@@ -1,16 +1,18 @@
 package hu.elte.feladatnyilvantarto.controller;
 
-import hu.elte.feladatnyilvantarto.service.SignInService;
+import hu.elte.feladatnyilvantarto.service.SignUpException;
 import hu.elte.feladatnyilvantarto.service.SignUpService;
-import hu.elte.feladatnyilvantarto.webdomain.UserForm;
+import hu.elte.feladatnyilvantarto.webdomain.SignUpForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 public class SignUpController {
@@ -21,17 +23,30 @@ public class SignUpController {
     @RequestMapping("signup")
     public String signUp(Model model)
     {
-        model.addAttribute("userform",new UserForm());
+        if(!model.containsAttribute("signupform")) {
+            model.addAttribute("signupform", new SignUpForm());
+        }
         return "signup";
     }
 
     @PostMapping("signup/signupaction")
-    public String signUpAction(@ModelAttribute("userform") UserForm userform, BindingResult bindingResult)
+    public String signUpAction(@Valid SignUpForm signupform,BindingResult bindingResult, RedirectAttributes redirectAttributes)
     {
-        if(!bindingResult.hasErrors()) {
-            signUpService.signUp(userform.getUsername(), passwordEncoder.encode(userform.getPassword()), userform.getUsername());
-            return "redirect:/signin";
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.signupform",bindingResult);
+            redirectAttributes.addFlashAttribute("signupform",signupform);
+            return "redirect:/signup";
         }
-        return "redirect:/signup";
+        try {
+            signUpService.signUp(signupform.getName(), passwordEncoder.encode(signupform.getPassword()), signupform.getUsername());
+        }catch (SignUpException exception)
+        {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.signupform",bindingResult);
+            redirectAttributes.addFlashAttribute("signupform",signupform);
+            redirectAttributes.addFlashAttribute("errormessage",exception.getMessage());
+            return "redirect:/signup";
+        }
+        redirectAttributes.addFlashAttribute("signupmessage","Registration was successful!");
+        return "redirect:/signin";
     }
 }

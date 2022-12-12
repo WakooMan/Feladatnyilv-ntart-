@@ -2,7 +2,7 @@ package hu.elte.feladatnyilvantarto.webdomain;
 
 import javax.validation.constraints.*;
 
-public class UserForm
+public class SignInForm
 {
     @NotEmpty(message= "Please give me your username!")
     private String username;
@@ -25,7 +25,7 @@ public class UserForm
         this.username = username;
     }
 
-    public UserForm()
+    public SignInForm()
     {
         username="";
         password="";
