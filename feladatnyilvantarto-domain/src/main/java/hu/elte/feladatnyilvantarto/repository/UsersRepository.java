@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public interface UsersRepository extends CrudRepository<User, Integer> {
 
     User findUserById(int id);
+    User findUserByUsername(String username);
 
 
 }

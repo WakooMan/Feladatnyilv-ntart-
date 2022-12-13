@@ -11,8 +11,9 @@ public class User
     @GeneratedValue
     private int id;
     private String name;
-    @Embedded
-    private Credentials credentials;
+
+    private String username;
+    private String password;
     @OneToMany
     private List<Group> groups;
     @OneToMany(mappedBy = "leader", cascade = {CascadeType.MERGE})
@@ -33,10 +34,11 @@ public class User
         this.currentTicket = currentTicket;
     }
 
-    public User(String name, Credentials credentials)
+    public User(String name, String username, String password)
     {
         this.name = name;
-        this.credentials = credentials;
+        this.username = username;
+        this.password = password;
         this.groups = new ArrayList<>();
         this.assignedTickets = new ArrayList<>();
     }
@@ -73,15 +75,14 @@ public class User
         return id;
     }
 
-
-
-    public Credentials getCredentials()
+    public String getUsername()
     {
-        return credentials;
+        return username;
     }
-    public void setCredentials(Credentials cred)
+
+    public void setUsername(String username)
     {
-        this.credentials = cred;
+        this.username = username;
     }
     public List<Group> getGroups()
     {
@@ -109,4 +110,11 @@ public class User
         this.userTimeMeasures = userTimeMeasures;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

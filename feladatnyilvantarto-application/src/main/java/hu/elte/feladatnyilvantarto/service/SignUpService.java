@@ -1,8 +1,8 @@
 package hu.elte.feladatnyilvantarto.service;
 
-import hu.elte.feladatnyilvantarto.domain.Credentials;
 import hu.elte.feladatnyilvantarto.domain.User;
 import hu.elte.feladatnyilvantarto.repository.UsersRepository;
+import hu.elte.feladatnyilvantarto.service.exceptions.SignUpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +12,14 @@ public class SignUpService {
     @Autowired
     private UsersRepository usersRepository;
     public void signUp(String name, String password,String userName){
-        Credentials cred = new Credentials(userName,password);
-        for(User usr : usersRepository.findAll()){
-            if(usr.getCredentials().getLoginName().equals(cred.getLoginName()))
-            {
-                throw new SignUpException();
-            }
+        User usr = usersRepository.findUserByUsername(userName);
+        if(usr != null)
+        {
+            throw new SignUpException();
         }
         User user = new User();
-        user.setCredentials(cred);
+        user.setUsername(userName);
+        user.setPassword(password);
         user.setName(name);
         usersRepository.save(user);
     }

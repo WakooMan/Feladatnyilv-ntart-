@@ -2,7 +2,6 @@ package hu.elte.feladatnyilvantarto;
 
 
 
-import hu.elte.feladatnyilvantarto.domain.Credentials;
 import hu.elte.feladatnyilvantarto.domain.Group;
 import hu.elte.feladatnyilvantarto.domain.Ticket;
 import hu.elte.feladatnyilvantarto.domain.User;
@@ -24,36 +23,34 @@ public class AddUserTest {
      private TicketRepository ticketRepository;
 
      public void AddUsers(){
-         Credentials cred= new Credentials("ab", "ab");
-         Credentials cred2= new Credentials("bc", "bc");
          ArrayList<User> users = new ArrayList<>();
          ArrayList<Ticket> tickets = new ArrayList<>();
-         User lead1 = new User("Próba Andrea", cred);
+         User lead1 = new User("Próba Andrea","ab","ab");
          users.add(lead1);
-         User lead2 = new User("Teszt Tamás", cred);
+         User lead2 = new User("Teszt Tamás", "ab","ab");
          users.add(lead2);
-         User lead3 = new User("Fukó Mihály", cred);
+         User lead3 = new User("Fukó Mihály", "ab","ab");
          users.add(lead3);
          Group g1= new Group("A-team", lead1);
          Group g2= new Group("B-team", lead2);
          Group g3= new Group("Z-team", lead3);
-         User u1=new User("Bubi Béla", cred);
+         User u1=new User("Bubi Béla", "ab","ab");
          g1.addWorker(u1);
-         User u2=new User("Kovács Patricia", cred2);
+         User u2=new User("Kovács Patricia", "bc", "bc");
          g1.addWorker(u2);
-         User u3=new User("Torta Donna", cred);
+         User u3=new User("Torta Donna", "ab","ab");
          g1.addWorker(u3);
-         User u4=new User("Sárga Károly", cred);
+         User u4=new User("Sárga Károly", "ab","ab");
          g2.addWorker(u4);
-         User u5=new User("Vasárnap Zsuzsanna", cred);
+         User u5=new User("Vasárnap Zsuzsanna", "ab","ab");
          g2.addWorker(u5);
-         User u6=new User("Kovács Vera", cred);
+         User u6=new User("Kovács Vera", "ab","ab");
          g2.addWorker(u6);
-         User u7=new User("Bokor Kata", cred);
+         User u7=new User("Bokor Kata", "ab","ab");
          g3.addWorker(u7);
-         User u8=new User("Újházi Johanna", cred);
+         User u8=new User("Újházi Johanna", "ab","ab");
          g3.addWorker(u8);
-         User u9=new User("Inas Judit", cred);
+         User u9=new User("Inas Judit", "ab","ab");
          g3.addWorker(u9);
          Ticket ticket1 = new Ticket(g1, "HIGH");
          ticket1.addAssignee(u1);

@@ -1,6 +1,6 @@
 package hu.elte.feladatnyilvantarto.controller;
 
-import hu.elte.feladatnyilvantarto.service.SignUpException;
+import hu.elte.feladatnyilvantarto.service.exceptions.SignUpException;
 import hu.elte.feladatnyilvantarto.service.SignUpService;
 import hu.elte.feladatnyilvantarto.webdomain.SignUpForm;
 import org.springframework.beans.factory.annotation.Autowired;

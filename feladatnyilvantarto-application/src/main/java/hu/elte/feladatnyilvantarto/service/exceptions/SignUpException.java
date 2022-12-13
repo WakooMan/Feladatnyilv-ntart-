@@ -1,4 +1,4 @@
-package hu.elte.feladatnyilvantarto.service;
+package hu.elte.feladatnyilvantarto.service.exceptions;
 
 public class SignUpException extends RuntimeException
 {
