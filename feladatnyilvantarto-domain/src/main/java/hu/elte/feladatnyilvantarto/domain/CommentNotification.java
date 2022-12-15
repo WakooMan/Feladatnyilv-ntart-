@@ -12,31 +12,20 @@ public class CommentNotification extends Notification {
 
     @ManyToOne
     private Comment comment;
-    private String message;
-
-    @Override
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    private LocalDateTime date;
 
 
-    public CommentNotification(Comment comm) {
+
+    public CommentNotification(User user,Comment comm) {
+        super(user);
         this.comment = comm;
-        date=comm.getDate();
+        setMessage();
     }
 
     public CommentNotification() {
-
+    super();
     }
-
     public Comment getComment() {
         return comment;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public void setMessage() {
@@ -48,15 +37,6 @@ public class CommentNotification extends Notification {
                 "'. "
                 + comment.getDate().format(formatter);
     }
-
-    public LocalDateTime getDate() {
-        return comment.getDate();
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
     public NotificationType getType() {
         return NOTIFICATION_TYPE;
     }
@@ -66,4 +46,24 @@ public class CommentNotification extends Notification {
         this.comment = comment;
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o instanceof CommentNotification)
+        {
+            CommentNotification notification = (CommentNotification) o;
+            return  super.equals(o) &&
+                    comment.equals(notification.comment);
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return  super.hashCode() +
+                comment.hashCode();
+    }
 }

@@ -56,4 +56,30 @@ public class WorkTime {
     public TimeMeasure getTimeMeasure() {
         return timeMeasure;
     }
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o instanceof WorkTime)
+        {
+            WorkTime workTime = (WorkTime) o;
+            return  id == workTime.id &&
+                    startDate.equals(workTime.startDate) &&
+                    endDate.equals(workTime.endDate) &&
+                    timeMeasure.getId() == workTime.timeMeasure.getId() &&
+                    timeWorked == workTime.timeWorked;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return  id +
+                startDate.hashCode() +
+                endDate.hashCode() +
+                timeMeasure.getId() +
+                timeWorked;
+    }
 }

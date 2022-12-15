@@ -91,14 +91,6 @@ public class User
 
     public List<Ticket> getAssignedTickets()
     {
-/*        List<Ticket> result = new ArrayList<Ticket>();
-        for(Group group:groups)
-        {
-            result.addAll(group.getTickets().stream().filter((t) -> (userType == UserType.Worker)?t.getAssignees().contains(this):t.getAssigner().equals(this)).collect(Collectors.toList()));
-        }
-        Ez majd a service logikába kerül bele
- */
-
         return assignedTickets;
     }
 
@@ -116,5 +108,40 @@ public class User
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o instanceof User)
+        {
+            User user = (User) o;
+            return  id == user.id &&
+                    username.equals(user.username) &&
+                    password.equals(user.password) &&
+                    name.equals(user.name) &&
+                    groups.equals(user.groups) &&
+                    groupsLed.equals(user.groupsLed) &&
+                    userTimeMeasures.equals(user.userTimeMeasures) &&
+                    currentTicket.equals(user.currentTicket) &&
+                    assignedTickets.equals(user.assignedTickets);
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return  id +
+                username.hashCode() +
+                password.hashCode() +
+                name.hashCode() +
+                groups.hashCode() +
+                groupsLed.hashCode() +
+                userTimeMeasures.hashCode() +
+                currentTicket.hashCode() +
+                assignedTickets.hashCode();
     }
 }

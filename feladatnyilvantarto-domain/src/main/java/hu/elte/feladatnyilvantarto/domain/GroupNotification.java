@@ -9,40 +9,22 @@ public class GroupNotification extends Notification {
 
     @Enumerated(EnumType.STRING)
     private static final NotificationType NOTIFICATION_TYPE = NotificationType.GROUP;
-    private final LocalDateTime date;
 
     @ManyToOne
     private Group group;
-    @ManyToOne
-    private User user;
-    private String message;
 
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public GroupNotification(Group group) {
+    public GroupNotification(User user,Group group) {
+        super(user);
         this.group = group;
-        date = LocalDateTime.now();
         setMessage();
     }
 
     public GroupNotification() {
-        date = LocalDateTime.now();
+        super();
     }
 
     public Group getGroup() {
         return group;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
     }
 
     public void setMessage() {
@@ -50,12 +32,31 @@ public class GroupNotification extends Notification {
         message = "You were added to Group '"
                 + group.getGroupName() +
                 "'. "
-                + date.format(formatter);
-        this.message = message;
+                + getDate().format(formatter);
     }
 
     public NotificationType getType() {
         return NOTIFICATION_TYPE;
+    }
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o instanceof GroupNotification)
+        {
+            GroupNotification notification = (GroupNotification) o;
+            return  super.equals(o) &&
+                    group.equals(notification.group);
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return  super.hashCode() +
+                group.hashCode();
     }
 
 }

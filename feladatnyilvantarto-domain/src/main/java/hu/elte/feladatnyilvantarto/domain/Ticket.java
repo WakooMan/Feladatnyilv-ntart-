@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Ticket {
@@ -149,5 +150,45 @@ public class Ticket {
         assignees.remove(assignee);
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o instanceof Ticket)
+        {
+            Ticket ticket = (Ticket) o;
+            return  id == ticket.id &&
+                    name.equals(ticket.name) &&
+                    description.equals(ticket.description) &&
+                    assigner.getId() == ticket.assigner.getId() &&
+                    assignees.stream().map(a -> a.getId()).collect(Collectors.toList()).equals(ticket.assignees.stream().map(a -> a.getId()).collect(Collectors.toList())) &&
+                    date.equals(ticket.date) &&
+                    deadline.equals(ticket.deadline) &&
+                    checkbox == ticket.checkbox &&
+                    group.getId() == ticket.group.getId() &&
+                    priority.equals(ticket.priority) &&
+                    comments.equals(ticket.comments) &&
+                    timeMeasures.equals(ticket.timeMeasures);
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return  id +
+                name.hashCode() +
+                description.hashCode() +
+                assigner.getId() +
+                assignees.stream().mapToInt(a -> a.getId()).sum() +
+                date.hashCode() +
+                deadline.hashCode() +
+                Boolean.hashCode(checkbox) +
+                group.getId() +
+                priority.hashCode() +
+                comments.hashCode() +
+                timeMeasures.hashCode();
+    }
 
 }

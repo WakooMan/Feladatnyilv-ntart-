@@ -10,24 +10,24 @@ public class NotificationFactory {
      * @param comment Comment
      * @return the commentNotification
      */
-    public Notification createCommentNotification(Comment comment){
-        return new CommentNotification(comment);
+    public Notification createCommentNotification(User user,Comment comment){
+        return new CommentNotification(user,comment);
     }
     /**
      *
      * @param group Group
      * @return the groupNotification
      */
-    public Notification createGroupNotification(Group group){
-        return new GroupNotification(group);
+    public Notification createGroupNotification(User user,Group group){
+        return new GroupNotification(user,group);
     }
     /**
      *
      * @param ticket Ticket
      * @return the ticketNotification
      */
-    public Notification createTicketNotification(Ticket ticket){
-        return new TicketNotification(ticket);
+    public Notification createTicketNotification(User user,Ticket ticket){
+        return new TicketNotification(user,ticket);
     }
 
 

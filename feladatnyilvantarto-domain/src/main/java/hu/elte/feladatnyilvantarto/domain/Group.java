@@ -3,6 +3,7 @@ package hu.elte.feladatnyilvantarto.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="GROUPS")
@@ -83,5 +84,31 @@ public class Group {
 
             workers.remove(user);
 
+    }
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o instanceof Group)
+        {
+            Group group = (Group) o;
+            return  id == group.id &&
+                    tickets.equals(group.tickets) &&
+                    groupName.equals(group.groupName) &&
+                    leader.getId() == group.leader.getId() &&
+                    workers.stream().map(w -> w.getId()).collect(Collectors.toList()).equals(group.workers.stream().map(w -> w.getId()).collect(Collectors.toList()));
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return  id +
+                tickets.hashCode() +
+                groupName.hashCode() +
+                leader.getId() +
+                workers.stream().mapToInt(w -> w.getId()).sum();
     }
 }

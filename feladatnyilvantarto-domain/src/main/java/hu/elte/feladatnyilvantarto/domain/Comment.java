@@ -87,6 +87,34 @@ public class Comment {
         this.taggedUsers = taggedUsers;
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o instanceof Comment)
+        {
+            Comment comment = (Comment) o;
+            return  id == comment.id &&
+                    userFrom.getId() == comment.userFrom.getId() &&
+                    ticket.getId() == comment.ticket.getId() &&
+                    message.equals(comment.message) &&
+                    date.equals(comment.date) &&
+                    taggedUsers.equals(comment.taggedUsers);
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return  id +
+                userFrom.getId() +
+                ticket.getId() +
+                message.hashCode() +
+                date.hashCode() +
+                taggedUsers.hashCode();
+    }
 
 }
 

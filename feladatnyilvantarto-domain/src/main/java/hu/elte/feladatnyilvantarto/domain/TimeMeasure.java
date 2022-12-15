@@ -63,4 +63,31 @@ public class TimeMeasure {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o instanceof TimeMeasure)
+        {
+            TimeMeasure timeMeasure = (TimeMeasure) o;
+            return  id == timeMeasure.id &&
+                    workState.equals(timeMeasure.workState) &&
+                    workTimes.equals(timeMeasure.workTimes) &&
+                    user.getId() == timeMeasure.user.getId() &&
+                    ticket.getId() == timeMeasure.getId();
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return  id +
+                workState.hashCode() +
+                workTimes.hashCode() +
+                user.getId() +
+                ticket.getId();
+    }
 }

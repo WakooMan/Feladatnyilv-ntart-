@@ -28,28 +28,4 @@ public class GroupsController {
     {
         return "groups";
     }
-    private List<GroupResponse> transformGroupResponse(List<Group> groups) {
-        return groups.stream().map(r ->
-        {
-            GroupResponse rr = new GroupResponse();
-            rr.setLeader(r.getLeader().getName());
-            rr.setUsers(r.getWorkers().stream().map(w ->
-                    {
-                        return new UserResponse(w.getName(),
-                            w.getAssignedTickets().stream().filter(t ->
-                            {return t.getGroup().equals(r);})
-                                    .collect(Collectors.toList()).size());
-                    }
-            ).collect(Collectors.toList()));
-            return rr;
-        }).collect(Collectors.toList());
-    }
-
-    @GetMapping("/api/groups")
-    public Iterable <GroupResponse> getGroups(){
-
-        return transformGroupResponse(GetAuthenticatedUser().getGroups());
-    }
-
-
 }
