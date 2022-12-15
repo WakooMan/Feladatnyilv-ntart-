@@ -23,39 +23,38 @@ public class AddUserTest {
     private GroupsRepository groupsRepository;
      @Autowired
      private TicketRepository ticketRepository;
-    public PasswordEncoder pwdEncoder() {
-        return new BCryptPasswordEncoder(12);
-    }
+     @Autowired
+    private PasswordEncoder pwdEncoder;
 
      public void AddUsers(){
          ArrayList<User> users = new ArrayList<>();
          ArrayList<Ticket> tickets = new ArrayList<>();
-         User lead1 = new User("Próba Andrea","a1",pwdEncoder().encode("a1"));
+         User lead1 = new User("Próba Andrea","a1",pwdEncoder.encode("a1"));
          users.add(lead1);
-         User lead2 = new User("Teszt Tamás", "a4",pwdEncoder().encode("a4"));
+         User lead2 = new User("Teszt Tamás", "a4",pwdEncoder.encode("a4"));
          users.add(lead2);
-         User lead3 = new User("Fukó Mihály", "a2",pwdEncoder().encode("a2"));
+         User lead3 = new User("Fukó Mihály", "a2",pwdEncoder.encode("a2"));
          users.add(lead3);
          Group g1= new Group("A-team", lead1);
          Group g2= new Group("B-team", lead2);
          Group g3= new Group("Z-team", lead3);
-         User u1=new User("Bubi Béla", "ab",pwdEncoder().encode("ab"));
+         User u1=new User("Bubi Béla", "ab",pwdEncoder.encode("ab"));
          g1.addWorker(u1);
-         User u2=new User("Kovács Patricia", "bc", pwdEncoder().encode("bc"));
+         User u2=new User("Kovács Patricia", "bc", pwdEncoder.encode("bc"));
          g1.addWorker(u2);
-         User u3=new User("Torta Donna", "test",pwdEncoder().encode("test"));
+         User u3=new User("Torta Donna", "test",pwdEncoder.encode("test"));
          g1.addWorker(u3);
-         User u4=new User("Sárga Károly", "aa",pwdEncoder().encode("aa"));
+         User u4=new User("Sárga Károly", "aa",pwdEncoder.encode("aa"));
          g2.addWorker(u4);
-         User u5=new User("Vasárnap Zsuzsanna", "a9",pwdEncoder().encode("a9"));
+         User u5=new User("Vasárnap Zsuzsanna", "a9",pwdEncoder.encode("a9"));
          g2.addWorker(u5);
-         User u6=new User("Kovács Vera", "a8",pwdEncoder().encode("a8"));
+         User u6=new User("Kovács Vera", "a8",pwdEncoder.encode("a8"));
          g2.addWorker(u6);
-         User u7=new User("Bokor Kata", "a7",pwdEncoder().encode("a7"));
+         User u7=new User("Bokor Kata", "a7",pwdEncoder.encode("a7"));
          g3.addWorker(u7);
-         User u8=new User("Újházi Johanna", "a6",pwdEncoder().encode("a6"));
+         User u8=new User("Újházi Johanna", "a6",pwdEncoder.encode("a6"));
          g3.addWorker(u8);
-         User u9=new User("Inas Judit", "aw",pwdEncoder().encode("aw"));
+         User u9=new User("Inas Judit", "aw",pwdEncoder.encode("aw"));
          g3.addWorker(u9);
          Ticket ticket1 = new Ticket(g1, "HIGH");
          ticket1.addAssignee(u1);

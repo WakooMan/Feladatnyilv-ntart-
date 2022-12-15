@@ -19,10 +19,7 @@ public class FeladatnyilvantartoApplication {
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
        return args -> addUserTest.AddUsers();
     }
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		 return new BCryptPasswordEncoder(12);
-	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(FeladatnyilvantartoApplication.class, args);
 	}
