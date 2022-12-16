@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Ticket {
@@ -23,9 +24,9 @@ public class Ticket {
     @ManyToOne(cascade = {CascadeType.MERGE})
     private  Group group;
     private Priority priority;
-    @OneToMany(orphanRemoval = true, mappedBy = "ticket")
+    @OneToMany(orphanRemoval = true, mappedBy = "ticket", fetch = FetchType.EAGER)
     private  List<Comment> comments;
-    @OneToMany(orphanRemoval = true, mappedBy="ticket")
+    @OneToMany(orphanRemoval = true, mappedBy="ticket", fetch = FetchType.EAGER)
     private List<TimeMeasure> timeMeasures;
     public Ticket(Group group, String priority) {
         this.group= group;
@@ -150,4 +151,16 @@ public class Ticket {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ticket ticket = (Ticket) o;
+        return id == ticket.id && Objects.equals(name, ticket.name) && Objects.equals(assigner, ticket.assigner) && Objects.equals(date, ticket.date) && Objects.equals(group, ticket.group);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, assigner, date, group);
+    }
 }

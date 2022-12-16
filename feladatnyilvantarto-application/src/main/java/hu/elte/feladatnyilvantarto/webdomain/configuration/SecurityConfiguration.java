@@ -22,6 +22,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().loginPage("/signin").permitAll()
                 .and()
+                .csrf().ignoringAntMatchers("/h2-console/**")
+                .and()
+                .headers().frameOptions().sameOrigin() // h2-console access
+                .and()
                 .logout().permitAll();
     }
     @Bean
