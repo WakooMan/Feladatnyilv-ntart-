@@ -87,6 +87,7 @@ public class AddUserTest {
 
          usersRepository.saveAll(users);
          groupsRepository.saveAll(groups);
+
          ticketRepository.save(ticket1);
          ticketRepository.save(ticket2);
          ticketRepository.save(ticket3);

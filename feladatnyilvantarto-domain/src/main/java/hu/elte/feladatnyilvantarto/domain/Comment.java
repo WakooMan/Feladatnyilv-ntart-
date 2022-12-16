@@ -3,7 +3,6 @@ package hu.elte.feladatnyilvantarto.domain;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 
 @Entity
@@ -88,18 +87,32 @@ public class Comment {
         this.taggedUsers = taggedUsers;
     }
 
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Comment comment = (Comment) o;
-        return id == comment.id && Objects.equals(userFrom, comment.userFrom) && Objects.equals(ticket, comment.ticket);
+    public boolean equals(Object o)
+    {
+        if (o instanceof Comment comment)
+        {
+            return  id == comment.id &&
+                    userFrom.getId() == comment.userFrom.getId() &&
+                    ticket.getId() == comment.ticket.getId() &&
+                    message.equals(comment.message) &&
+                    date.equals(comment.date) &&
+                    taggedUsers.equals(comment.taggedUsers);
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, userFrom, ticket);
+    public int hashCode()
+    {
+        return  id +
+                userFrom.getId() +
+                ticket.getId() +
+                message.hashCode() +
+                date.hashCode() +
+                taggedUsers.hashCode();
     }
 }
 

@@ -18,13 +18,11 @@ import java.util.stream.Collectors;
 @Controller
 public class GroupsController {
 
-    @Autowired
-    private GroupsService groupsService;
+
     public User GetAuthenticatedUser()
     {
         return ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
     }
-
     @GetMapping("/groups")
     public String group (Model model)
     {
@@ -32,28 +30,7 @@ public class GroupsController {
         model.addAttribute("username",GetAuthenticatedUser().getUsername());
         return "groups";
     }
-    private List<GroupResponse> transformGroupResponse(List<Group> groups) {
-        return groups.stream().map(r ->
-        {
-            GroupResponse rr = new GroupResponse();
-            rr.setLeader(r.getLeader().getName());
-            rr.setUsers(r.getWorkers().stream().map(w ->
-                    {
-                        return new UserResponse(w.getName(),
-                            w.getAssignedTickets().stream().filter(t ->
-                            {return t.getGroup().equals(r);})
-                                    .collect(Collectors.toList()).size());
-                    }
-            ).collect(Collectors.toList()));
-            return rr;
-        }).collect(Collectors.toList());
-    }
 
-    @GetMapping("/api/groups")
-    public Iterable <GroupResponse> getGroups(){
-
-        return transformGroupResponse(groupsService.listGroupsOfUser(GetAuthenticatedUser()));
-    }
 
 
 }

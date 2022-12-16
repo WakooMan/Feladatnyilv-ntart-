@@ -3,7 +3,6 @@ package hu.elte.feladatnyilvantarto.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 @NamedEntityGraph(
         name = "graph.authorBooks",
         attributeNodes = @NamedAttributeNode("groups")
@@ -19,7 +18,7 @@ public class User
 
     private String username;
     private String password;
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Group> groups;
     @OneToMany(mappedBy = "leader", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<Group> groupsLed;
@@ -29,7 +28,7 @@ public class User
     @OneToOne
     private Ticket currentTicket;
 
-    @ManyToMany(mappedBy = "assignees")
+    @ManyToMany(mappedBy = "assignees", fetch = FetchType.EAGER)
     private List<Ticket> assignedTickets;
     public Ticket getCurrentTicket() {
         return currentTicket;
@@ -96,14 +95,6 @@ public class User
 
     public List<Ticket> getAssignedTickets()
     {
-/*        List<Ticket> result = new ArrayList<Ticket>();
-        for(Group group:groups)
-        {
-            result.addAll(group.getTickets().stream().filter((t) -> (userType == UserType.Worker)?t.getAssignees().contains(this):t.getAssigner().equals(this)).collect(Collectors.toList()));
-        }
-        Ez majd a service logikába kerül bele
- */
-
         return assignedTickets;
     }
 
@@ -124,15 +115,36 @@ public class User
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id && Objects.equals(name, user.name) && Objects.equals(username, user.username);
+    public boolean equals(Object o)
+    {
+        if (o instanceof User user)
+        {
+            return  id == user.id &&
+                    username.equals(user.username) &&
+                    password.equals(user.password) &&
+                    name.equals(user.name) &&
+                    groups.equals(user.groups) &&
+                    groupsLed.equals(user.groupsLed) &&
+                    userTimeMeasures.equals(user.userTimeMeasures) &&
+                    currentTicket.equals(user.currentTicket) &&
+                    assignedTickets.equals(user.assignedTickets);
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, name, username);
+    public int hashCode()
+    {
+        return  id +
+                username.hashCode() +
+                password.hashCode() +
+                name.hashCode() +
+                groups.hashCode() +
+                groupsLed.hashCode() +
+                userTimeMeasures.hashCode() +
+                currentTicket.hashCode() +
+                assignedTickets.hashCode();
     }
 }

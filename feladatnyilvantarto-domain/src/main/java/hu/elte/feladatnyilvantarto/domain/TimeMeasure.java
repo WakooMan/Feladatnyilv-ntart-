@@ -2,7 +2,6 @@ package hu.elte.feladatnyilvantarto.domain;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class TimeMeasure {
@@ -66,15 +65,28 @@ public class TimeMeasure {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TimeMeasure that = (TimeMeasure) o;
-        return id == that.id && workState == that.workState && Objects.equals(user, that.user) && Objects.equals(ticket, that.ticket);
+    public boolean equals(Object o)
+    {
+        if (o instanceof TimeMeasure timeMeasure)
+        {
+            return  id == timeMeasure.id &&
+                    workState.equals(timeMeasure.workState) &&
+                    workTimes.equals(timeMeasure.workTimes) &&
+                    user.getId() == timeMeasure.user.getId() &&
+                    ticket.getId() == timeMeasure.getId();
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, workState, user, ticket);
+    public int hashCode()
+    {
+        return  id +
+                workState.hashCode() +
+                workTimes.hashCode() +
+                user.getId() +
+                ticket.getId();
     }
 }

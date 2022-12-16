@@ -7,8 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Objects;
-
 @Entity
 public class WorkTime {
     @Id
@@ -58,17 +56,29 @@ public class WorkTime {
     public TimeMeasure getTimeMeasure() {
         return timeMeasure;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WorkTime workTime = (WorkTime) o;
-        return id == workTime.id && Objects.equals(startDate, workTime.startDate);
+    public boolean equals(Object o)
+    {
+        if (o instanceof WorkTime workTime)
+        {
+            return  id == workTime.id &&
+                    startDate.equals(workTime.startDate) &&
+                    endDate.equals(workTime.endDate) &&
+                    timeMeasure.getId() == workTime.timeMeasure.getId() &&
+                    timeWorked == workTime.timeWorked;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, startDate);
+    public int hashCode()
+    {
+        return  id +
+                startDate.hashCode() +
+                endDate.hashCode() +
+                timeMeasure.getId() +
+                timeWorked;
     }
 }

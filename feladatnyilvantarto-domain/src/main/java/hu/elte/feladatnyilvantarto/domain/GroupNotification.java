@@ -1,49 +1,29 @@
 package hu.elte.feladatnyilvantarto.domain;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 @Entity
 public class GroupNotification extends Notification {
 
     @Enumerated(EnumType.STRING)
     private static final NotificationType NOTIFICATION_TYPE = NotificationType.GROUP;
-    private final LocalDateTime date;
 
     @ManyToOne
     private Group group;
-    @ManyToOne
-    private User user;
-    private String message;
 
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public GroupNotification(Group group) {
+    public GroupNotification(User user,Group group) {
+        super(user);
         this.group = group;
-        date = LocalDateTime.now();
         setMessage();
     }
 
     public GroupNotification() {
-        date = LocalDateTime.now();
+        super();
     }
 
     public Group getGroup() {
         return group;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
     }
 
     public void setMessage() {
@@ -51,23 +31,30 @@ public class GroupNotification extends Notification {
         message = "You were added to Group '"
                 + group.getGroupName() +
                 "'. "
-                + date.format(formatter);
+                + getDate().format(formatter);
     }
 
     public NotificationType getType() {
         return NOTIFICATION_TYPE;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GroupNotification that = (GroupNotification) o;
-        return Objects.equals(date, that.date) && Objects.equals(group, that.group) && Objects.equals(user, that.user);
+    public boolean equals(Object o)
+    {
+        if (o instanceof GroupNotification notification)
+        {
+            return  super.equals(o) &&
+                    group.equals(notification.group);
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(date, group, user);
+    public int hashCode()
+    {
+        return  super.hashCode() +
+                group.hashCode();
     }
+
 }

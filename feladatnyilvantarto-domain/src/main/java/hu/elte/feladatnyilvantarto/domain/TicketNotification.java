@@ -1,9 +1,7 @@
 package hu.elte.feladatnyilvantarto.domain;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 
 @Entity
@@ -14,26 +12,19 @@ public class TicketNotification extends Notification {
 
     @ManyToOne
     private Ticket ticket;
-    private String message;
-    @ManyToOne
-    private User user;
-    private final LocalDateTime date;
 
-    public TicketNotification(Ticket ticket) {
+    public TicketNotification(User user,Ticket ticket) {
+        super(user);
         this.ticket = ticket;
-        date = LocalDateTime.now();
+        setMessage();
     }
 
     public TicketNotification() {
-        date = LocalDateTime.now();
+        super();
     }
 
     public Ticket getTicket() {
         return ticket;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     public void setMessage() {
@@ -41,17 +32,8 @@ public class TicketNotification extends Notification {
         message = "New activity in Ticket '"
                 + ticket.getName() +
                 "'. "
-                + date.format(formatter);
+                + getDate().format(formatter);
     }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
 
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
@@ -60,17 +42,23 @@ public class TicketNotification extends Notification {
     public NotificationType getType() {
         return NOTIFICATION_TYPE;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TicketNotification that = (TicketNotification) o;
-        return Objects.equals(ticket, that.ticket) && Objects.equals(user, that.user) && Objects.equals(date, that.date);
+    public boolean equals(Object o)
+    {
+        if (o instanceof TicketNotification notification)
+        {
+            return  super.equals(o) &&
+                    ticket.equals(notification.ticket);
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(ticket, user, date);
+    public int hashCode()
+    {
+        return  super.hashCode() +
+                ticket.hashCode();
     }
 }

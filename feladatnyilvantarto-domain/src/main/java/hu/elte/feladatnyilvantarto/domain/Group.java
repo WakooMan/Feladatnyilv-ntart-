@@ -3,7 +3,6 @@ package hu.elte.feladatnyilvantarto.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name="GROUPS")
@@ -16,7 +15,7 @@ public class Group {
     private String groupName;
     @ManyToOne
     private User leader;
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<User> workers;
 
     public Group() {
@@ -85,17 +84,29 @@ public class Group {
             workers.remove(user);
 
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Group group = (Group) o;
-        return id == group.id && Objects.equals(groupName, group.groupName) && Objects.equals(leader, group.leader);
+    public boolean equals(Object o)
+    {
+        if (o instanceof Group group)
+        {
+            return  id == group.id &&
+                    tickets.equals(group.tickets) &&
+                    groupName.equals(group.groupName) &&
+                    leader.getId() == group.leader.getId() &&
+                    workers.stream().map(w -> w.getId()).toList().equals(group.workers.stream().map(w -> w.getId()).toList());
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, groupName, leader);
+    public int hashCode()
+    {
+        return  id +
+                tickets.hashCode() +
+                groupName.hashCode() +
+                leader.getId() +
+                workers.stream().mapToInt(w -> w.getId()).sum();
     }
 }
