@@ -11,12 +11,12 @@ public class Group {
     @Id
     @GeneratedValue
     private int id;
-    @OneToMany(mappedBy = "group", cascade = {CascadeType.MERGE})
+    @OneToMany(mappedBy = "group", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<Ticket> tickets;
     private String groupName;
     @ManyToOne
     private User leader;
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<User> workers;
 
     public Group() {

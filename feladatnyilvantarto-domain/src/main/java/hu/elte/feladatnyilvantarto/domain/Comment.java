@@ -3,6 +3,7 @@ package hu.elte.feladatnyilvantarto.domain;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -16,7 +17,7 @@ public class Comment {
     private Ticket ticket;
     private String message;
     private LocalDateTime date;
-    @OneToMany
+    @OneToMany (fetch = FetchType.EAGER)
     private List<User> taggedUsers;
 
     public Comment(User from, Ticket in, String message) {
@@ -116,5 +117,17 @@ public class Comment {
                 taggedUsers.hashCode();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return id == comment.id && Objects.equals(userFrom, comment.userFrom) && Objects.equals(ticket, comment.ticket);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userFrom, ticket);
+    }
 }
 

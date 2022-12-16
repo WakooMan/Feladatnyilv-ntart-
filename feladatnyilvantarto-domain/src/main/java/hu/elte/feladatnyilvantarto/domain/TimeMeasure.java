@@ -7,9 +7,9 @@ import java.util.List;
 public class TimeMeasure {
     @Id
     @GeneratedValue
-    public int id;
+    private int id;
     private WorkState workState;
-    @OneToMany(mappedBy = "timeMeasure", orphanRemoval = true)
+    @OneToMany(mappedBy = "timeMeasure", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<WorkTime> workTimes;
     @ManyToOne
     private User user;

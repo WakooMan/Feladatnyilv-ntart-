@@ -24,9 +24,9 @@ public class Ticket {
     @ManyToOne(cascade = {CascadeType.MERGE})
     private  Group group;
     private Priority priority;
-    @OneToMany(orphanRemoval = true, mappedBy = "ticket")
+    @OneToMany(orphanRemoval = true, mappedBy = "ticket", fetch = FetchType.EAGER)
     private  List<Comment> comments;
-    @OneToMany(orphanRemoval = true, mappedBy="ticket")
+    @OneToMany(orphanRemoval = true, mappedBy="ticket", fetch = FetchType.EAGER)
     private List<TimeMeasure> timeMeasures;
     public Ticket(Group group, String priority) {
         this.group= group;

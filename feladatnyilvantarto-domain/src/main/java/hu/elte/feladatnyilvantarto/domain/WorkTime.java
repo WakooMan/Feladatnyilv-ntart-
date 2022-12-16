@@ -11,7 +11,7 @@ import java.time.temporal.ChronoUnit;
 public class WorkTime {
     @Id
     @GeneratedValue
-    public int id;
+    private int id;
     private final ZonedDateTime startDate;
     private ZonedDateTime endDate;
     @ManyToOne

@@ -3,6 +3,11 @@ package hu.elte.feladatnyilvantarto.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+@NamedEntityGraph(
+        name = "graph.authorBooks",
+        attributeNodes = @NamedAttributeNode("groups")
+)
 @Entity
 @Table(name = "USERS")
 public class User
@@ -14,11 +19,11 @@ public class User
 
     private String username;
     private String password;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Group> groups;
-    @OneToMany(mappedBy = "leader", cascade = {CascadeType.MERGE})
+    @OneToMany(mappedBy = "leader", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<Group> groupsLed;
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE})
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<TimeMeasure> userTimeMeasures;
 
     @OneToOne
