@@ -3,6 +3,7 @@ package hu.elte.feladatnyilvantarto.domain;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 
 @Entity
@@ -58,5 +59,18 @@ public class TicketNotification extends Notification {
 
     public NotificationType getType() {
         return NOTIFICATION_TYPE;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TicketNotification that = (TicketNotification) o;
+        return Objects.equals(ticket, that.ticket) && Objects.equals(user, that.user) && Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ticket, user, date);
     }
 }

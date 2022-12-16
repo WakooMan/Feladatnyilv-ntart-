@@ -17,10 +17,10 @@
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
             <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/tickets">Tickets</a></li>
                 <li><a href="/groups">Groups</a></li>
             <li><a><form:form action="logout"><input type="submit" value="Logout"></form:form></a></li>
             </sec:authorize>
         </ul>
     </nav>
-    <h2>${username}</h2>
 </header>

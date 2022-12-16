@@ -16,11 +16,11 @@ public class GroupsService {
     @Autowired
     private UsersRepository usersRepository;
 
-    public List<Group> listGroupsLedByUser(User user){
-        return groupsRepository.findGroupsByLeader(user);
+    public List<Group> listGroupsLedByUser(int id){
+        return groupsRepository.findGroupsByLeader_Id(id);
     }
     public List<Group> listGroupsOfUser(User user){
-        return groupsRepository.findGroupsByWorkersContaining(user);
+        return user.getGroups();
     }
 
 

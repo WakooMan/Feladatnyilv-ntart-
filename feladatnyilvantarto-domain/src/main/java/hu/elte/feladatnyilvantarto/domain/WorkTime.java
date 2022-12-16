@@ -7,11 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
+
 @Entity
 public class WorkTime {
     @Id
     @GeneratedValue
-    public int id;
+    private int id;
     private final ZonedDateTime startDate;
     private ZonedDateTime endDate;
     @ManyToOne
@@ -55,5 +57,18 @@ public class WorkTime {
 
     public TimeMeasure getTimeMeasure() {
         return timeMeasure;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WorkTime workTime = (WorkTime) o;
+        return id == workTime.id && Objects.equals(startDate, workTime.startDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, startDate);
     }
 }

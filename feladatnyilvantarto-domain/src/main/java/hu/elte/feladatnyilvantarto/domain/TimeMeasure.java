@@ -2,14 +2,15 @@ package hu.elte.feladatnyilvantarto.domain;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class TimeMeasure {
     @Id
     @GeneratedValue
-    public int id;
+    private int id;
     private WorkState workState;
-    @OneToMany(mappedBy = "timeMeasure", orphanRemoval = true)
+    @OneToMany(mappedBy = "timeMeasure", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<WorkTime> workTimes;
     @ManyToOne
     private User user;
@@ -62,5 +63,18 @@ public class TimeMeasure {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TimeMeasure that = (TimeMeasure) o;
+        return id == that.id && workState == that.workState && Objects.equals(user, that.user) && Objects.equals(ticket, that.ticket);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, workState, user, ticket);
     }
 }

@@ -3,6 +3,7 @@ package hu.elte.feladatnyilvantarto.domain;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @Entity
 public class CommentNotification extends Notification {
@@ -13,6 +14,7 @@ public class CommentNotification extends Notification {
     @ManyToOne
     private Comment comment;
     private String message;
+
 
     @Override
     public void setDate(LocalDateTime date) {
@@ -66,4 +68,16 @@ public class CommentNotification extends Notification {
         this.comment = comment;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommentNotification that = (CommentNotification) o;
+        return Objects.equals(comment, that.comment) && Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(comment, date);
+    }
 }

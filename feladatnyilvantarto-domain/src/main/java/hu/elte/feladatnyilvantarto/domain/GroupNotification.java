@@ -3,6 +3,7 @@ package hu.elte.feladatnyilvantarto.domain;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @Entity
 public class GroupNotification extends Notification {
@@ -51,11 +52,22 @@ public class GroupNotification extends Notification {
                 + group.getGroupName() +
                 "'. "
                 + date.format(formatter);
-        this.message = message;
     }
 
     public NotificationType getType() {
         return NOTIFICATION_TYPE;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GroupNotification that = (GroupNotification) o;
+        return Objects.equals(date, that.date) && Objects.equals(group, that.group) && Objects.equals(user, that.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, group, user);
+    }
 }
