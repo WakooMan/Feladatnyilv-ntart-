@@ -20,7 +20,7 @@ public class GroupsService {
         return groupsRepository.findGroupsByLeader_Id(id);
     }
     public List<Group> listGroupsOfUser(User user){
-        return user.getGroups();
+        return groupsRepository.findGroupsByWorkersContains(user);
     }
 
 

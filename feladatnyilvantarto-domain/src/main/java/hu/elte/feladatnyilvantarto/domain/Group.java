@@ -16,7 +16,7 @@ public class Group {
     private String groupName;
     @ManyToOne
     private User leader;
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<User> workers;
 
     public Group() {
