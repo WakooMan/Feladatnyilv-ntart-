@@ -18,7 +18,7 @@ public class User
 
     private String username;
     private String password;
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Group> groups;
     @OneToMany(mappedBy = "leader", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<Group> groupsLed;
@@ -28,7 +28,7 @@ public class User
     @OneToOne
     private Ticket currentTicket;
 
-    @ManyToMany(mappedBy = "assignees")
+    @ManyToMany(mappedBy = "assignees", fetch = FetchType.EAGER)
     private List<Ticket> assignedTickets;
     public Ticket getCurrentTicket() {
         return currentTicket;

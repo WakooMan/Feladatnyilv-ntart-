@@ -20,7 +20,7 @@
             "<tr><td>Worker</td><td>Ticket's number</td></tr>";
         group.users.forEach(function (worker, index) {
             result += "<tr>" +
-                "<td>" + worker.name + "</td>" +
+                "<td>" + worker.user + "</td>" +
                 "<td>" + worker.count + "</td>";
         });
         result += "</table>";

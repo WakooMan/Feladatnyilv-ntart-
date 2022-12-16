@@ -2,6 +2,9 @@ package hu.elte.feladatnyilvantarto.rest.domain;
 
 public class UserResponse {
     private String user;
+
+
+
     private int count;
 
     public  UserResponse(){}
@@ -26,4 +29,5 @@ public class UserResponse {
     public void setCount(int count) {
         this.count = count;
     }
+
 }
