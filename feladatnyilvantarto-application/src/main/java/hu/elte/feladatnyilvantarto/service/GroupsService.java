@@ -23,13 +23,19 @@ public class GroupsService {
         return groupsRepository.findGroupsByWorkersContains(user);
     }
 
+    public Group getGroupById(int id) {
+        return groupsRepository.findById(id).orElse(null);
+    }
 
     /*public void createNewGroup(String name, User user){
         Group group = new Group(name, user);
         groupsRepository.save(group);
     }*/
 
-    public Group createNewGroup(Group group) {
+    public Group createNewGroup(String name, User leader) {
+        Group group = new Group();
+        group.setGroupName(name);
+        group.setLeader(leader);
         return groupsRepository.save(group);
     }
 
@@ -66,7 +72,6 @@ public class GroupsService {
         if (!user.equals(group.getLeader())){
             groupsRepository.delete(group);
         }
-
     }
 
 

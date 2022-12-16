@@ -1,13 +1,12 @@
 package hu.elte.feladatnyilvantarto.service;
 
-import hu.elte.feladatnyilvantarto.domain.Group;
-import hu.elte.feladatnyilvantarto.domain.Ticket;
-import hu.elte.feladatnyilvantarto.domain.User;
+import hu.elte.feladatnyilvantarto.domain.*;
 import hu.elte.feladatnyilvantarto.repository.TicketRepository;
 import hu.elte.feladatnyilvantarto.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +19,20 @@ public class TicketService {
     @Autowired
     private UsersRepository usersRepository;
 
-    public Ticket createTicket(){
-        return new Ticket();
+    public void createTicket(String name, String description, User assigner,
+                               ArrayList<User> assignees, LocalDateTime newdeadline,
+                               boolean chekcbox, Group group, Priority priority){
+        Ticket ticket = new Ticket();
+        ticket.setName(name);
+        ticket.setDescription(description);
+        ticket.addAssignee(assigner);
+        ticket.setAssignees(assignees);
+        ticket.setDeadline(newdeadline);
+        ticket.setCheckbox(chekcbox);
+        ticket.setGroup(group);
+        ticket.setPriority(priority.toString());
+
+        ticketRepository.save(ticket);
     }
     public List<Ticket> listTickets(){
         return new ArrayList<>();
@@ -79,7 +90,7 @@ public class TicketService {
             }
         }
     public void unAddSelf(User user, Ticket ticket){
-        if ((createTicket().getAssignees().contains(user))
+        if ((ticket.getAssignees().contains(user))
                 || user.equals(ticket.getGroup().getLeader())){
             ticket.deleteAssignee(user);
             ticketRepository.save(ticket);

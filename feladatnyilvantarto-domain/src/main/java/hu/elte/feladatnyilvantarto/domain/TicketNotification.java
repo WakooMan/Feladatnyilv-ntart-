@@ -2,6 +2,7 @@ package hu.elte.feladatnyilvantarto.domain;
 
 import javax.persistence.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 
 @Entity
@@ -61,4 +62,5 @@ public class TicketNotification extends Notification {
         return  super.hashCode() +
                 ticket.hashCode();
     }
+
 }

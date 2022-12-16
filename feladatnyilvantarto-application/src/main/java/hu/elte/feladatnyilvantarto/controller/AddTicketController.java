@@ -5,25 +5,26 @@ import hu.elte.feladatnyilvantarto.domain.Ticket;
 import hu.elte.feladatnyilvantarto.service.TicketService;
 import hu.elte.feladatnyilvantarto.webdomain.AddGroupRequest;
 import hu.elte.feladatnyilvantarto.webdomain.AddTicketRequest;
+import hu.elte.feladatnyilvantarto.webdomain.SignUpForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+@Controller
 public class AddTicketController {
 
     @Autowired
     private TicketService ticketService;
 
-    @PostMapping("addTicket")
-    public String addTicket(AddTicketRequest addTicketRequest) {
-        Ticket ticket = new Ticket();
-        ticket.getName();
-        ticket.getDescription();
+    @RequestMapping("/addticket")
+    public String addTicket(Model model) {
 
-        //nem használom így az AddTicketRequest-et
-        //a metódusok nem várnak paramétert, pedig kéne nekik átadni:getName,getDescr., createTicket
+        if(!model.containsAttribute("addticketform")) {
+            model.addAttribute("addticketform", new AddTicketRequest());
+        }
 
-        ticketService.createTicket();
-
-        return "redirect:ticket";
+        return "addticket";
     }
 }

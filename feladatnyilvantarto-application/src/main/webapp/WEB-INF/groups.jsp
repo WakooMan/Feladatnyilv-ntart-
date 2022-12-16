@@ -1,33 +1,37 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="_header.jsp"/>
-
 <h1>Groups</h1>
 
 <h2>${username}'s groups:</h2>
 
-<div id ="content">
+<a href="/addgroup">Add new group</a>
 
-</div>
+<c:forEach items="${groupList}" var="group">
+    <table>
+        <tr>
+            <th>Workers</th>
+            <th>Ticket's number</th>
+        </tr>
 
-<script>
-    fetch("/api/groups")
-    .then(res => res.json())
-    .then((groups) => {
-        console.log(groups);
-    let result = "";
-    groups.forEach(function(group, index) {
-        result += "<h2>Leader: " + group.leader + "</h2>" +
-            "<table border = 1>" +
-            "<tr><td>Worker</td><td>Ticket's number</td></tr>";
-        group.users.forEach(function (worker, index) {
-            result += "<tr>" +
-                "<td>" + worker.user + "</td>" +
-                "<td>" + worker.count + "</td>";
-        });
-        result += "</table>";
-    });
-    document.getElementById("content").innerHTML = result;
-    });
-</script>
+        <div id ="content">
+            <c:forEach items="${group.workers}" var="worker">
+            <tr>
+                <td>${worker.name}</td>
+                <td>${worker.assignedTickets.size()}</td>
+            </tr>
+            </c:forEach>
+        </div>
+    </table>
+    <div>
+        <a href="/tickets">Tickets</a>
+        <a href="/modifygroup">Modify this group</a>
+        <form:form action="/removegroup/action/${group.id}">
+            <button type="submit">Remove this group</button>
+        </form:form>
+    </div>
+</c:forEach>
+
 
 
 
