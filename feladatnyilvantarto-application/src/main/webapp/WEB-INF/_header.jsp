@@ -5,12 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
 </head>
 <body>
 <header>
     <nav>
         <ul>
-
             <sec:authorize access="isAnonymous()">
             <li><a href="/signin">Sign In</a></li>
             <li><a href="/signup">Sign Up</a></li>
@@ -19,7 +19,8 @@
             <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="/tickets">Tickets</a></li>
                 <li><a href="/groups">Groups</a></li>
-            <li><a><form:form action="logout"><input type="submit" value="Logout"></form:form></a></li>
+                <li>User: ${fullname}</li>
+            <li><a><form:form action="logout"><input id="logout" type="submit" value="Logout"></form:form></a></li>
             </sec:authorize>
         </ul>
     </nav>

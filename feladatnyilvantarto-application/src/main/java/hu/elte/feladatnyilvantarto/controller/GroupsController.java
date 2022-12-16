@@ -22,15 +22,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class GroupsController {
+public class GroupsController extends AuthenticatedControllerBase {
 
     @Autowired
     private GroupsService groupsService;
-
-    public User GetAuthenticatedUser()
-    {
-        return ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-    }
 
     @GetMapping("/groups")
     public String group (Model model)

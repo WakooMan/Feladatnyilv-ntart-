@@ -20,12 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.naming.Binding;
 
 @Controller
-public class AddGroupController {
+public class AddGroupController extends AuthenticatedControllerBase {
 
-    public User GetAuthenticatedUser()
-    {
-        return ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-    }
     @Autowired
     private GroupsService groupsService;
 
