@@ -24,10 +24,15 @@ public class GroupsService {
     }
 
 
-    public void createNewGroup(String name, User user){
+    /*public void createNewGroup(String name, User user){
         Group group = new Group(name, user);
         groupsRepository.save(group);
+    }*/
+
+    public Group createNewGroup(Group group) {
+        return groupsRepository.save(group);
     }
+
     public void modifyGroupName(User user, Group group, String name){
         if (user.equals(group.getLeader())){
             group.setGroupName(name);

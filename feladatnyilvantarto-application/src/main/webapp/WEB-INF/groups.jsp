@@ -1,33 +1,24 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="_header.jsp"/>
 
 <h1>Groups</h1>
 
-<h2>${username}'s groups:</h2>
+<c:forEach items="${groups}" var="group">
+<table>
+    <tr>
+        <th>Workers</th>
+        <th>Ticket's number</th>
+    </tr>
 
-<div id ="content">
+<c:forEach items="${workers}" var="worker">
+    <tr>
+        <td>${worker.name}</td>
+        <td>${worker.ticketnumber}</td>
+    </tr>
+</c:forEach>
+</table>
+</c:forEach>
 
-</div>
-
-<script>
-    fetch("/api/groups")
-    .then(res => res.json())
-    .then((groups) => {
-        console.log(groups);
-    let result = "";
-    groups.forEach(function(group, index) {
-        result += "<h2>Leader: " + group.leader + "</h2>" +
-            "<table border = 1>" +
-            "<tr><td>Worker</td><td>Ticket's number</td></tr>";
-        group.users.forEach(function (worker, index) {
-            result += "<tr>" +
-                "<td>" + worker.name + "</td>" +
-                "<td>" + worker.count + "</td>";
-        });
-        result += "</table>";
-    });
-    document.getElementById("content").innerHTML = result;
-    });
-</script>
 
 
 
