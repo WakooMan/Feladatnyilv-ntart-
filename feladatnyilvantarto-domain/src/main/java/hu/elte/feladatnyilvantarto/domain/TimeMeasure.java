@@ -67,9 +67,8 @@ public class TimeMeasure {
     @Override
     public boolean equals(Object o)
     {
-        if (o instanceof TimeMeasure)
+        if (o instanceof TimeMeasure timeMeasure)
         {
-            TimeMeasure timeMeasure = (TimeMeasure) o;
             return  id == timeMeasure.id &&
                     workState.equals(timeMeasure.workState) &&
                     workTimes.equals(timeMeasure.workTimes) &&

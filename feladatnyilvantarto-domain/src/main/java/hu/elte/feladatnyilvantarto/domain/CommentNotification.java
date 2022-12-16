@@ -1,7 +1,6 @@
 package hu.elte.feladatnyilvantarto.domain;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
@@ -49,9 +48,8 @@ public class CommentNotification extends Notification {
     @Override
     public boolean equals(Object o)
     {
-        if (o instanceof CommentNotification)
+        if (o instanceof CommentNotification notification)
         {
-            CommentNotification notification = (CommentNotification) o;
             return  super.equals(o) &&
                     comment.equals(notification.comment);
         }

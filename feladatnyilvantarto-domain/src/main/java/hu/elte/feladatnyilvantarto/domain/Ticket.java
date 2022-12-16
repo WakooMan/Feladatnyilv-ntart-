@@ -5,7 +5,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 public class Ticket {
@@ -153,14 +152,13 @@ public class Ticket {
     @Override
     public boolean equals(Object o)
     {
-        if (o instanceof Ticket)
+        if (o instanceof Ticket ticket)
         {
-            Ticket ticket = (Ticket) o;
             return  id == ticket.id &&
                     name.equals(ticket.name) &&
                     description.equals(ticket.description) &&
                     assigner.getId() == ticket.assigner.getId() &&
-                    assignees.stream().map(a -> a.getId()).collect(Collectors.toList()).equals(ticket.assignees.stream().map(a -> a.getId()).collect(Collectors.toList())) &&
+                    assignees.stream().map(a -> a.getId()).toList().equals(ticket.assignees.stream().map(a -> a.getId()).toList()) &&
                     date.equals(ticket.date) &&
                     deadline.equals(ticket.deadline) &&
                     checkbox == ticket.checkbox &&

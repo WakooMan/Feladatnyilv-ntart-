@@ -3,7 +3,6 @@ package hu.elte.feladatnyilvantarto.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 @NamedEntityGraph(
         name = "graph.authorBooks",
         attributeNodes = @NamedAttributeNode("groups")
@@ -118,9 +117,8 @@ public class User
     @Override
     public boolean equals(Object o)
     {
-        if (o instanceof User)
+        if (o instanceof User user)
         {
-            User user = (User) o;
             return  id == user.id &&
                     username.equals(user.username) &&
                     password.equals(user.password) &&

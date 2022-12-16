@@ -1,7 +1,6 @@
 package hu.elte.feladatnyilvantarto.domain;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
@@ -41,9 +40,8 @@ public class GroupNotification extends Notification {
     @Override
     public boolean equals(Object o)
     {
-        if (o instanceof GroupNotification)
+        if (o instanceof GroupNotification notification)
         {
-            GroupNotification notification = (GroupNotification) o;
             return  super.equals(o) &&
                     group.equals(notification.group);
         }

@@ -1,7 +1,6 @@
 package hu.elte.feladatnyilvantarto.domain;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
@@ -46,9 +45,8 @@ public class TicketNotification extends Notification {
     @Override
     public boolean equals(Object o)
     {
-        if (o instanceof TicketNotification)
+        if (o instanceof TicketNotification notification)
         {
-            TicketNotification notification = (TicketNotification) o;
             return  super.equals(o) &&
                     ticket.equals(notification.ticket);
         }

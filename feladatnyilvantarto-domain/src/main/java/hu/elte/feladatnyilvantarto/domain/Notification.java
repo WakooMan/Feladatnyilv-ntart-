@@ -12,14 +12,19 @@ public abstract class Notification {
     @GeneratedValue
     private int id;
     protected String message;
-    private final LocalDateTime date;
+    private LocalDateTime date;
     private boolean seen=false;
     @ManyToOne
     private User user;
     protected Notification(User user) { date = LocalDateTime.now(); this.user = user;}
-    protected Notification() {date = LocalDateTime.now();}
+    protected Notification() {}
     public LocalDateTime getDate() {
         return date;
+    }
+
+    public void setDate(LocalDateTime date)
+    {
+        this.date = date;
     }
 
     public boolean isSeen() {
@@ -56,9 +61,8 @@ public abstract class Notification {
     @Override
     public boolean equals(Object o)
     {
-        if (o instanceof Notification)
+        if (o instanceof Notification notification)
         {
-            Notification notification = (Notification) o;
             return  id == notification.id &&
                     message.equals(notification.message) &&
                     date.equals(notification.date) &&

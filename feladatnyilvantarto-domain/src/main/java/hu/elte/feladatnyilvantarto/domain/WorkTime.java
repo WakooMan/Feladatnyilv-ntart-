@@ -59,9 +59,8 @@ public class WorkTime {
     @Override
     public boolean equals(Object o)
     {
-        if (o instanceof WorkTime)
+        if (o instanceof WorkTime workTime)
         {
-            WorkTime workTime = (WorkTime) o;
             return  id == workTime.id &&
                     startDate.equals(workTime.startDate) &&
                     endDate.equals(workTime.endDate) &&
