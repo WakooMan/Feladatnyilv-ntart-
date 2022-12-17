@@ -58,7 +58,6 @@ public class TicketService {
     public void closeTicket(Ticket ticket){
         ticket.setCheckbox(false);
         ticketRepository.save(ticket);
-
     }
     public void removeTicket(Ticket ticket, User user){
         if (ticket.getAssigner().equals(user) || user.equals(ticket.getGroup().getLeader())) {

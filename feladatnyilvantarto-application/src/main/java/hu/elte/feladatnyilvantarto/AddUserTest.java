@@ -69,7 +69,7 @@ public class AddUserTest {
          Ticket ticket2 = new Ticket(g2, "MEDIUM");
          ticket2.addAssignee(u1);
          ticket2.setAssigner(lead2);
-         ticket2.setGroup(g3);
+         ticket2.setGroup(g1);
          ticket2.setName("Clean countertops");
          ticket2.setDescription("Please clean the countertops.");
          Ticket ticket3 = new Ticket(g3, "LOW");
@@ -79,7 +79,7 @@ public class AddUserTest {
          ticket3.setName("Water the office plants");
          ticket3.setDescription("Please water the office plants.");
          Ticket ticket4 = new Ticket(g1, "LOW");
-         ticket4.addAssignee(u5);
+         ticket4.addAssignee(u1);
          ticket4.setAssigner(lead3);
          ticket4.setGroup(g1);
          ticket4.setName("Buy milk");
