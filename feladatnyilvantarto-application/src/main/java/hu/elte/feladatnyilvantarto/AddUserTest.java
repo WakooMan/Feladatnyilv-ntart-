@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Component
@@ -92,6 +93,10 @@ public class AddUserTest {
          ticketRepository.save(ticket2);
          ticketRepository.save(ticket3);
          ticketRepository.save(ticket4);
+         u1.setCurrentTicket(ticket1);
+         usersRepository.save(u1);
+         ticket1.setDeadline(LocalDateTime.now().plusDays(5));
+         ticketRepository.save(ticket1);
 
 
 

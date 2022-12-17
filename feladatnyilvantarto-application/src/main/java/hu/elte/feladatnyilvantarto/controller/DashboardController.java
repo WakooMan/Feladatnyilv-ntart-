@@ -1,5 +1,6 @@
 package hu.elte.feladatnyilvantarto.controller;
 
+import hu.elte.feladatnyilvantarto.webdomain.CurrentTicket;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,7 @@ public class DashboardController extends AuthenticatedControllerBase {
     public String home(RedirectAttributes model)
     {
         model.addFlashAttribute("fullname",GetAuthenticatedUser().getName());
-
+        model.addFlashAttribute("currentticket",(GetAuthenticatedUser().getCurrentTicket()!= null)?new CurrentTicket(GetAuthenticatedUser().getCurrentTicket().getName(),"todo") : null);
         return "redirect:dashboard";
     }
 
@@ -22,7 +23,7 @@ public class DashboardController extends AuthenticatedControllerBase {
     {
 
         model.addAttribute("fullname",GetAuthenticatedUser().getName());
-
+        model.addAttribute("currentticket",(GetAuthenticatedUser().getCurrentTicket()!= null)?new CurrentTicket(GetAuthenticatedUser().getCurrentTicket().getName(),"todo") : null);
         return "dashboard";
     }
 

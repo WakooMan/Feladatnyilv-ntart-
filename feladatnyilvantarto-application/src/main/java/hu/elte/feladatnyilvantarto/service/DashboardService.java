@@ -29,7 +29,7 @@ public class DashboardService {
     public List<Ticket> dueInAWeek(User user) {
         List<Ticket> deadlines = ticketRepository.findTicketsByAssigneesContainingOrderByDeadlineAsc(user);
 
-        deadlines.removeIf(ticket -> ticket.getDeadline().isAfter(ticket.getDeadline().plusDays(7)));
+        deadlines.removeIf(ticket -> ticket.getDeadline() == null || ticket.getDeadline().isAfter(ticket.getDeadline().plusDays(7)));
         return deadlines;
     }
     public List<Notification> listUnseenNotifications(User user) {
