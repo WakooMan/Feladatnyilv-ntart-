@@ -6,6 +6,8 @@ import hu.elte.feladatnyilvantarto.repository.GroupsRepository;
 import hu.elte.feladatnyilvantarto.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,11 +29,6 @@ public class GroupsService {
         return groupsRepository.findById(id).orElse(null);
     }
 
-    /*public void createNewGroup(String name, User user){
-        Group group = new Group(name, user);
-        groupsRepository.save(group);
-    }*/
-
     public Group createNewGroup(String name, User leader) {
         Group group = new Group();
         group.setGroupName(name);
@@ -40,27 +37,29 @@ public class GroupsService {
     }
 
     public void modifyGroupName(User user, Group group, String name){
-        if (user.equals(group.getLeader())){
+        if (user.equals(group.getLeader())) {
             group.setGroupName(name);
             groupsRepository.save(group);
         }
     }
-    public void addNewMemberById(User user, Group group, int newUserId){
-        if (usersRepository.findUserById(newUserId) != null) {
-            User newMember =usersRepository.findUserById(newUserId);
+
+    public void addNewMemberByUsername(User user, int groupId, String name) {
+        if (usersRepository.findUserByUsername(name) != null) {
+            User newMember = usersRepository.findUserByUsername(name);
+            Group group = groupsRepository.findGroupById(groupId);
             if (user.equals(group.getLeader()) && newMember != null) {
                 group.addWorker(newMember);
+                //NOTIFICATION
                 groupsRepository.save(group);
             }
         }
     }
 
-    public void removeMember(User user, Group group, User toRemove){
+    public void removeMemberById(User user, Group group, int toRemoveid){
         if (user.equals(group.getLeader())){
-            group.removeWorker(toRemove);
+            group.getWorkers().removeIf(u -> u.getId()==toRemoveid);
             groupsRepository.save(group);
         }
-
     }
     public void leaveGroup(User user, Group group){
         if (!user.equals(group.getLeader())){
@@ -69,7 +68,8 @@ public class GroupsService {
         }
     }
     public void removeGroup(User user, Group group){
-        if (!user.equals(group.getLeader())){
+        if (user.equals(group.getLeader())){
+            group.getWorkers().removeAll(group.getWorkers());
             groupsRepository.delete(group);
         }
     }

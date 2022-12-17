@@ -12,6 +12,8 @@ public interface GroupsRepository extends CrudRepository<Group, Integer> {
 
     List<Group> findGroupsByLeader_Id(int id);
     List<Group> findGroupsByWorkersContains(User user);
+    Group findGroupById(int id);
+
 
 
 

@@ -119,15 +119,7 @@ public class User
     {
         if (o instanceof User user)
         {
-            return  id == user.id &&
-                    username.equals(user.username) &&
-                    password.equals(user.password) &&
-                    name.equals(user.name) &&
-                    groups.equals(user.groups) &&
-                    groupsLed.equals(user.groupsLed) &&
-                    userTimeMeasures.equals(user.userTimeMeasures) &&
-                    currentTicket.equals(user.currentTicket) &&
-                    assignedTickets.equals(user.assignedTickets);
+            return  id == user.id ;
         }
         else {
             return false;
