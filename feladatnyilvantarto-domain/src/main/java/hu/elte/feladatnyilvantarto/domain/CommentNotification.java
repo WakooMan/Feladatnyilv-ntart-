@@ -30,7 +30,7 @@ public class CommentNotification extends Notification {
     public void setMessage() {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         message = "User "
-                + comment.getFrom().getName() +
+                + comment.getUserFrom().getName() +
                 " added comment in ticket '"
                 + comment.getIn().getName() +
                 "'. "

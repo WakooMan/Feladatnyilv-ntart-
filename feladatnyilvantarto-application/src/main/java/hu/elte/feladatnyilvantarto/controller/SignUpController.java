@@ -2,7 +2,7 @@ package hu.elte.feladatnyilvantarto.controller;
 
 import hu.elte.feladatnyilvantarto.service.exceptions.SignUpException;
 import hu.elte.feladatnyilvantarto.service.SignUpService;
-import hu.elte.feladatnyilvantarto.webdomain.SignUpForm;
+import hu.elte.feladatnyilvantarto.webdomain.form.SignUpForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

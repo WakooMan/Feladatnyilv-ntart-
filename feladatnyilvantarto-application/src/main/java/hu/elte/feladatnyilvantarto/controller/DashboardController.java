@@ -1,6 +1,6 @@
 package hu.elte.feladatnyilvantarto.controller;
 
-import hu.elte.feladatnyilvantarto.webdomain.CurrentTicket;
+import hu.elte.feladatnyilvantarto.webdomain.other.CurrentTicket;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

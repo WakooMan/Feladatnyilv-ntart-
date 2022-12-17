@@ -1,15 +1,10 @@
 package hu.elte.feladatnyilvantarto.controller;
 
-import hu.elte.feladatnyilvantarto.domain.Group;
-import hu.elte.feladatnyilvantarto.domain.Ticket;
 import hu.elte.feladatnyilvantarto.service.TicketService;
-import hu.elte.feladatnyilvantarto.webdomain.AddGroupRequest;
-import hu.elte.feladatnyilvantarto.webdomain.AddTicketRequest;
-import hu.elte.feladatnyilvantarto.webdomain.SignUpForm;
+import hu.elte.feladatnyilvantarto.webdomain.form.AddTicketRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller

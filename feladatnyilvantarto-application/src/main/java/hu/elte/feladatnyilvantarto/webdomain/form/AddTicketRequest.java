@@ -1,4 +1,4 @@
-package hu.elte.feladatnyilvantarto.webdomain;
+package hu.elte.feladatnyilvantarto.webdomain.form;
 
 public class AddTicketRequest {
     private String name;

@@ -1,4 +1,4 @@
-package hu.elte.feladatnyilvantarto.webdomain;
+package hu.elte.feladatnyilvantarto.webdomain.form;
 
 import hu.elte.feladatnyilvantarto.webdomain.Validators.IsName;
 import hu.elte.feladatnyilvantarto.webdomain.Validators.IsPassword;

@@ -2,8 +2,7 @@ package hu.elte.feladatnyilvantarto.controller;
 
 import hu.elte.feladatnyilvantarto.domain.Group;
 import hu.elte.feladatnyilvantarto.service.GroupsService;
-import hu.elte.feladatnyilvantarto.service.UserService;
-import hu.elte.feladatnyilvantarto.webdomain.AddGroupRequest;
+import hu.elte.feladatnyilvantarto.webdomain.form.AddGroupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
