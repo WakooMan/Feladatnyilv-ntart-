@@ -24,6 +24,12 @@ public class GroupsService {
     public List<Group> listGroupsOfUser(User user){
         return groupsRepository.findGroupsByWorkersContains(user);
     }
+    public List<Group> listExhaustiveGroupsOfUser(User user){
+        List<Group> groups=new ArrayList<>();
+        groups.addAll(groupsRepository.findGroupsByWorkersContains(user));
+        groups.addAll(groupsRepository.findGroupsByLeader_Id(user.getId()));
+        return groups;
+    }
 
     public Group getGroupById(int id) {
         return groupsRepository.findById(id).orElse(null);

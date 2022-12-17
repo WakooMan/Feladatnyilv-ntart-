@@ -20,7 +20,7 @@
                 <li><a href="/tickets">Tickets</a></li>
                 <li><a href="/groups">Groups</a></li>
                 <li>User: ${fullname}</li>
-            <li><a><form:form action="logout"><input id="logout" type="submit" value="Logout"></form:form></a></li>
+            <li><a><form:form action="/logout"><input id="logout" type="submit" value="Logout"></form:form></a></li>
             </sec:authorize>
         </ul>
     </nav>
