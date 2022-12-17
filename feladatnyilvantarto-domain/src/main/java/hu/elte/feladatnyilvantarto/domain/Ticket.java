@@ -102,7 +102,8 @@ public class Ticket {
         this.assigner = assigner;
     }
 
-    public List<User> getAssignees() {
+    public List<User> getAssignees()
+    {
         return assignees;
     }
     public void setAssignees(ArrayList<User> assignees) {
@@ -140,6 +141,10 @@ public class Ticket {
             }
         }
         return userTimeMeasure;
+    }
+    public void setTimeMeasures(List<TimeMeasure> timeMeasures)
+    {
+        this.timeMeasures = timeMeasures;
     }
 
     public void addAssignee(User assignee){

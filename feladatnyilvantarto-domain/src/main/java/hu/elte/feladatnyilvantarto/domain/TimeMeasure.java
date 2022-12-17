@@ -15,7 +15,14 @@ public class TimeMeasure {
     private User user;
     @ManyToOne
     private Ticket ticket;
-
+    public TimeMeasure(){
+    }
+    public TimeMeasure(User user,Ticket ticket)
+    {
+        this.user=user;
+        this.ticket=ticket;
+        this.workState = WorkState.Paused;
+    }
     public void setId(int id) {
         this.id = id;
     }

@@ -7,12 +7,14 @@ import hu.elte.feladatnyilvantarto.domain.Ticket;
 import hu.elte.feladatnyilvantarto.domain.User;
 import hu.elte.feladatnyilvantarto.repository.GroupsRepository;
 import hu.elte.feladatnyilvantarto.repository.TicketRepository;
+import hu.elte.feladatnyilvantarto.repository.TimeMeasureRepository;
 import hu.elte.feladatnyilvantarto.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Component
@@ -23,6 +25,8 @@ public class AddUserTest {
     private GroupsRepository groupsRepository;
      @Autowired
      private TicketRepository ticketRepository;
+     @Autowired
+     private TimeMeasureRepository timeMeasureRepository;
      @Autowired
     private PasswordEncoder pwdEncoder;
 
@@ -92,6 +96,12 @@ public class AddUserTest {
          ticketRepository.save(ticket2);
          ticketRepository.save(ticket3);
          ticketRepository.save(ticket4);
+         u1.setCurrentTicket(ticket1);
+         usersRepository.save(u1);
+         ticket1.setDeadline(LocalDateTime.now().plusDays(5));
+         ticketRepository.save(ticket1);
+         timeMeasureRepository.saveAll(ticket1.getTimeMeasures());
+
 
 
 

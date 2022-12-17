@@ -1,8 +1,13 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="_header.jsp"/>
 <main>
 <article>
     <h3>TaskHandler</h3>
-    <p>Task in progress: <a><button>None</button></a></p>
+    <p>Task in progress:
+        <c:choose>
+        <c:when test="${currentticket != null}"><a href="${currentticket.url}"><button>${currentticket.name}</button></a></c:when>
+        <c:otherwise>There is no current ticket.</c:otherwise>
+        </c:choose></p>
     <p>Today's working time: <a><button>0</button></a></p>
 </article>
     <section>
