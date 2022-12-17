@@ -6,7 +6,6 @@ import hu.elte.feladatnyilvantarto.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +36,16 @@ public class TicketService {
     public List<Ticket> listTickets(){
         return new ArrayList<>();
     }
-    public List<Ticket> listTicketsByGroupsSelected(List<Group> groups){
-        return new ArrayList<>();
+    public List<Ticket> listTicketsByGroup(List<Group> groups){
+        List<Ticket> grouptickets=new ArrayList<>();
+        Ticket ticket = new Ticket();
+        for (Group group : groups) {
+            grouptickets.addAll(ticketRepository
+                    .findTicketsByGroupOrderByPriorityAsc(group)
+                    .stream().filter(t ->{ return !t.getCheckbox();})
+                    .toList());
+        }
+        return grouptickets;
     }
 
     public List<Ticket> searchForTicket (String searchWord, List<Group> groups){

@@ -47,8 +47,4 @@ public class DashboardService {
 
     //Pite diagram? No azt hogyan :D
 
-
-
-
-
 }

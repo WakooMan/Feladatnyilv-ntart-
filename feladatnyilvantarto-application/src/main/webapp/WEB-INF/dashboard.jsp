@@ -61,7 +61,7 @@
                     "<td>" + ticket.description + "</td>" +
                     "<td>" + ticket.deadline + "</td>" +
                     "<td>";
-                    result += (isleader)?((ticket.started)?"igen":"nem"):"<a>Elkezdem vagy vmi ilyesmi</a>";
+                    result += (isleader)?((ticket.started)?"igen":"nem"):"<a>Start the ticket</a>";
                     result += "</td>" +
                     "</tr>";
             });

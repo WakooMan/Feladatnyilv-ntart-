@@ -2,6 +2,7 @@ package hu.elte.feladatnyilvantarto.service;
 
 import hu.elte.feladatnyilvantarto.domain.Group;
 import hu.elte.feladatnyilvantarto.domain.Ticket;
+import hu.elte.feladatnyilvantarto.domain.User;
 import hu.elte.feladatnyilvantarto.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,17 @@ public class TicketListService {
         }
         return unassigned;
     }
-   // public List<Ticket>
+    public List<Ticket> findTicketsByWorker(List<User> users) {
+        List<Ticket> workertickets = new ArrayList<>();
+        for (User user : users) {
+            for (Ticket ticket
+            :ticketRepository.findTicketsByAssigneesContainingOrderByPriorityAsc(user)) {
+                if (!ticket.getAssignees().isEmpty()) {
+                    workertickets.add(ticket);
+                }
+            }
+        }
+        return workertickets;
+    }
 
 }
