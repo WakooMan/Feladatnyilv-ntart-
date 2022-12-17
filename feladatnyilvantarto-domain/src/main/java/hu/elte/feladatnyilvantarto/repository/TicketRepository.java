@@ -21,6 +21,7 @@ public interface TicketRepository extends PagingAndSortingRepository<Ticket, Int
     List<Ticket> findTicketsByAssigneesContainingAndTimeMeasuresIsNullOrderByPriorityAsc(User user);
     List<Ticket> findTicketsByAssigneesContainingOrderByDateAsc(User user);
     List<Ticket> findTicketsByGroupAndNameContainingOrderByDate(Group group,String searchWord);
+    Ticket findTicketById(int id);
 
 }
 

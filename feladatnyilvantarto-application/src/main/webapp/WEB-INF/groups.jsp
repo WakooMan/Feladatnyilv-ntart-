@@ -98,7 +98,7 @@
 
                     </table>
                     <div>
-                        <a href="/tickets">Tickets</a>
+                        <a href="/tickets/${group.id}">Tickets</a>
                         <form:form action="/leavegroup/action/${group.id}">
                             <button type="submit">Leave group</button>
                         </form:form>

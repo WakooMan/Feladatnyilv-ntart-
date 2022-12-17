@@ -32,11 +32,12 @@ public class TicketsController extends AuthenticatedControllerBase {
     private UserService userService;
 
 
-    @GetMapping("/tickets")
+    @GetMapping("/tickets/{groupid}")
     public String ticket (Model model)
     {
         List<Group> groupList = groupsService.listExhaustiveGroupsOfUser(GetAuthenticatedUser());
         List<Ticket> ticketList = ticketService.listTicketsByGroup(groupList);
+
 
         boolean GroupHasTicket=false;
         if (groupList.size()>0){

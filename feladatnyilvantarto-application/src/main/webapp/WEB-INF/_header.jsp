@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
     <link rel="stylesheet" type="text/css" href="../css/general.css">
+    <title>Taskmanager</title>
 </head>
 <body>
 <header>
