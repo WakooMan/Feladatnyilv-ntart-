@@ -77,7 +77,7 @@ public class TicketController extends AuthenticatedControllerBase{
             timeMeasureService.startWorkOnTicket(GetAuthenticatedUser(),ticket);
             userService.setTicketAsCurrent(ticket, GetAuthenticatedUser());}
 
-        return "redirect:/ticket/" + id;
+        return "redirect:/dashboard";
     }
 
     @PostMapping("/ticket/restart/{id}")
@@ -86,7 +86,7 @@ public class TicketController extends AuthenticatedControllerBase{
         if (ticket.getGroup().getLeader().equals(GetAuthenticatedUser()) || ticket.getAssignees().contains(GetAuthenticatedUser())) {
             ticketService.restartTicket(GetAuthenticatedUser(), ticket);
         }
-        return "redirect:/ticket/" + id;
+        return "redirect:/dashboard";
     }
 
     @PostMapping("/ticket/pauseaction/{id}")
@@ -96,7 +96,9 @@ public class TicketController extends AuthenticatedControllerBase{
                 && ticket.getAssignees().contains(GetAuthenticatedUser())){
             timeMeasureService.pauseWorkOnTicket(GetAuthenticatedUser(),ticket);
         userService.unsetTicketAsCurrent(ticket, GetAuthenticatedUser());}
-        return "redirect:/ticket/" + id;
+        return "redirect:/dashboard";
+
+
     }
 
     @PostMapping("/ticket/finishaction/{id}")
@@ -108,6 +110,7 @@ public class TicketController extends AuthenticatedControllerBase{
             ticketService.closeTicket(ticket);
 
         }
-        return "redirect:/ticket/" + id;
+        return "redirect:/dashboard";
+
     }
 }
