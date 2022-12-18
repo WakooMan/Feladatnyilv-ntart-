@@ -1,6 +1,7 @@
 package hu.elte.feladatnyilvantarto.service;
 
 import hu.elte.feladatnyilvantarto.domain.*;
+import hu.elte.feladatnyilvantarto.repository.NotificationRepository;
 import hu.elte.feladatnyilvantarto.repository.TicketRepository;
 import hu.elte.feladatnyilvantarto.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import java.util.List;
 public class TicketService {
     @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @Autowired
     private UsersRepository usersRepository;
@@ -35,9 +38,6 @@ public class TicketService {
         ticket.setPriority(priority.toString());
 
         ticketRepository.save(ticket);
-    }
-    public List<Ticket> listTickets(){
-        return new ArrayList<>();
     }
     public List<Ticket> listTicketsByGroup(List<Group> groups){
         List<Ticket> grouptickets=new ArrayList<>();
@@ -91,35 +91,25 @@ public class TicketService {
             ticketRepository.delete(ticket);
         }
     }
-    public void modifyDeadline(Ticket ticket, User user, LocalDateTime newdeadline){
-        if (newdeadline.isAfter(LocalDateTime.now())) {
-            if ((ticket.getAssigner().equals(user)
-                    || user.equals(ticket.getGroup().getLeader()))){
-                ticket.setDeadline(newdeadline);
-                ticketRepository.save(ticket);
-            }
-        }
-    }
-    public void modifyDescription(Ticket ticket, User user, String newdescription){
-        if ((ticket.getAssigner().equals(user)
-                    || user.equals(ticket.getGroup().getLeader()))){
-                ticket.setDescription(newdescription);
-                ticketRepository.save(ticket);
-        }
-    }
-
-    public void modifyName(Ticket ticket, User user, String newname){
+    public void modifyTicket(Ticket ticket, User user,String name,String description,Priority priority ,LocalDateTime newdeadline){
         if ((ticket.getAssigner().equals(user)
                 || user.equals(ticket.getGroup().getLeader()))){
-            ticket.setName(newname);
+        ticket.setName(name);
+        ticket.setDescription(description);
+        ticket.setPriority(priority.toString());
+        if (newdeadline.isAfter(LocalDateTime.now())) {
+                ticket.setDeadline(newdeadline);
+            }
             ticketRepository.save(ticket);
         }
     }
+
     public void modifyAssignees(Ticket ticket, User assignee){
                 ticket.getAssignees().add(assignee);
         assignee.getAssignedTickets().add(ticket);
                 ticketRepository.save(ticket);
         usersRepository.save(assignee);
+        notificationRepository.save(new NotificationFactory().createTicketNotification(assignee,ticket));
             }
 
     public void removeAssignee(User user, Ticket ticket){

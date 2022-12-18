@@ -81,8 +81,5 @@
             </c:forEach>
 
     </table>
-    <div>
-        <a href="/modifyticket">Modify ticket</a>
-    </div>
 
 <jsp:include page="_footer.jsp"/>

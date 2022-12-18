@@ -1,13 +1,17 @@
 package hu.elte.feladatnyilvantarto.webdomain.form;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 public class AddTicketRequest {
+    @NotEmpty(message = "Please give me the name of the Ticket!")
     private String name;
+    @NotEmpty(message = "Please give me the description of the Ticket!")
     private String description;
 
 
     private int groupId;
+    @NotEmpty(message = "Please give me the deadline of the Ticket!")
     private String deadline;
     private String priority;
 

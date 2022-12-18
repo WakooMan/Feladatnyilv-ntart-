@@ -126,6 +126,7 @@
     <form action="/ticket/deleteaction/${ticket.id}" method="post">
         <input type="submit" value="Delete this ticket" class="btn">
     </form>
+    <a href="/ticket/modifyticket/${ticket.id}"><button>Modify ticket</button></a>
     </c:if>
 
 <script>

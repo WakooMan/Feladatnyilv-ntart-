@@ -29,7 +29,7 @@ public class TicketNotification extends Notification {
     }
 
     public void setMessage() {
-        message = "New activity in Ticket '"
+        message = "You have been assigned to Ticket '"
                 + ticket.getName() +
                 "'.";
     }

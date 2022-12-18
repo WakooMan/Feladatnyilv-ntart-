@@ -64,7 +64,7 @@
                     "<th>Task</th>" +
                     "<th>DeadLine</th>" +
                     "<th>";
-                    result += (isleader)?"Elkezdett?":"";
+                    result += (isleader)?"Started?":"";
                     result += "</th>" +
                     "</tr>";
             tickets.forEach(function (ticket,index)
@@ -74,7 +74,7 @@
                     "<td>" + ticket.description + "</td>" +
                     "<td>" + ticket.deadline + "</td>" +
                     "<td>";
-                    result += (isleader)?((ticket.started)?"igen":"nem"):"<a href='/ticket/" + ticket.id + "'>View</a>";
+                    result += (isleader)?((ticket.started)?"yes":"no"):"<a href='/ticket/" + ticket.id + "'>View</a>";
                     result += "</td>" +
                     "</tr>";
             });

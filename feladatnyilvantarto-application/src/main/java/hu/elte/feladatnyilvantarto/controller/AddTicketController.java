@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,14 +46,23 @@ public class AddTicketController extends AuthenticatedControllerBase {
     }
 
     @PostMapping("/addticket/action")
-    public String addTicketAction(AddTicketRequest addTicketRequest,
+    public String addTicketAction(@Valid AddTicketRequest addticketform,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        Group group = groupsService.getGroupById(addTicketRequest.getGroupId());
-        ArrayList<User> user= new ArrayList<>();
-        LocalDateTime dl = LocalDateTime.parse(addTicketRequest.getDeadline());
-        ticketService.createTicket(addTicketRequest.getName(),addTicketRequest.getDescription(),GetAuthenticatedUser(),
-                user, dl, false,
-                group, Priority.valueOf(addTicketRequest.getPriority()) );
-        return "redirect:/tickets";
+        if(bindingResult.hasErrors())
+        {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addticketform",bindingResult);
+            redirectAttributes.addFlashAttribute("addticketform",addticketform);
+            return "redirect:/addticket";
+        }
+        else
+        {
+            Group group = groupsService.getGroupById(addticketform.getGroupId());
+            ArrayList<User> user= new ArrayList<>();
+            LocalDateTime dl = LocalDateTime.parse(addticketform.getDeadline());
+            ticketService.createTicket(addticketform.getName(),addticketform.getDescription(),GetAuthenticatedUser(),
+                    user, dl, false,
+                    group, Priority.valueOf(addticketform.getPriority()) );
+            return "redirect:/tickets";
+        }
     }
 }

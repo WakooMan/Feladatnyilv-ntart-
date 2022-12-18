@@ -4,8 +4,11 @@ import hu.elte.feladatnyilvantarto.domain.Group;
 import hu.elte.feladatnyilvantarto.domain.Ticket;
 import hu.elte.feladatnyilvantarto.domain.User;
 import hu.elte.feladatnyilvantarto.service.*;
+import hu.elte.feladatnyilvantarto.transformer.TicketTransformer;
 import hu.elte.feladatnyilvantarto.webdomain.form.AddGroupRequest;
+import hu.elte.feladatnyilvantarto.webdomain.form.AddTicketRequest;
 import hu.elte.feladatnyilvantarto.webdomain.form.CommentForm;
+import hu.elte.feladatnyilvantarto.webdomain.form.ModifyTicketForm;
 import hu.elte.feladatnyilvantarto.webdomain.other.GroupUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,7 +130,31 @@ public class TicketController extends AuthenticatedControllerBase{
 
 
     }
+    @GetMapping("/ticket/modifyticket/{id}")
+    public String form(Model model, @PathVariable("id")int id)
+    {
+        if(!model.containsAttribute("modifyticketform")) {
+            Ticket ticket = ticketService.ticketById(id);
+            ModifyTicketForm modifyticketform = new ModifyTicketForm();
+            new TicketTransformer().transformTicketToModifyTicketResponse(modifyticketform,ticket);
+            model.addAttribute("modifyticketform", modifyticketform);
+        }
+        return "modifyticket";
+    }
 
+    @PostMapping("/ticket/modifyticket")
+    public String ModifyTicket(@Valid ModifyTicketForm modifyticketform,BindingResult bindingResult,RedirectAttributes redirectAttributes)
+    {
+        if(bindingResult.hasErrors())
+        {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.modifyticketform",bindingResult);
+            redirectAttributes.addFlashAttribute("modifyticketform",modifyticketform);
+            return "redirect:/ticket/modifyticket/" + modifyticketform.getId();
+        }
+        Ticket ticket = ticketService.ticketById(modifyticketform.getId());
+        ticketService.modifyTicket(ticket,GetAuthenticatedUser(),modifyticketform.getName(),modifyticketform.getDescription(),modifyticketform.getPriority(),LocalDateTime.parse(modifyticketform.getDeadline()));
+        return "redirect:/ticket/" + modifyticketform.getId();
+    }
     @PostMapping("/addassignee/action/{tid}")
     public String AddAssignee (AddGroupRequest addUserRequest,
                                BindingResult bindingResult, RedirectAttributes redirectAttributes,
