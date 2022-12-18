@@ -13,9 +13,19 @@ public class NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
 
-    public List<Notification> GetNotificationsByUser(User user)
+    public List<Notification> getNotificationsByUser(User user)
     {
         return notificationRepository.findNotificationsByUserAndSeenFalseOrderByDateDesc(user);
+    }
+
+    public Notification getNotificationById(int id)
+    {
+        return notificationRepository.findNotificationById(id);
+    }
+
+    public void delete(Notification notification)
+    {
+        notificationRepository.delete(notification);
     }
 
 }

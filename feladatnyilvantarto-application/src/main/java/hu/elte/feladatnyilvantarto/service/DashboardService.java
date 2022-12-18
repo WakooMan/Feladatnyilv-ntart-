@@ -21,13 +21,13 @@ public class DashboardService {
             return user.getCurrentTicket();
     }
     public List<Ticket> startedTickets(User user){
-        return ticketRepository.findTicketsByAssigneesContainingAndTimeMeasuresIsNotNullOrderByPriorityAsc(user);
+        return ticketRepository.findTicketsByAssigneesContainingAndTimeMeasuresIsNotNullOrderByPriorityAsc(user).stream().filter(t-> !t.getCheckbox()).toList();
     }
     public List<Ticket> notStartedTickets(User user){
-        return ticketRepository.findTicketsByAssigneesContainingAndTimeMeasuresIsNullOrderByPriorityAsc(user);
+        return ticketRepository.findTicketsByAssigneesContainingAndTimeMeasuresIsNullOrderByPriorityAsc(user).stream().filter(t-> !t.getCheckbox()).toList();
     }
     public List<Ticket> dueInAWeek(User user) {
-        List<Ticket> deadlines = ticketRepository.findTicketsByAssigneesContainingOrderByDeadlineAsc(user);
+        List<Ticket> deadlines = ticketRepository.findTicketsByAssigneesContainingOrderByDeadlineAsc(user).stream().filter(t-> !t.getCheckbox()).toList();
 
         deadlines.removeIf(ticket -> ticket.getDeadline() == null || ticket.getDeadline().isAfter(ticket.getDeadline().plusDays(7)));
         return deadlines;

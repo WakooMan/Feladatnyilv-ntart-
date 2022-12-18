@@ -27,11 +27,9 @@ public class GroupNotification extends Notification {
     }
 
     public void setMessage() {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         message = "You were added to Group '"
                 + group.getGroupName() +
-                "'. "
-                + getDate().format(formatter);
+                "'.";
     }
 
     public NotificationType getType() {

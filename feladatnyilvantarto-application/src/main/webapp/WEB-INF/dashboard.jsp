@@ -12,42 +12,41 @@
     <br>Time spent working in the last 7 days: ${timeworkedlastweek}
         <br>Time spent working in the past month: ${timeworkedlastmonth}</p>
 </article>
-    <section>
-    <aside>
-        <h4>Notifications</h4>
-        <c:forEach items="${notifications}" var="notification">
-            <article>
-                <p>${notification.message}</p>
-            </article>
-        </c:forEach>
-    </aside>
+    <div>
+        <aside>
+            <h4>Notifications</h4>
+            <div id="notifications">
 
-    <h4>Tickets Assigned To You</h4>
-    <h5>Tickets in progress:</h5>
-    <div id="started">
+            </div>
+        </aside>
+        <section>
+            <h4>Tickets Assigned To You</h4>
+            <h5>Tickets in progress:</h5>
+            <div id="started">
 
+            </div>
+            <h5>Tickets not started yet:</h5>
+            <div id="waiting">
+
+            </div>
+            <h5>Due this week: </h5>
+            <div id="weekend">
+
+            </div>
+            <h5>Tickets created by you: </h5>
+            <div id="created">
+
+            </div>
+        </section>
     </div>
-    <h5>Tickets not started yet:</h5>
-    <div id="waiting">
-
-    </div>
-    <h5>Due this week: </h5>
-    <div id="weekend">
-
-    </div>
-    <h5>Tickets created by you: </h5>
-    <div id="created">
-
-    </div>
-</section>
 </main>
 <script>
-    function callapi(apiurl,func,isleader,domobject)
+    function callapi(apiurl,func,object,domobject)
     {
         fetch(apiurl)
             .then(res => res.json())
             .then((obj) => {
-                domobject.innerHTML = func(obj,isleader);
+                domobject.innerHTML = func(obj,object);
             });
     }
 
@@ -84,9 +83,27 @@
         return result;
     }
 
+    function notificationresult(notifications,object)
+    {
+        let result = "";
+        if(notifications.length>0)
+        {
+            notifications.forEach(function(notification,index)
+            {
+                result += "<article>";
+                result += "<form action='/dashboard/removenotification/" + notification.id +"' method='post'><label for='not' >TYPE: " + notification.type + " <input id='not' type='submit' value='X'/></label></form>";
+                result += "<p>" + notification.message + "</p>";
+                result += "<p>" + notification.time + "</p>"
+                result += "</article>";
+            });
+        }
+        return result;
+    }
+
     callapi("/api/tickets/started/yes",tableresult,false,document.getElementById("started"));
     callapi("/api/tickets/started/no",tableresult,false,document.getElementById("waiting"));
     callapi("/api/tickets/weekend",tableresult,false,document.getElementById("weekend"));
     callapi("/api/tickets/created",tableresult,true,document.getElementById("created"));
+    callapi("/api/notifications",notificationresult,null,document.getElementById("notifications"));
 </script>
 <jsp:include page="_footer.jsp"/>

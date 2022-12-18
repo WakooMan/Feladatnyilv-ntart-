@@ -29,11 +29,9 @@ public class TicketNotification extends Notification {
     }
 
     public void setMessage() {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         message = "New activity in Ticket '"
                 + ticket.getName() +
-                "'. "
-                + getDate().format(formatter);
+                "'.";
     }
 
     public void setTicket(Ticket ticket) {

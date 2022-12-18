@@ -10,6 +10,7 @@ import java.util.List;
 @Component
 public interface NotificationRepository extends CrudRepository<Notification, Integer> {
 
+    Notification findNotificationById(int id);
     List<Notification> findNotificationsByUserAndSeenFalseOrderByDateDesc(User user);
 
 }

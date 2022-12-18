@@ -1,16 +1,16 @@
 package hu.elte.feladatnyilvantarto.controller;
 
+import hu.elte.feladatnyilvantarto.domain.Notification;
 import hu.elte.feladatnyilvantarto.domain.User;
 import hu.elte.feladatnyilvantarto.service.NotificationService;
-import hu.elte.feladatnyilvantarto.service.TicketService;
 import hu.elte.feladatnyilvantarto.service.TimeMeasureService;
-import hu.elte.feladatnyilvantarto.service.UserService;
 import hu.elte.feladatnyilvantarto.webdomain.other.CurrentTicket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class DashboardController extends AuthenticatedControllerBase {
@@ -19,10 +19,6 @@ public class DashboardController extends AuthenticatedControllerBase {
     private TimeMeasureService timeMeasureService;
     @Autowired
     private NotificationService notificationService;
-    @Autowired
-    private UserService userService;
-@Autowired
-private TicketService ticketService;
     @GetMapping("/")
     public String home()
     {
@@ -38,8 +34,18 @@ private TicketService ticketService;
         model.addAttribute("timeworkedtoday", timeMeasureService.timeSpentByUserToday(user));
         model.addAttribute("fullname",GetAuthenticatedUser().getName());
         model.addAttribute("currentticket",(user.getCurrentTicket()!= null)?new CurrentTicket(user.getCurrentTicket().getName(),"/ticket/"+ user.getCurrentTicket().getId()) : null);
-        model.addAttribute("notifications",notificationService.GetNotificationsByUser(user));
         return "dashboard";
+    }
+
+    @PostMapping("/dashboard/removenotification/{id}")
+    public String removeNotification(@PathVariable("id") int id)
+    {
+        Notification notification = notificationService.getNotificationById(id);
+        if(notificationService.getNotificationsByUser(GetAuthenticatedUser()).contains(notification))
+        {
+            notificationService.delete(notification);
+        }
+        return "redirect:/dashboard";
     }
 
 
