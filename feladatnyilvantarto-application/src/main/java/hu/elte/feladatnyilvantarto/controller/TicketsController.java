@@ -32,6 +32,22 @@ public class TicketsController extends AuthenticatedControllerBase {
     private UserService userService;
 
 
+    @GetMapping("/tickets")
+    public String ticketList (Model model)
+    {
+        List<Group> groupList = groupsService.listExhaustiveGroupsOfUser(GetAuthenticatedUser());
+        List<Ticket> ticketList = ticketService.listTicketsByGroup(groupList);
+
+        boolean GroupHasTicket=false;
+        if (groupList.size()>0){
+            GroupHasTicket=true;
+        }
+        model.addAttribute("groups", groupList);
+        model.addAttribute("groupHasTickets", GroupHasTicket);
+        model.addAttribute("ticketList", ticketList);
+        model.addAttribute("username",GetAuthenticatedUser().getName());
+        return "tickets";
+    }
     @GetMapping("/tickets/{groupid}")
     public String ticket (Model model)
     {

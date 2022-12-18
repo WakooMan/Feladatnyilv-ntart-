@@ -24,7 +24,7 @@ public class TicketService {
         Ticket ticket = new Ticket();
         ticket.setName(name);
         ticket.setDescription(description);
-        ticket.addAssignee(assigner);
+        ticket.setAssigner(assigner);
         ticket.setAssignees(assignees);
         ticket.setDeadline(newdeadline);
         ticket.setCheckbox(chekcbox);

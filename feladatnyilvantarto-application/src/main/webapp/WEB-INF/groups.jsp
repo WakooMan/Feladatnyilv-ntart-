@@ -98,7 +98,8 @@
 
                     </table>
                     <div>
-                        <a href="/tickets/${group.id}">Tickets</a>
+                        <a href="/tickets/filter?group=${group.id}&status=active&assignee=all">Active tickets</a>
+                        <a href="/tickets/filter?group=${group.id}&status=active&assignee=unassigned">Unassigned tickets</a>
                         <form:form action="/leavegroup/action/${group.id}">
                             <button type="submit">Leave group</button>
                         </form:form>

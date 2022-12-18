@@ -1,8 +1,39 @@
 package hu.elte.feladatnyilvantarto.webdomain.form;
 
+import java.time.LocalDateTime;
+
 public class AddTicketRequest {
     private String name;
     private String description;
+
+
+    private int groupId;
+    private String deadline;
+    private String priority;
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
 
     public String getName() {
         return name;

@@ -4,25 +4,25 @@
 
 <h1>Creating a new ticket</h1>
 <br><br>
-<form action="/addTicket" method="post">
+<form action="/addticket/action" method="post">
     <label for="name">Ticket's name:</label><br>
     <input type="text" id="name" name="name"><br>
     <label for="description">Description:</label><br>
     <input type="text" id="description" name="description"><br>
-    <label for="group" id="group" name="group">Select a group:</label>
-    <select multiple ="true" path="???">
-        <option items="${groups}" itemValue="groupName" itemLabel="groupName"></option>
+    <label for="groupId">Select a group:</label>
+    <select name="groupId" id="groupId">
+        <c:forEach items="${groups}" var="group">
+            <option value="${group.id}">${group.groupName}</option>
+        </c:forEach>
     </select>
-    <label for="assigner" id="assigner">Select a worker:</label>
-    <select multiple="true" path="??">
-        <option items="${users}" itemValuse="username" itemLabel="username"></option>
+    <label for="priority">Priority:</label>
+    <select name="priority" id="priority">
+        <option value="LOW">Low</option>
+        <option value="MEDIUM">Medium</option>
+        <option value="HIGH">High</option>
     </select>
-    <label for="priority" id="priority">Priority:</label>
-    <select multiple="true" path="??">
-        <option items="${priority}"itemValuse="priority" itemLabel="priority"></option>
-    </select>
-    <label for="ticketdeadline">Deadline:</label>
-    <input type="datetime-local" id="ticketdeadline" name="ticketdeadline">
+    <label for="deadline">Deadline:</label>
+    <input type="datetime-local" id="deadline" name="deadline">
     <input type="submit" value="Add ticket">
 </form>
 
