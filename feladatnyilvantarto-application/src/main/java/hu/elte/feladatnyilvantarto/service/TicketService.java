@@ -72,7 +72,6 @@ public class TicketService {
         return result;
         }
     public void closeTicket(Ticket ticket){
-        ticket.setCheckbox(true);
         for (User u : ticket.getAssignees()){
             if (u.getCurrentTicket()!=null && u.getCurrentTicket().equals(ticket)){
                 userService.unsetTicketAsCurrent(ticket, u);
@@ -80,6 +79,7 @@ public class TicketService {
 
             }
         }
+        ticket.setCheckbox(true);
         ticketRepository.save(ticket);
     }
     public void removeTicket(Ticket ticket, User user){

@@ -1,7 +1,10 @@
 package hu.elte.feladatnyilvantarto.controller;
 
+import hu.elte.feladatnyilvantarto.domain.User;
+import hu.elte.feladatnyilvantarto.service.NotificationService;
 import hu.elte.feladatnyilvantarto.service.TicketService;
 import hu.elte.feladatnyilvantarto.service.TimeMeasureService;
+import hu.elte.feladatnyilvantarto.service.UserService;
 import hu.elte.feladatnyilvantarto.webdomain.other.CurrentTicket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,26 +17,28 @@ public class DashboardController extends AuthenticatedControllerBase {
 
     @Autowired
     private TimeMeasureService timeMeasureService;
+    @Autowired
+    private NotificationService notificationService;
+    @Autowired
+    private UserService userService;
 @Autowired
 private TicketService ticketService;
     @GetMapping("/")
-    public String home(RedirectAttributes model)
+    public String home()
     {
-
-        model.addFlashAttribute("fullname",GetAuthenticatedUser().getName());
-
-        model.addFlashAttribute("currentticket",GetAuthenticatedUser().getCurrentTicket());
-        return "redirect:dashboard";
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/dashboard")
     public String dashboard(Model model)
     {
-        model.addAttribute("timeworkedlastweek", timeMeasureService.timeSpentByUserHoursAndMinutesLastWeek(GetAuthenticatedUser()));
-        model.addAttribute("timeworkedlastmonth", timeMeasureService.timeSpentByUserHoursAndMinutesLastMonth(GetAuthenticatedUser()));
-        model.addAttribute("timeworkedtoday", timeMeasureService.timeSpentByUserToday(GetAuthenticatedUser()));
+        User user = GetAuthenticatedUser();
+        model.addAttribute("timeworkedlastweek", timeMeasureService.timeSpentByUserHoursAndMinutesLastWeek(user));
+        model.addAttribute("timeworkedlastmonth", timeMeasureService.timeSpentByUserHoursAndMinutesLastMonth(user));
+        model.addAttribute("timeworkedtoday", timeMeasureService.timeSpentByUserToday(user));
         model.addAttribute("fullname",GetAuthenticatedUser().getName());
-        model.addAttribute("currentticket",(GetAuthenticatedUser().getCurrentTicket()!= null)?new CurrentTicket(GetAuthenticatedUser().getCurrentTicket().getName(),"/ticket/"+ GetAuthenticatedUser().getCurrentTicket().getId()) : null);
+        model.addAttribute("currentticket",(user.getCurrentTicket()!= null)?new CurrentTicket(user.getCurrentTicket().getName(),"/ticket/"+ user.getCurrentTicket().getId()) : null);
+        model.addAttribute("notifications",notificationService.GetNotificationsByUser(user));
         return "dashboard";
     }
 

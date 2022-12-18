@@ -14,7 +14,7 @@ public class TicketTransformer {
         DashboardTicketResponse response = new DashboardTicketResponse();
         response.setDescription(ticket.getDescription());
         response.setPriority(ticket.getPriority());
-        response.setDeadline(ticket.getDeadline() != null ?ticket.getDeadline().format(DateTimeFormatter.ISO_DATE_TIME):"None");
+        response.setDeadline(ticket.getDeadline() != null ?ticket.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")):"None");
         response.setId(ticket.getId());
         return response;
     }

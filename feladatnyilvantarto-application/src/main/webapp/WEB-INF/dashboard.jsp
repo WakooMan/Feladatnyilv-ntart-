@@ -8,14 +8,18 @@
         <c:when test="${currentticket != null}"><a href="${currentticket.url}"><button>${currentticket.name}</button></a></c:when>
         <c:otherwise>There is no current ticket.</c:otherwise>
         </c:choose></p>
-    <p>Today's working time: ${timeworkedtoday}</p>
+    <p>Today's working time: ${timeworkedtoday}
+    <br>Time spent working in the last 7 days: ${timeworkedlastweek}
+        <br>Time spent working in the past month: ${timeworkedlastmonth}</p>
 </article>
-    <p>Time spent working in the last 7 days: ${timeworkedlastweek}
-    <br>Time spent working in the past month: ${timeworkedlastmonth}</p>
     <section>
     <aside>
         <h4>Notifications</h4>
-        <p>This is an aside for notifications.</p>
+        <c:forEach items="${notifications}" var="notification">
+            <article>
+                <p>${notification.message}</p>
+            </article>
+        </c:forEach>
     </aside>
 
     <h4>Tickets Assigned To You</h4>

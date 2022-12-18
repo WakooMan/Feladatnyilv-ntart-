@@ -1,8 +1,10 @@
 package hu.elte.feladatnyilvantarto.service;
 
 import hu.elte.feladatnyilvantarto.domain.Group;
+import hu.elte.feladatnyilvantarto.domain.NotificationFactory;
 import hu.elte.feladatnyilvantarto.domain.User;
 import hu.elte.feladatnyilvantarto.repository.GroupsRepository;
+import hu.elte.feladatnyilvantarto.repository.NotificationRepository;
 import hu.elte.feladatnyilvantarto.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ import java.util.List;
 @Service
 public class GroupsService {
 
+    @Autowired
+    private NotificationRepository notificationRepository;
     @Autowired
     private GroupsRepository groupsRepository;
     @Autowired
@@ -55,7 +59,7 @@ public class GroupsService {
             Group group = groupsRepository.findGroupById(groupId);
             if (user.equals(group.getLeader()) && newMember != null) {
                 group.addWorker(newMember);
-                //NOTIFICATION
+                notificationRepository.save(new NotificationFactory().createGroupNotification(user,group));
                 groupsRepository.save(group);
             }
         }
