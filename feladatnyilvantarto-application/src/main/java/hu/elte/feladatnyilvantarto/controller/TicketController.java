@@ -53,6 +53,7 @@ public class TicketController extends AuthenticatedControllerBase{
         List<User> assigned = ticket.getAssignees();
         members.removeAll(assigned);
 
+        model.addAttribute("fullname",GetAuthenticatedUser().getName());
         model.addAttribute("timespent", timespent);
         model.addAttribute("ticket", ticket);
         model.addAttribute("assignees", ticket.getAssignees());

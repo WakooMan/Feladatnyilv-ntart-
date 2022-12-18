@@ -46,6 +46,8 @@ public class GroupsController extends AuthenticatedControllerBase {
         model.addAttribute("userHasGroups", hasGroups);
         model.addAttribute("groupListMember", groupList);
         model.addAttribute("groupListLed", groupListLed);
+        model.addAttribute("fullname",GetAuthenticatedUser().getName());
+
         return "groups";
     }
 
