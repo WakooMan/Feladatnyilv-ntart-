@@ -133,18 +133,24 @@ public class Ticket {
     public List<TimeMeasure> getTimeMeasures(){
         return timeMeasures;
     }
-    public List<TimeMeasure> getUserTimeMeasures(User user){
-        List<TimeMeasure> userTimeMeasure = new ArrayList<>();
+    public TimeMeasure getUserTimeMeasure(User user){
         for (TimeMeasure time : getTimeMeasures()){
             if (time.getUser().equals(user)){
-                userTimeMeasure.add(time);
+                return time;
             }
         }
-        return userTimeMeasure;
+        return null;
     }
     public void setTimeMeasures(List<TimeMeasure> timeMeasures)
     {
         this.timeMeasures = timeMeasures;
+    }
+
+    public void addTimeMeasure(TimeMeasure timeMeasure)
+    {
+        if(timeMeasures.stream().filter(time-> time.getUser().equals(timeMeasure.getUser())).count() == 0) {
+            timeMeasures.add(timeMeasure);
+        }
     }
 
     public void addAssignee(User assignee){

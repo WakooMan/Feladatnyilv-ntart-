@@ -1,4 +1,4 @@
-package hu.elte.feladatnyilvantarto.webdomain;
+package hu.elte.feladatnyilvantarto.webdomain.other;
 
 public class CurrentTicket {
     private String url;

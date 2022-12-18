@@ -66,7 +66,7 @@
                     "<td>" + ticket.description + "</td>" +
                     "<td>" + ticket.deadline + "</td>" +
                     "<td>";
-                    result += (isleader)?((ticket.started)?"igen":"nem"):"<a>Start the ticket</a>";
+                    result += (isleader)?((ticket.started)?"igen":"nem"):"<a href='/ticket/" + ticket.id + "'>View</a>";
                     result += "</td>" +
                     "</tr>";
             });

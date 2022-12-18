@@ -41,12 +41,8 @@ public class Comment {
         return ticket;
     }
 
-    public User getFrom() {
+    public User getUserFrom() {
         return userFrom;
-    }
-
-    public void setFrom(User usr) {
-        userFrom = usr;
     }
 
     public Ticket getIn() {

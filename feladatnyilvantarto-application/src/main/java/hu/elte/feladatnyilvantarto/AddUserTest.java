@@ -4,6 +4,7 @@ package hu.elte.feladatnyilvantarto;
 
 import hu.elte.feladatnyilvantarto.domain.Group;
 import hu.elte.feladatnyilvantarto.domain.Ticket;
+import hu.elte.feladatnyilvantarto.domain.TimeMeasure;
 import hu.elte.feladatnyilvantarto.domain.User;
 import hu.elte.feladatnyilvantarto.repository.GroupsRepository;
 import hu.elte.feladatnyilvantarto.repository.TicketRepository;
@@ -100,7 +101,9 @@ public class AddUserTest {
          usersRepository.save(u1);
          ticket1.setDeadline(LocalDateTime.now().plusDays(5));
          ticketRepository.save(ticket1);
-         timeMeasureRepository.saveAll(ticket1.getTimeMeasures());
+         TimeMeasure timeMeasure = new TimeMeasure(u1,ticket1);
+         ticket1.addTimeMeasure(timeMeasure);
+         timeMeasureRepository.save(timeMeasure);
 
 
 

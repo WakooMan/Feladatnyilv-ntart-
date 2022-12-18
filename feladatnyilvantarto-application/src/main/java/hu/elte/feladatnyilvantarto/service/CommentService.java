@@ -31,7 +31,7 @@ public class CommentService {
     }
     public void removeComment(User from, Ticket ticket){
         Comment comment = commentRepository.findFirstByUserFromAndTicketOrderByDateAsc(from, ticket);
-        if (comment.getFrom().equals(from) || from.getGroupsLed().contains(comment.getTicket().getGroup())) {
+        if (comment.getUserFrom().equals(from) || from.getGroupsLed().contains(comment.getTicket().getGroup())) {
             commentRepository.delete(comment);
         }
     }

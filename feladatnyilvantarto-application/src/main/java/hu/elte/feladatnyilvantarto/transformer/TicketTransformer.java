@@ -15,6 +15,7 @@ public class TicketTransformer {
         response.setDescription(ticket.getDescription());
         response.setPriority(ticket.getPriority());
         response.setDeadline(ticket.getDeadline() != null ?ticket.getDeadline().format(DateTimeFormatter.ISO_DATE_TIME):"None");
+        response.setId(ticket.getId());
         return response;
     }
 }
