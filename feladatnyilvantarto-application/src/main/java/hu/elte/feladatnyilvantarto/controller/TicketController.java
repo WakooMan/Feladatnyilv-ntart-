@@ -60,4 +60,25 @@ public class TicketController extends AuthenticatedControllerBase{
             return "redirect:/ticket/" + commentform.getTicketId();
         }
     }
+
+    @PostMapping("/ticket/startaction/{id}")
+    public String StartTicket (@PathVariable("id") int id) {
+        Ticket ticket = ticketService.ticketById(id);
+        ticket.setCheckbox(true);
+        return "/ticket/" + id;
+    }
+
+    @GetMapping("/ticket/pauseaction/{id}")
+    public String PauseTicket (@PathVariable("id") int id) {
+        Ticket ticket = ticketService.ticketById(id);
+        ticket.setCheckbox(false);
+        return "/ticket/" + id;
+    }
+
+    @GetMapping("/ticket/finishaction/{id}")
+    public String FinishTicket (@PathVariable("id") int id) {
+        Ticket ticket = ticketService.ticketById(id);
+        ticket.setCheckbox(false);
+        return "/ticket/" + id;
+    }
 }
