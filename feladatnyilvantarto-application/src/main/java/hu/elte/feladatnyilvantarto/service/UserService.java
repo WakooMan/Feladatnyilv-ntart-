@@ -25,6 +25,7 @@ public class UserService {
     public User findUserById(int id){
         return usersRepository.findUserById(id);
     }
+    public User findUserByUsername(String un) { return usersRepository.findUserByUsername(un);}
     public List<User> listMembersOfGroupExhaustive(int id){
         List<User> list = new ArrayList<>();
         Group g = groupsRepository.findGroupById(id);

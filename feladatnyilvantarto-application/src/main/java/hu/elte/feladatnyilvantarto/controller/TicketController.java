@@ -1,8 +1,10 @@
 package hu.elte.feladatnyilvantarto.controller;
 
+import hu.elte.feladatnyilvantarto.domain.Group;
 import hu.elte.feladatnyilvantarto.domain.Ticket;
 import hu.elte.feladatnyilvantarto.domain.User;
 import hu.elte.feladatnyilvantarto.service.*;
+import hu.elte.feladatnyilvantarto.webdomain.form.AddGroupRequest;
 import hu.elte.feladatnyilvantarto.webdomain.form.CommentForm;
 import hu.elte.feladatnyilvantarto.webdomain.other.GroupUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +49,25 @@ public class TicketController extends AuthenticatedControllerBase{
         for (User user : ticket.getAssignees()) {
             timespent.put(user.getName(), timeMeasureService.timeSpentByUserOnTicket(user, ticket));
         }
+        List<User> members= userService.listMembersOfGroupExhaustive(ticket.getGroup().getId());
+        List<User> assigned = ticket.getAssignees();
+        members.removeAll(assigned);
+
         model.addAttribute("timespent", timespent);
         model.addAttribute("ticket", ticket);
+        model.addAttribute("assignees", ticket.getAssignees());
+        model.addAttribute("groupMembersNotAssignees", members);
+        model.addAttribute("ticketFinished", ticket.getCheckbox());
+        model.addAttribute("unassignedEmpty", members.isEmpty());
+        model.addAttribute("assigneesEmpty", ticket.getAssignees().isEmpty());
+        model.addAttribute("userIsAssigner", ticket.getAssigner().equals(GetAuthenticatedUser()));
+        model.addAttribute("userIsGroupLeader", GetAuthenticatedUser().getGroupsLed().contains(ticket.getGroup()));
+        model.addAttribute("userIsAssignee", GetAuthenticatedUser().getAssignedTickets().contains(ticket));
+        model.addAttribute("userHasCurrentTicketNotThis", (GetAuthenticatedUser().getCurrentTicket()!=null && !GetAuthenticatedUser().getCurrentTicket().equals(ticket)));
+        model.addAttribute("userHasCurrentThis", (GetAuthenticatedUser().getCurrentTicket()!=null && GetAuthenticatedUser().getCurrentTicket().equals(ticket)));
+        model.addAttribute("UserHasNoCurrent", GetAuthenticatedUser().getCurrentTicket()==null);
         model.addAttribute("uid", GetAuthenticatedUser().getId());
+        model.addAttribute("username", GetAuthenticatedUser().getUsername());
         List<User> users = Stream.concat(ticket.getGroup().getWorkers().stream(),Stream.of(ticket.getGroup().getLeader())).filter(w -> !w.equals(GetAuthenticatedUser())).toList();
         model.addAttribute("groupusers",users.stream().map(u -> new GroupUser(u.getId(),u.getName())).toArray());
         if(!model.containsAttribute("commentform"))
@@ -108,6 +126,16 @@ public class TicketController extends AuthenticatedControllerBase{
 
     }
 
+    @PostMapping("/addassignee/action/{tid}")
+    public String AddAssignee (AddGroupRequest addUserRequest,
+                               BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                               @PathVariable("tid") int id){
+        Ticket ticket = ticketService.ticketById(id);
+        User user = userService.findUserByUsername(addUserRequest.getName());
+            ticketService.modifyAssignees(ticket,user);
+        return "redirect:/ticket/" + id;
+    }
+
     @PostMapping("/ticket/finishaction/{id}")
     public String FinishTicket (@PathVariable("id") int id) {
 
@@ -118,6 +146,15 @@ public class TicketController extends AuthenticatedControllerBase{
 
         }
         return "redirect:/dashboard";
+    }
 
+    @PostMapping("/removeassignee/action/{tid}")
+    public String RemoveAssignee (AddGroupRequest addUserRequest,
+                               BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                               @PathVariable("tid") int id){
+        Ticket ticket = ticketService.ticketById(id);
+        User user = userService.findUserByUsername(addUserRequest.getName());
+        ticketService.removeAssignee(user, ticket);
+        return "redirect:/ticket/" + id;
     }
 }

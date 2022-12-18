@@ -33,7 +33,7 @@ public class DashboardController extends AuthenticatedControllerBase {
         model.addAttribute("timeworkedlastmonth", timeMeasureService.timeSpentByUserHoursAndMinutesLastMonth(user));
         model.addAttribute("timeworkedtoday", timeMeasureService.timeSpentByUserToday(user));
         model.addAttribute("fullname",GetAuthenticatedUser().getName());
-        model.addAttribute("currentticket",(user.getCurrentTicket()!= null)?new CurrentTicket(user.getCurrentTicket().getName(),"/ticket/"+ user.getCurrentTicket().getId()) : null);
+        model.addAttribute("currentticket",(user.getCurrentTicket()!= null)?new CurrentTicket(user.getCurrentTicket().getName(),"/ticket/"+ user.getCurrentTicket().getId(), user.getCurrentTicket().getId()) : null);
         return "dashboard";
     }
 

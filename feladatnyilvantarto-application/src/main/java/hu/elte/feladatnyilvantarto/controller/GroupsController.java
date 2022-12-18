@@ -2,6 +2,8 @@ package hu.elte.feladatnyilvantarto.controller;
 
 import hu.elte.feladatnyilvantarto.domain.Group;
 import hu.elte.feladatnyilvantarto.service.GroupsService;
+import hu.elte.feladatnyilvantarto.service.TicketService;
+import hu.elte.feladatnyilvantarto.service.UserService;
 import hu.elte.feladatnyilvantarto.webdomain.form.AddGroupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,12 @@ public class GroupsController extends AuthenticatedControllerBase {
 
     @Autowired
     private GroupsService groupsService;
+
+    @Autowired
+    private TicketService ticketService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/groups")
     public String group (Model model)
@@ -64,16 +72,21 @@ public class GroupsController extends AuthenticatedControllerBase {
     public String removeMemberAction(@PathVariable("id") int id,@PathVariable("uid") int uid, RedirectAttributes redirectAttributes) {
         Group group = groupsService.getGroupById(id);
         if (group != null) {
-            groupsService.removeMemberById(GetAuthenticatedUser(), group, uid);
-        }
+                groupsService.leaveGroup(GetAuthenticatedUser(), group);
+            }
         return "redirect:/groups";
-    }
+        }
+
+
+
 
     @PostMapping("/leavegroup/action/{id}")
     public String leaveAction(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
         Group group = groupsService.getGroupById(id);
         if (group != null) {
+
             groupsService.leaveGroup(GetAuthenticatedUser(), group);
+
         }
         return "redirect:/groups";
     }

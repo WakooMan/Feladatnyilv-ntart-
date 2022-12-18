@@ -5,7 +5,6 @@ import hu.elte.feladatnyilvantarto.repository.TicketRepository;
 import hu.elte.feladatnyilvantarto.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,20 +115,20 @@ public class TicketService {
             ticketRepository.save(ticket);
         }
     }
-    public void modifyAssignees(Ticket ticket, List<User> assignees, User user){
-            if ((ticket.getAssigner().equals(user)
-                    || user.equals(ticket.getGroup().getLeader()))){
-                ticket.setAssignees((ArrayList<User>) assignees);
+    public void modifyAssignees(Ticket ticket, User assignee){
+                ticket.getAssignees().add(assignee);
+        assignee.getAssignedTickets().add(ticket);
                 ticketRepository.save(ticket);
+        usersRepository.save(assignee);
             }
-        }
-    public void unAddSelf(User user, Ticket ticket){
-        if ((ticket.getAssignees().contains(user))
-                || user.equals(ticket.getGroup().getLeader())){
-            ticket.deleteAssignee(user);
+
+    public void removeAssignee(User user, Ticket ticket){
+            ticket.getAssignees().remove(user);
+            user.getAssignedTickets().remove(ticket);
             ticketRepository.save(ticket);
+            usersRepository.save(user);
         }
-    }
+
     public void restartTicket(User user, Ticket ticket){
         if ((ticket.getAssigner().equals(user))
                 || user.equals(ticket.getGroup().getLeader())){

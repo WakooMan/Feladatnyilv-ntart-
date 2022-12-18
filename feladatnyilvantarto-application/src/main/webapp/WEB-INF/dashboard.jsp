@@ -5,7 +5,11 @@
     <h3>TaskHandler</h3>
     <p>Task in progress:
         <c:choose>
-        <c:when test="${currentticket != null}"><a href="${currentticket.url}"><button>${currentticket.name}</button></a></c:when>
+        <c:when test="${currentticket != null}"><a href="${currentticket.url}"><button>${currentticket.name}</button></a>
+    <form action="/ticket/pauseaction/${currentticket.id}" method="post">
+        <input type="submit" value="Stop working">
+    </form>
+        </c:when>
         <c:otherwise>There is no current ticket.</c:otherwise>
         </c:choose></p>
     <p>Today's working time: ${timeworkedtoday}

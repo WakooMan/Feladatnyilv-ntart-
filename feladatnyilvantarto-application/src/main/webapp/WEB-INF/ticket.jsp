@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="_header.jsp"/>
+<style>#removeassignee, #addassignee { display: none; width: 300px; height: 200px; background: #7bbfa2; position: absolute }</style><div>
 
 <h1>Details of this ticket:</h1>
 <h2>${ticket.name}</h2>
 
-<h3>Time spent on this task:</h3>
+<h3>Assignees:</h3>
 <ul>
 
     <c:forEach var="entry" items="${timespent}">
@@ -38,19 +39,67 @@
     </tr>
 </table>
 
-
+<c:if test="${UserHasNoCurrent && userIsAssignee}">
 <form action="/ticket/startaction/${ticket.id}" method="post">
     <input type="submit" value="I'm working on this ticket">
 </form>
+</c:if>
+<c:if test="${userHasCurrentThis}">
     <form action="/ticket/pauseaction/${ticket.id}" method="post">
     <input type="submit" value="Pause">
     </form>
+</c:if>
+<c:if test="${userIsAssigner || userIsGroupLeader || userIsAssignee}">
     <form action="/ticket/finishaction/${ticket.id}" method="post">
     <input type="submit" value="I finish this ticket">
     </form>
+</c:if>
+<c:if test="${ticketFinished && (userIsAssigner || userIsGroupLeader)}">
 <form action="/ticket/restart/${ticket.id}" method="post">
     <input type="submit" value="Restart">
 </form>
+</c:if>
+<c:if test="${!unassignedEmpty && (userIsAssigner || userIsGroupLeader)}">
+<button onclick="showAdd()">Add assignee</button>
+<div id="addassignee">
+    <form action="/addassignee/action/${ticket.id}" method="post">
+        <label for="group">Select user to add:</label><select name="name" id="group">
+                <c:forEach items="${groupMembersNotAssignees}" var="user">
+                <option value="${user.username}">${user.name}</option>
+            </c:forEach>
+            </select>
+        <input type="submit" value="Add assignee">
+        <input type="button" onclick="hideAdd()" value="Cancel">
+    </form>
+</div>
+    </c:if>
+    <c:if test="${userIsAssignee}">
+    <form action="/removeassignee/action/${ticket.id}" method="post">
+        <input type="hidden" name="name" value="${username}">
+        <input type="submit" value="Unassign self">
+    </form>
+    </c:if>
+    <c:if test="${!userIsAssignee}">
+    <form action="/addassignee/action/${ticket.id}" method="post">
+        <input type="hidden" name="name" value="${username}">
+        <input type="submit" value="Assign self to ticket">
+    </form>
+    </c:if>
+    <c:if test="${!assigneesEmpty && (userIsAssigner || userIsGroupLeader)}">
+    <button onclick="showRm()">Remove assignee</button>
+    <div id="removeassignee">
+        <form action="/removeassignee/action/${ticket.id}" method="post">
+            <label for="remove">Select user to add:</label><select name="name" id="remove">
+            <c:forEach items="${assignees}" var="user">
+                <option value="${user.username}">${user.name}</option>
+            </c:forEach>
+        </select>
+            <input type="submit" value="Remove selected assignee">
+            <input type="button" onclick="hideRm()" value="Cancel">
+        </form>
+    </div>
+    </c:if>
+
 
 <h3>Comments</h3>
 <c:forEach items="${ticket.comments}" var="comment">
@@ -74,5 +123,19 @@
     <input type="submit" value="Send Comment"/>
 </form:form>
 
+<script>
+    function showAdd(){
+        document.getElementById("addassignee").style.display = "block";
+    }
+    function hideAdd(){
+        document.getElementById("addassignee").style.display = "none";
+    }
+    function showRm(){
+        document.getElementById("removeassignee").style.display = "block";
+    }
+    function hideRm(){
+        document.getElementById("removeassignee").style.display = "none";
+    }
+</script>
 
 <jsp:include page="_footer.jsp"/>
