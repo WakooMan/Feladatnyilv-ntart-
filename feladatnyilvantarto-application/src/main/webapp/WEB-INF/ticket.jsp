@@ -122,6 +122,11 @@
     <form:textarea path="message"/>
     <input type="submit" value="Send Comment"/>
 </form:form>
+<c:if test="${userIsAssigner || userIsGroupLeader}">
+    <form action="/ticket/deleteaction/${ticket.id}" method="post">
+        <input type="submit" value="Delete this ticket" class="btn">
+    </form>
+    </c:if>
 
 <script>
     function showAdd(){
@@ -137,5 +142,6 @@
         document.getElementById("removeassignee").style.display = "none";
     }
 </script>
+
 
 <jsp:include page="_footer.jsp"/>

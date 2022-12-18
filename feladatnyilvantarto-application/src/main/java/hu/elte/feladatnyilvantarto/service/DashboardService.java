@@ -45,6 +45,5 @@ public class DashboardService {
         return ticketRepository.findTicketsByAssigner(user);
     }
 
-    //Pite diagram? No azt hogyan :D
 
 }

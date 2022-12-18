@@ -157,4 +157,15 @@ public class TicketController extends AuthenticatedControllerBase{
         ticketService.removeAssignee(user, ticket);
         return "redirect:/ticket/" + id;
     }
+
+    @PostMapping("/ticket/deleteaction/{id}")
+    public String DeleteTicket (@PathVariable("id") int id) {
+
+        Ticket ticket = ticketService.ticketById(id);
+        if (ticket.getAssignees().contains(GetAuthenticatedUser()) || ticket.getGroup().getLeader().equals(GetAuthenticatedUser())
+                || ticket.getAssigner().equals(GetAuthenticatedUser())){
+            ticketService.removeTicket(ticket, GetAuthenticatedUser());
+        }
+        return "redirect:/tickets";
+    }
 }
