@@ -14,5 +14,5 @@ public interface TimeMeasureRepository extends CrudRepository<TimeMeasure, Integ
 
     List<TimeMeasure> findTimeMeasuresByTicket(Ticket ticket);
     List<TimeMeasure> findTimeMeasuresByUser(User user);
-    List<TimeMeasure> findTimeMeasuresByUserAndTicket(User user, Ticket ticket);
+    TimeMeasure findTimeMeasureByUserAndTicket(User user, Ticket ticket);
 }

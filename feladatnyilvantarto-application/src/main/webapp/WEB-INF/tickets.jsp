@@ -44,10 +44,11 @@
         </table>
     </form:form>
 </div>
-
+<c:if test="${!groups.isEmpty()}">
 <form action="/addticket">
     <input type="submit" value="Add new ticket" />
 </form>
+</c:if>
 
 
     <table>

@@ -39,7 +39,6 @@ public class AddTicketController extends AuthenticatedControllerBase {
             model.addAttribute("addticketform", new AddTicketRequest());
         }
         model.addAttribute("groups", groupsService.listExhaustiveGroupsOfUser(GetAuthenticatedUser()));
-
         return "addticket";
     }
 

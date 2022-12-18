@@ -80,19 +80,35 @@ public class TicketsController extends AuthenticatedControllerBase {
                 .contains(groupsService.getGroupById(group))){
             groupList.add(groupsService.getGroupById(group));
         }
-        List<Ticket> ticketList = ticketService.listTicketsByGroup(groupList).stream().toList();
-        if (status.equals("active")){
-            ticketList=ticketList.stream().filter(a -> !a.getCheckbox()).toList();
-        }else if (status.equals("finished")){
-            ticketList=ticketList.stream().filter(Ticket::getCheckbox).toList();
+        ArrayList<Ticket> ticketList=new ArrayList<>();
+
+        if (status.equals("active") && assignee.equals("user")){
+            ticketList.addAll(ticketService.listAllTicketsByGroup(groupList).stream().toList()
+                    .stream().filter(a -> a.getAssignees().contains(GetAuthenticatedUser()) & !a.getCheckbox()).toList());
+        }else if (status.equals("active") && assignee.equals("unassigned")){
+            ticketList.addAll(ticketService.listAllTicketsByGroup(groupList).stream().toList()
+                    .stream().filter(a -> a.getAssignees().isEmpty() & !a.getCheckbox()).toList());
+        }else if (status.equals("active") && assignee.equals("all")){
+            ticketList.addAll(ticketService.listAllTicketsByGroup(groupList).stream().toList()
+                    .stream().filter(a -> !a.getCheckbox()).toList());
+        }else if (status.equals("active") && assignee.equals("userAssigner")){
+            ticketList.addAll(ticketService.listAllTicketsByGroup(groupList).stream().toList()
+                    .stream().filter(a -> a.getAssigner().equals(GetAuthenticatedUser()) & !a.getCheckbox()).toList());
         }
-        if (assignee.equals("user")){
-            ticketList=ticketList.stream().filter(a -> a.getAssignees().contains(GetAuthenticatedUser())).toList();
-        } else if (assignee.equals("unassigned")){
-            ticketList=ticketList.stream().filter(a -> a.getAssignees().isEmpty()).toList();
-        } else if (assignee.equals("userAssigner")){
-            ticketList=ticketList.stream().filter(a -> a.getAssigner().equals(GetAuthenticatedUser())).toList();
+        else if (status.equals("finished") && assignee.equals("user")){
+            ticketList.addAll(ticketService.listAllTicketsByGroup(groupList).stream().toList()
+                    .stream().filter(a -> a.getAssignees().contains(GetAuthenticatedUser()) & a.getCheckbox()).toList());
+        }else if (status.equals("finished") && assignee.equals("unassigned")){
+            ticketList.addAll(ticketService.listAllTicketsByGroup(groupList).stream().toList()
+                    .stream().filter(a -> a.getAssignees().isEmpty() & a.getCheckbox()).toList());
+        }else if (status.equals("finished") && assignee.equals("all")){
+            ticketList.addAll(ticketService.listAllTicketsByGroup(groupList).stream().toList()
+                    .stream().filter(a -> a.getCheckbox()).toList());
+        }else if (status.equals("finished") && assignee.equals("userAssigner")){
+            ticketList.addAll(ticketService.listAllTicketsByGroup(groupList).stream().toList()
+                    .stream().filter(a -> a.getAssigner().equals(GetAuthenticatedUser()) & a.getCheckbox()).toList());
         }
+
 
         boolean GroupHasTicket=false;
         if (groupList.size()>0){

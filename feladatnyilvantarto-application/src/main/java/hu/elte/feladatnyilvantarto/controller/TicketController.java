@@ -2,9 +2,7 @@ package hu.elte.feladatnyilvantarto.controller;
 
 import hu.elte.feladatnyilvantarto.domain.Ticket;
 import hu.elte.feladatnyilvantarto.domain.User;
-import hu.elte.feladatnyilvantarto.service.CommentService;
-import hu.elte.feladatnyilvantarto.service.TicketService;
-import hu.elte.feladatnyilvantarto.service.UserService;
+import hu.elte.feladatnyilvantarto.service.*;
 import hu.elte.feladatnyilvantarto.webdomain.form.CommentForm;
 import hu.elte.feladatnyilvantarto.webdomain.other.GroupUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +27,22 @@ public class TicketController extends AuthenticatedControllerBase{
     private TicketService ticketService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private GroupsService groupsService;
+    @Autowired
+    private TimeMeasureService timeMeasureService;
 
     @GetMapping("/ticket/{id}")
     public String GetTicket(@PathVariable("id") int id, Model model)
     {
+
         Ticket ticket = ticketService.ticketById(id);
+        if (ticket==null || !groupsService.listExhaustiveGroupsOfUser(GetAuthenticatedUser()).contains(ticket.getGroup()))
+        {
+            return "redirect:/tickets";
+        }
         model.addAttribute("ticket", ticket);
+        model.addAttribute("uid", GetAuthenticatedUser().getId());
         List<User> users = Stream.concat(ticket.getGroup().getWorkers().stream(),Stream.of(ticket.getGroup().getLeader())).filter(w -> !w.equals(GetAuthenticatedUser())).toList();
         model.addAttribute("groupusers",users.stream().map(u -> new GroupUser(u.getId(),u.getName())).toArray());
         if(!model.containsAttribute("commentform"))
@@ -56,7 +64,7 @@ public class TicketController extends AuthenticatedControllerBase{
         else
         {
             Ticket ticket = ticketService.ticketById(commentform.getTicketId());
-            commentService.addComment(GetAuthenticatedUser(),Stream.of(userService.findUserById(commentform.getTaggedUser())).toList(),ticket,commentform.getMessage());
+            commentService.addComment(GetAuthenticatedUser(),userService.findUserById(commentform.getTaggedUser()),ticket,commentform.getMessage());
             return "redirect:/ticket/" + commentform.getTicketId();
         }
     }
@@ -64,21 +72,42 @@ public class TicketController extends AuthenticatedControllerBase{
     @PostMapping("/ticket/startaction/{id}")
     public String StartTicket (@PathVariable("id") int id) {
         Ticket ticket = ticketService.ticketById(id);
-        ticket.setCheckbox(true);
-        return "/ticket/" + id;
+        if(GetAuthenticatedUser().getCurrentTicket()==null
+        && ticket.getAssignees().contains(GetAuthenticatedUser())){
+            timeMeasureService.startWorkOnTicket(GetAuthenticatedUser(),ticket);
+            userService.setTicketAsCurrent(ticket, GetAuthenticatedUser());}
+
+        return "redirect:/ticket/" + id;
     }
 
-    @GetMapping("/ticket/pauseaction/{id}")
+    @PostMapping("/ticket/restart/{id}")
+    public String ReStartTicket (@PathVariable("id") int id) {
+        Ticket ticket = ticketService.ticketById(id);
+        if (ticket.getGroup().getLeader().equals(GetAuthenticatedUser()) || ticket.getAssignees().contains(GetAuthenticatedUser())) {
+            ticketService.restartTicket(GetAuthenticatedUser(), ticket);
+        }
+        return "redirect:/ticket/" + id;
+    }
+
+    @PostMapping("/ticket/pauseaction/{id}")
     public String PauseTicket (@PathVariable("id") int id) {
         Ticket ticket = ticketService.ticketById(id);
-        ticket.setCheckbox(false);
-        return "/ticket/" + id;
+        if(GetAuthenticatedUser().getCurrentTicket().equals(ticket)
+                && ticket.getAssignees().contains(GetAuthenticatedUser())){
+            timeMeasureService.pauseWorkOnTicket(GetAuthenticatedUser(),ticket);
+        userService.unsetTicketAsCurrent(ticket, GetAuthenticatedUser());}
+        return "redirect:/ticket/" + id;
     }
 
-    @GetMapping("/ticket/finishaction/{id}")
+    @PostMapping("/ticket/finishaction/{id}")
     public String FinishTicket (@PathVariable("id") int id) {
+
         Ticket ticket = ticketService.ticketById(id);
-        ticket.setCheckbox(false);
-        return "/ticket/" + id;
+        if (ticket.getAssignees().contains(GetAuthenticatedUser()) || ticket.getGroup().getLeader().equals(GetAuthenticatedUser())
+                || ticket.getAssigner().equals(GetAuthenticatedUser())){
+            ticketService.closeTicket(ticket);
+
+        }
+        return "redirect:/ticket/" + id;
     }
 }

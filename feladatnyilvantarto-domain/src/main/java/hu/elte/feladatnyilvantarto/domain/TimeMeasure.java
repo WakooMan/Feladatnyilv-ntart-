@@ -1,6 +1,7 @@
 package hu.elte.feladatnyilvantarto.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,8 +44,8 @@ public class TimeMeasure {
         return workState;
     }
 
-    public void startWork(){
-        workState=WorkState.Working;
+    public void setWorkTimes(List<WorkTime> wt){
+        workTimes=wt;
     }
     public void pauseWork(){
         workState=WorkState.Paused;

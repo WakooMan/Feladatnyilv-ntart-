@@ -26,19 +26,25 @@
 </table>
 
 
-<form action="/ticket/startaction/${ticket.id}" method="post"></form>
+<form action="/ticket/startaction/${ticket.id}" method="post">
     <input type="submit" value="I'm working on this ticket">
-
-    <form action="/ticket/pauseaction/${ticket.id}" method="post"></form>
+</form>
+    <form action="/ticket/pauseaction/${ticket.id}" method="post">
     <input type="submit" value="Pause">
-
-    <form action="/ticket/finishaction/${ticket.id}" method="post"></form>
+    </form>
+    <form action="/ticket/finishaction/${ticket.id}" method="post">
     <input type="submit" value="I finish this ticket">
-
+    </form>
+<form action="/ticket/restart/${ticket.id}" method="post">
+    <input type="submit" value="Restart">
+</form>
 
 <h3>Comments</h3>
 <c:forEach items="${ticket.comments}" var="comment">
-    <h5>from: ${comment.userFrom.name} ${comment.date}</h5>
+    <h5>from: ${comment.userFrom.name} ${comment.date}<c:if test="${comment.taggedUser!=null}">
+    @${comment.taggedUser.name}</h5>
+</c:if>
+
     <article>${comment.message}</article>
 </c:forEach>
 <h4>Write Comment</h4>
@@ -46,7 +52,7 @@
     <form:label path="taggedUser">Tag User from your group:</form:label>
     <form:hidden path="ticketId" value="${id}"/>
     <form:select path="taggedUser">
-        <form:option value="-1" label="None"/>
+        <form:option value="0" label="None"/>
         <c:forEach items="${groupusers}" var="groupuser">
             <form:option value="${groupuser.id}" label="${groupuser.name}"/>
         </c:forEach>

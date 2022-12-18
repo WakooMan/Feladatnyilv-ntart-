@@ -17,17 +17,21 @@ public class TicketService {
 
     @Autowired
     private UsersRepository usersRepository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private TimeMeasureService timeMeasureService;
 
     public void createTicket(String name, String description, User assigner,
                                ArrayList<User> assignees, LocalDateTime newdeadline,
-                               boolean chekcbox, Group group, Priority priority){
+                               boolean checkbox, Group group, Priority priority){
         Ticket ticket = new Ticket();
         ticket.setName(name);
         ticket.setDescription(description);
         ticket.setAssigner(assigner);
         ticket.setAssignees(assignees);
         ticket.setDeadline(newdeadline);
-        ticket.setCheckbox(chekcbox);
+        ticket.setCheckbox(checkbox);
         ticket.setGroup(group);
         ticket.setPriority(priority.toString());
 
@@ -47,6 +51,15 @@ public class TicketService {
         }
         return grouptickets;
     }
+    public List<Ticket> listAllTicketsByGroup(List<Group> groups){
+        List<Ticket> grouptickets=new ArrayList<>();
+        Ticket ticket = new Ticket();
+        for (Group group : groups) {
+            grouptickets.addAll(ticketRepository
+                    .findTicketsByGroupOrderByPriorityAsc(group));
+        }
+        return grouptickets;
+    }
 
     public Ticket ticketById (int id) {
         return ticketRepository.findTicketById(id);
@@ -59,11 +72,23 @@ public class TicketService {
         return result;
         }
     public void closeTicket(Ticket ticket){
-        ticket.setCheckbox(false);
+        ticket.setCheckbox(true);
+        for (User u : ticket.getAssignees()){
+            if (u.getCurrentTicket()!=null && u.getCurrentTicket().equals(ticket)){
+                userService.unsetTicketAsCurrent(ticket, u);
+                timeMeasureService.pauseWorkOnTicket(u,ticket);
+
+            }
+        }
         ticketRepository.save(ticket);
     }
     public void removeTicket(Ticket ticket, User user){
         if (ticket.getAssigner().equals(user) || user.equals(ticket.getGroup().getLeader())) {
+            for (User u : ticket.getAssignees()){
+                if ((u.getCurrentTicket()!=null && u.getCurrentTicket().equals(ticket))){
+                    userService.unsetTicketAsCurrent(ticket, u);
+                }
+            }
             ticketRepository.delete(ticket);
         }
     }
@@ -105,13 +130,12 @@ public class TicketService {
             ticketRepository.save(ticket);
         }
     }
-    public void setAsCurrent(User user, Ticket ticket){
-        user.setCurrentTicket(ticket);
-        usersRepository.save(user);
-    }
-    public void putOnHiatus(User user){
-        user.setCurrentTicket(null);
-        usersRepository.save(user);
+    public void restartTicket(User user, Ticket ticket){
+        if ((ticket.getAssigner().equals(user))
+                || user.equals(ticket.getGroup().getLeader())){
+            ticket.setCheckbox(false);
+            ticketRepository.save(ticket);
+        }
     }
     
 

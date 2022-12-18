@@ -12,6 +12,8 @@ public class WorkTime {
     @Id
     @GeneratedValue
     private int id;
+
+
     private final ZonedDateTime startDate;
     private ZonedDateTime endDate;
     @ManyToOne
@@ -55,6 +57,17 @@ public class WorkTime {
 
     public TimeMeasure getTimeMeasure() {
         return timeMeasure;
+    }
+    public void setEndDate(ZonedDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setTimeMeasure(TimeMeasure timeMeasure) {
+        this.timeMeasure = timeMeasure;
+    }
+
+    public void setTimeWorked(int timeWorked) {
+        this.timeWorked = timeWorked;
     }
     @Override
     public boolean equals(Object o)
