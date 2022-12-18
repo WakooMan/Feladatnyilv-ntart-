@@ -16,8 +16,8 @@ public class Comment {
     private Ticket ticket;
     private String message;
     private LocalDateTime date;
-    @OneToMany (fetch = FetchType.EAGER)
-    private List<User> taggedUsers;
+    @OneToOne (fetch = FetchType.EAGER)
+    private User taggedUser;
 
     public Comment(User from, Ticket in, String message) {
         this.userFrom = from;
@@ -75,12 +75,12 @@ public class Comment {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
-    public List<User> getTaggedUsers() {
-        return taggedUsers;
+    public User getTaggedUser() {
+        return taggedUser;
     }
 
-    public void setTaggedUsers(List<User> taggedUsers) {
-        this.taggedUsers = taggedUsers;
+    public void setTaggedUser(User taggedUser) {
+        this.taggedUser = taggedUser;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class Comment {
                     ticket.getId() == comment.ticket.getId() &&
                     message.equals(comment.message) &&
                     date.equals(comment.date) &&
-                    taggedUsers.equals(comment.taggedUsers);
+                    taggedUser.equals(comment.taggedUser);
         }
         else {
             return false;
@@ -108,7 +108,7 @@ public class Comment {
                 ticket.getId() +
                 message.hashCode() +
                 date.hashCode() +
-                taggedUsers.hashCode();
+                taggedUser.hashCode();
     }
 }
 

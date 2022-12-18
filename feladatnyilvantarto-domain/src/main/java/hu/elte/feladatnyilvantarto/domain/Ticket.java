@@ -15,7 +15,7 @@ public class Ticket {
     private String description;
     @ManyToOne(cascade = {CascadeType.MERGE})
     private User assigner;
-    @ManyToMany(cascade = {CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<User> assignees;
     private final LocalDateTime date;
     private LocalDateTime deadline;
@@ -168,15 +168,9 @@ public class Ticket {
             return  id == ticket.id &&
                     name.equals(ticket.name) &&
                     description.equals(ticket.description) &&
-                    assigner.getId() == ticket.assigner.getId() &&
-                    assignees.stream().map(a -> a.getId()).toList().equals(ticket.assignees.stream().map(a -> a.getId()).toList()) &&
-                    date.equals(ticket.date) &&
-                    deadline.equals(ticket.deadline) &&
-                    checkbox == ticket.checkbox &&
-                    group.getId() == ticket.group.getId() &&
-                    priority.equals(ticket.priority) &&
-                    comments.equals(ticket.comments) &&
-                    timeMeasures.equals(ticket.timeMeasures);
+                    assigner.getId() == ticket.assigner.getId()
+
+                    ;
         }
         else {
             return false;

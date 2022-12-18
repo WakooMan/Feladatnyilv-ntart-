@@ -8,15 +8,17 @@
         <c:when test="${currentticket != null}"><a href="${currentticket.url}"><button>${currentticket.name}</button></a></c:when>
         <c:otherwise>There is no current ticket.</c:otherwise>
         </c:choose></p>
-    <p>Today's working time: <a><button>0</button></a></p>
+    <p>Today's working time: ${timeworkedtoday}</p>
 </article>
+    <p>Time spent working in the last 7 days: ${timeworkedlastweek}
+    <br>Time spent working in the past month: ${timeworkedlastmonth}</p>
     <section>
     <aside>
         <h4>Notifications</h4>
         <p>This is an aside for notifications.</p>
     </aside>
 
-    <h4>Assigned Tickets To You</h4>
+    <h4>Tickets Assigned To You</h4>
     <h5>Tickets in progress:</h5>
     <div id="started">
 
@@ -25,11 +27,10 @@
     <div id="waiting">
 
     </div>
-    <h5>Tickets with deadline on this week: </h5>
+    <h5>Due this week: </h5>
     <div id="weekend">
 
     </div>
-    <h4>Assigned Tickets By You</h4>
     <h5>Tickets created by you: </h5>
     <div id="created">
 

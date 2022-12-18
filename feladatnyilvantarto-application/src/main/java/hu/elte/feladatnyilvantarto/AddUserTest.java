@@ -97,7 +97,6 @@ public class AddUserTest {
          ticketRepository.save(ticket2);
          ticketRepository.save(ticket3);
          ticketRepository.save(ticket4);
-         u1.setCurrentTicket(ticket1);
          usersRepository.save(u1);
          ticket1.setDeadline(LocalDateTime.now().plusDays(5));
          ticketRepository.save(ticket1);

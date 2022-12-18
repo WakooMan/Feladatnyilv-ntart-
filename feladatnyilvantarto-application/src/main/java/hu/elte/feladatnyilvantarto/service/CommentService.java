@@ -23,9 +23,9 @@ public class CommentService {
     public Comment findComment(int id){
         return commentRepository.findCommentById(id);
     }
-    public void addComment(User from,List<User> tagged, Ticket ticket, String message){
+    public void addComment(User from,User tagged, Ticket ticket, String message){
         Comment comment=new Comment(from, ticket, message);
-        comment.setTaggedUsers(tagged);
+        comment.setTaggedUser(tagged);
         comment.setDate(LocalDateTime.now());
         commentRepository.save(comment);
     }
