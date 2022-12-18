@@ -6,11 +6,23 @@
 <h2>${ticket.name}</h2>
 
 <h3>Time spent on this task:</h3>
+<ul>
+
+    <c:forEach var="entry" items="${timespent}">
+        <li>
+        ${entry.key}
+        <c:forEach var="info" items="${entry.value}">
+        ${info}
+        </c:forEach>
+        </li>
+    </c:forEach>
+</ul>
 
 
 <table>
     <tr>
         <th>Task name</th>
+        <th>Added</th>
         <th>Task's description</th>
         <th>Group</th>
         <th>Priority</th>
@@ -18,8 +30,9 @@
     </tr>
     <tr>
         <td>${ticket.name}</td>
+        <td>${ticket.date}</td>
         <td>${ticket.description}</td>
-        <td>${ticket.name}</td>
+        <td>${ticket.group.groupName}</td>
         <td>${ticket.priority}</td>
         <td>${ticket.deadline}</td>
     </tr>

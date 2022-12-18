@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 @Controller
@@ -41,6 +43,11 @@ public class TicketController extends AuthenticatedControllerBase{
         {
             return "redirect:/tickets";
         }
+        Map<String, String> timespent = new HashMap<>();
+        for (User user : ticket.getAssignees()) {
+            timespent.put(user.getName(), timeMeasureService.timeSpentByUserOnTicket(user, ticket));
+        }
+        model.addAttribute("timespent", timespent);
         model.addAttribute("ticket", ticket);
         model.addAttribute("uid", GetAuthenticatedUser().getId());
         List<User> users = Stream.concat(ticket.getGroup().getWorkers().stream(),Stream.of(ticket.getGroup().getLeader())).filter(w -> !w.equals(GetAuthenticatedUser())).toList();

@@ -44,6 +44,24 @@ public class TimeMeasureService {
         return getStringOfTimeHoursAndMinutes(list);
     }
 
+    public String timeSpentByUserOnTicket(User user, Ticket ticket){
+
+        if (timeMeasureRepository.findTimeMeasureByUserAndTicket(user, ticket)!=null) {
+            TimeMeasure tm = timeMeasureRepository.findTimeMeasureByUserAndTicket(user, ticket);
+            ArrayList<WorkTime> timelist = new ArrayList<>();
+            for (WorkTime wt : tm.getWorkTimes()) {
+                if (wt.getEndDate() != null && wt.getEndDate().isAfter(ZonedDateTime.now().minusDays(7))) {
+                    timelist.add(wt);
+                } else if (wt.getEndDate() == null) {
+                    wt.end();
+                    timelist.add(wt);
+                }
+                return getStringOfTimeHoursAndMinutesWorkTime(timelist);
+            }
+        }
+        return "Hasn't started yet.";
+
+    }
     public String timeSpentByUserHoursAndMinutesLastWeek(User user){
         List<TimeMeasure> list = timeMeasureRepository.findTimeMeasuresByUser(user);
         ArrayList<WorkTime> timelist =new ArrayList<>();
