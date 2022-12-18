@@ -11,11 +11,11 @@
     <input type="text" id="description" name="description"><br>
     <label for="group" id="group" name="group">Select a group:</label>
     <select multiple ="true" path="???">
-        <option items="${groups}" itemValue="groupName" itemLabel="groupName"></option>
+        <option items="${groups.name}" itemValue="groupName" itemLabel="groupName"></option>
     </select>
     <label for="assigner" id="assigner">Select a worker:</label>
     <select multiple="true" path="??">
-        <option items="${users}" itemValuse="username" itemLabel="username"></option>
+        <option items="${users.name}" itemValuse="username" itemLabel="username"></option>
     </select>
     <label for="priority" id="priority">Priority:</label>
     <select multiple="true" path="??">

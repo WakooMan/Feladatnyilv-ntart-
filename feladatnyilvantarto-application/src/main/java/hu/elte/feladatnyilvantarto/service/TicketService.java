@@ -51,7 +51,6 @@ public class TicketService {
     public Ticket ticketById (int id) {
         return ticketRepository.findTicketById(id);
     }
-
     public List<Ticket> searchForTicket (String searchWord, List<Group> groups){
         List<Ticket> result=new ArrayList<>();
         for (Group group : groups){

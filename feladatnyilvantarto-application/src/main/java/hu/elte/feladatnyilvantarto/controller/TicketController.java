@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,27 @@ public class TicketController extends AuthenticatedControllerBase{
         model.addAttribute("id",id);
 
         return "ticket";
+    }
+
+    @PostMapping("/ticket/startaction/{id}")
+    public String StartTicket (@PathVariable("id") int id) {
+        Ticket ticket = ticketService.ticketById(id);
+        ticket.setCheckbox(true);
+        return "/ticket/" + id;
+    }
+
+    @GetMapping("/ticket/pauseaction/{id}")
+    public String PauseTicket (@PathVariable("id") int id) {
+        Ticket ticket = ticketService.ticketById(id);
+        ticket.setCheckbox(false);
+        return "/ticket/" + id;
+    }
+
+    @GetMapping("/ticket/finishaction/{id}")
+    public String FinishTicket (@PathVariable("id") int id) {
+        Ticket ticket = ticketService.ticketById(id);
+        ticket.setCheckbox(false);
+        return "/ticket/" + id;
     }
 
 }
