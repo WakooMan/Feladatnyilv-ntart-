@@ -11,7 +11,7 @@ public class TimeMeasure {
     private int id;
     private WorkState workState;
     @OneToMany(mappedBy = "timeMeasure", orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<WorkTime> workTimes;
+    private List<WorkTime> workTimes = new ArrayList<>();
     @ManyToOne
     private User user;
     @ManyToOne
