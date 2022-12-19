@@ -11,6 +11,7 @@ import java.util.List;
 public interface NotificationRepository extends CrudRepository<Notification, Integer> {
 
     Notification findNotificationById(int id);
+    List<Notification> findAll();
     List<Notification> findNotificationsByUserOrderByDateDesc(User user);
 
 }

@@ -1,8 +1,6 @@
 package hu.elte.feladatnyilvantarto.service;
 
-import hu.elte.feladatnyilvantarto.domain.Group;
-import hu.elte.feladatnyilvantarto.domain.NotificationFactory;
-import hu.elte.feladatnyilvantarto.domain.User;
+import hu.elte.feladatnyilvantarto.domain.*;
 import hu.elte.feladatnyilvantarto.repository.GroupsRepository;
 import hu.elte.feladatnyilvantarto.repository.NotificationRepository;
 import hu.elte.feladatnyilvantarto.repository.UsersRepository;
@@ -57,7 +55,7 @@ public class GroupsService {
         if (usersRepository.findUserByUsername(name) != null) {
             User newMember = usersRepository.findUserByUsername(name);
             Group group = groupsRepository.findGroupById(groupId);
-            if (user.equals(group.getLeader()) && newMember != null) {
+            if (user.equals(group.getLeader()) && newMember != null && !newMember.equals(group.getLeader())) {
                 group.addWorker(newMember);
                 notificationRepository.save(new NotificationFactory().createGroupNotification(user,group));
                 groupsRepository.save(group);
@@ -80,6 +78,30 @@ public class GroupsService {
     public void removeGroup(User user, Group group){
         if (user.equals(group.getLeader())){
             group.getWorkers().removeAll(group.getWorkers());
+            List<Notification> notifications = notificationRepository.findAll().stream().filter(
+                    n ->
+                    {
+                        if(n.getType() == NotificationType.GROUP)
+                        {
+                            GroupNotification notification = ((GroupNotification)n);
+                            return notification.getGroup().equals(group);
+                        }
+                        else if(n.getType() == NotificationType.COMMENT)
+                        {
+                            CommentNotification notification = ((CommentNotification)n);
+                            return notification.getComment().getTicket().getGroup().equals(group);
+                        }
+                        else if(n.getType() == NotificationType.TICKET)
+                        {
+                            TicketNotification notification = ((TicketNotification)n);
+                            return notification.getTicket().getGroup().equals(group);
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }).toList();
+            notificationRepository.deleteAll(notifications);
             groupsRepository.delete(group);
         }
     }

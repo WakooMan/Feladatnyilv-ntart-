@@ -2,8 +2,6 @@ package hu.elte.feladatnyilvantarto.controller;
 
 import hu.elte.feladatnyilvantarto.domain.Group;
 import hu.elte.feladatnyilvantarto.service.GroupsService;
-import hu.elte.feladatnyilvantarto.service.TicketService;
-import hu.elte.feladatnyilvantarto.service.UserService;
 import hu.elte.feladatnyilvantarto.webdomain.form.AddGroupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,12 +19,6 @@ public class GroupsController extends AuthenticatedControllerBase {
 
     @Autowired
     private GroupsService groupsService;
-
-    @Autowired
-    private TicketService ticketService;
-
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/groups")
     public String group (Model model)

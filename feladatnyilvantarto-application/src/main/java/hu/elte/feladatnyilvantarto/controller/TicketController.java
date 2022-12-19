@@ -139,6 +139,7 @@ public class TicketController extends AuthenticatedControllerBase{
             new TicketTransformer().transformTicketToModifyTicketResponse(modifyticketform,ticket);
             model.addAttribute("modifyticketform", modifyticketform);
         }
+        model.addAttribute("fullname",GetAuthenticatedUser().getName());
         return "modifyticket";
     }
 
