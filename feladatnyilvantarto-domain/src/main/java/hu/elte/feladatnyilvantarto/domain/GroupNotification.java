@@ -9,7 +9,7 @@ public class GroupNotification extends Notification {
     @Enumerated(EnumType.STRING)
     private static final NotificationType NOTIFICATION_TYPE = NotificationType.GROUP;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Group group;
 
     public GroupNotification(User user,Group group) {

@@ -9,7 +9,7 @@ public class CommentNotification extends Notification {
     @Enumerated(EnumType.STRING)
     private static final NotificationType NOTIFICATION_TYPE = NotificationType.COMMENT;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Comment comment;
 
 

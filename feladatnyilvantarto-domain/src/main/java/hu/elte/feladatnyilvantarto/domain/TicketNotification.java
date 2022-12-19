@@ -11,7 +11,7 @@ public class TicketNotification extends Notification {
     @Enumerated(EnumType.STRING)
     private static final NotificationType NOTIFICATION_TYPE = NotificationType.TICKET;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Ticket ticket;
 
     public TicketNotification(User user,Ticket ticket) {
