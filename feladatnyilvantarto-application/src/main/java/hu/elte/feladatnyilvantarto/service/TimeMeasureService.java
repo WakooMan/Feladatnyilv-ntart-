@@ -21,29 +21,6 @@ public class TimeMeasureService {
     @Autowired
     private WorkTimeRepository workTimeRepository;
 
-    public List<TimeMeasure> listTicketTimeMeasures(Ticket ticket){
-        return timeMeasureRepository.findTimeMeasuresByTicket(ticket);
-    }
-
-    public TimeMeasure listTimeMeasuresByUserInTicket(User user, Ticket ticket){
-        return timeMeasureRepository.findTimeMeasureByUserAndTicket(user, ticket);
-    }
-    public List<TimeMeasure> listTimeMeasuresByUser(User user){
-        return timeMeasureRepository.findTimeMeasuresByUser(user);
-    }
-    public String timeSpentOnTicketHoursAndMinutes(Ticket ticket){
-        List<TimeMeasure> list = timeMeasureRepository.findTimeMeasuresByTicket(ticket);
-        return getStringOfTimeHoursAndMinutes(list);
-    }
-    public String timeSpentOnTicketDaysHoursAndMinutes(Ticket ticket){
-        List<TimeMeasure> list = timeMeasureRepository.findTimeMeasuresByTicket(ticket);
-        return getStringOfTimeDaysHoursAndMinutes(list);
-    }
-    public String timeSpentByUserHoursAndMinutes(User user){
-        List<TimeMeasure> list = timeMeasureRepository.findTimeMeasuresByUser(user);
-        return getStringOfTimeHoursAndMinutes(list);
-    }
-
     public String timeSpentByUserOnTicket(User user, Ticket ticket){
 
         if (timeMeasureRepository.findTimeMeasureByUserAndTicket(user, ticket)!=null) {

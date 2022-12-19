@@ -20,7 +20,6 @@ public class Ticket {
     private final LocalDateTime date;
     private LocalDateTime deadline;
     private boolean checkbox;
-    //ez az hogy kész van? írjuk át a nevét
     @ManyToOne(cascade = {CascadeType.MERGE})
     private  Group group;
     private Priority priority;
@@ -73,15 +72,6 @@ public class Ticket {
     }
     public void deleteComment(Comment c){
         getComments().remove(c);
-    }
-
-    /**
-     *
-     * @param c Comment to be replaced
-     * @param e New comment
-     */
-    public void replaceComment(Comment c, Comment e){
-        getComments().add(getComments().indexOf(c), e);
     }
     public String getName() {
         return name;

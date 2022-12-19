@@ -25,13 +25,14 @@ public class GroupNotification extends Notification {
     public Group getGroup() {
         return group;
     }
-
+    public void setGroup(Group group) { this.group=group;}
+    @Override
     public void setMessage() {
         message = "You were added to Group '"
                 + group.getGroupName() +
                 "'.";
     }
-
+    @Override
     public NotificationType getType() {
         return NOTIFICATION_TYPE;
     }

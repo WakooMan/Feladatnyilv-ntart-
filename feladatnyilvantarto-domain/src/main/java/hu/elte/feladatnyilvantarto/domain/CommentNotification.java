@@ -31,7 +31,7 @@ public class CommentNotification extends Notification {
         message = "User "
                 + comment.getUserFrom().getName() +
                 " added comment in ticket '"
-                + comment.getIn().getName() +
+                + comment.getTicket().getName() +
                 "'.";
     }
     public NotificationType getType() {

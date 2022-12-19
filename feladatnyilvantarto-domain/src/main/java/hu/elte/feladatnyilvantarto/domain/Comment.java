@@ -45,14 +45,6 @@ public class Comment {
         return userFrom;
     }
 
-    public Ticket getIn() {
-        return ticket;
-    }
-
-    public void setIn(Ticket tck) {
-        ticket = tck;
-    }
-
     public void setUserFrom(User userFrom) {
         this.userFrom = userFrom;
     }

@@ -9,7 +9,6 @@ public class TimeMeasure {
     @Id
     @GeneratedValue
     private int id;
-    private WorkState workState;
     @OneToMany(mappedBy = "timeMeasure", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<WorkTime> workTimes = new ArrayList<>();
     @ManyToOne
@@ -22,7 +21,6 @@ public class TimeMeasure {
     {
         this.user=user;
         this.ticket=ticket;
-        this.workState = WorkState.Paused;
     }
     public void setId(int id) {
         this.id = id;
@@ -40,15 +38,8 @@ public class TimeMeasure {
         return workTimes;
     }
 
-    public WorkState getWorkState() {
-        return workState;
-    }
-
     public void setWorkTimes(List<WorkTime> wt){
         workTimes=wt;
-    }
-    public void pauseWork(){
-        workState=WorkState.Paused;
     }
 
     public User getUser() {
@@ -78,7 +69,6 @@ public class TimeMeasure {
         if (o instanceof TimeMeasure timeMeasure)
         {
             return  id == timeMeasure.id &&
-                    workState.equals(timeMeasure.workState) &&
                     workTimes.equals(timeMeasure.workTimes) &&
                     user.getId() == timeMeasure.user.getId() &&
                     ticket.getId() == timeMeasure.getId();
@@ -92,7 +82,6 @@ public class TimeMeasure {
     public int hashCode()
     {
         return  id +
-                workState.hashCode() +
                 workTimes.hashCode() +
                 user.getId() +
                 ticket.getId();

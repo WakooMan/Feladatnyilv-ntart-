@@ -27,7 +27,7 @@ public class TicketNotification extends Notification {
     public Ticket getTicket() {
         return ticket;
     }
-
+    @Override
     public void setMessage() {
         message = "You have been assigned to Ticket '"
                 + ticket.getName() +
@@ -37,7 +37,7 @@ public class TicketNotification extends Notification {
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }
-
+    @Override
     public NotificationType getType() {
         return NOTIFICATION_TYPE;
     }

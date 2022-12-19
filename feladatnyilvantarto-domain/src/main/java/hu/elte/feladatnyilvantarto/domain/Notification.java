@@ -14,7 +14,6 @@ public abstract class Notification {
     private int id;
     protected String message;
     private LocalDateTime date;
-    private boolean seen = false;
     @ManyToOne
     private User user;
 
@@ -34,10 +33,6 @@ public abstract class Notification {
         this.date = date;
     }
 
-    public boolean isSeen() {
-        return seen;
-    }
-
     public User getUser() {
         return user;
     }
@@ -52,10 +47,6 @@ public abstract class Notification {
 
     public abstract NotificationType getType();
 
-    public void setSeen() {
-        seen = true;
-    }
-
     public int getId() {
         return id;
     }
@@ -68,10 +59,6 @@ public abstract class Notification {
         this.message = message;
     }
 
-    public void setSeen(boolean seen) {
-        this.seen = seen;
-    }
-
     public abstract void setMessage();
 
     @Override
@@ -80,7 +67,6 @@ public abstract class Notification {
             return id == notification.id &&
                     message.equals(notification.message) &&
                     date.equals(notification.date) &&
-                    seen == notification.seen &&
                     user.equals(notification.user);
         } else {
             return false;
@@ -92,7 +78,6 @@ public abstract class Notification {
         return id +
                 message.hashCode() +
                 date.hashCode() +
-                Boolean.hashCode(seen) +
                 user.hashCode();
     }
 }

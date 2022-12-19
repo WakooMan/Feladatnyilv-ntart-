@@ -14,12 +14,7 @@ import java.util.List;
 public class DashboardService {
     @Autowired
     private TicketRepository ticketRepository;
-    @Autowired
-    private NotificationRepository notificationRepository;
 
-    public Ticket ticketInProgress(User user){
-            return user.getCurrentTicket();
-    }
     public List<Ticket> startedTickets(User user){
         return ticketRepository.findTicketsByAssigneesContainingAndTimeMeasuresIsNotNullOrderByPriorityAsc(user).stream().filter(t-> !t.getCheckbox()).toList();
     }
@@ -27,19 +22,10 @@ public class DashboardService {
         return ticketRepository.findTicketsByAssigneesContainingAndTimeMeasuresIsNullOrderByPriorityAsc(user).stream().filter(t-> !t.getCheckbox()).toList();
     }
     public List<Ticket> dueInAWeek(User user) {
-        List<Ticket> deadlines = ticketRepository.findTicketsByAssigneesContainingOrderByDeadlineAsc(user).stream().filter(t-> !t.getCheckbox()).toList();
+        List<Ticket> deadlines = ticketRepository.findTicketsByAssigneesContainingOrderByDeadlineAsc(user).stream().filter(t -> !t.getCheckbox()).toList();
 
         deadlines.removeIf(ticket -> ticket.getDeadline() == null || ticket.getDeadline().isAfter(ticket.getDeadline().plusDays(7)));
         return deadlines;
-    }
-    public List<Notification> listUnseenNotifications(User user) {
-        return notificationRepository.findNotificationsByUserAndSeenFalseOrderByDateDesc(user);
-
-    }
-    public void setSeen(Notification notification){
-        notification.setSeen();
-        notificationRepository.save(notification);
-
     }
     public List<Ticket> usersTickets(User user){
         return ticketRepository.findTicketsByAssigner(user);

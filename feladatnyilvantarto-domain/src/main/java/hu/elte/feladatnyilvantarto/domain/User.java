@@ -60,6 +60,10 @@ public class User
         this.groupsLed = groupsLed;
     }
 
+    public int getId()
+    {
+        return id;
+    }
     public void setId(int id) {
         this.id = id;
     }
@@ -72,11 +76,6 @@ public class User
     }
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getId()
-    {
-        return id;
     }
 
     public String getUsername()
@@ -92,11 +91,13 @@ public class User
     {
         return groups;
     }
+    public void setGroups(List<Group> groups) {this.groups=groups;}
 
     public List<Ticket> getAssignedTickets()
     {
         return assignedTickets;
     }
+    public void setAssignedTickets(List<Ticket> assignedTickets) {this.assignedTickets = assignedTickets;}
 
     public List<TimeMeasure> getUserTimeMeasures() {
         return userTimeMeasures;

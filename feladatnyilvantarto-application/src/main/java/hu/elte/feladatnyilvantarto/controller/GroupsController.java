@@ -74,6 +74,7 @@ public class GroupsController extends AuthenticatedControllerBase {
     public String removeMemberAction(@PathVariable("id") int id,@PathVariable("uid") int uid, RedirectAttributes redirectAttributes) {
         Group group = groupsService.getGroupById(id);
         if (group != null) {
+        groupsService.removeMemberById(GetAuthenticatedUser(),group,uid);
                 groupsService.leaveGroup(GetAuthenticatedUser(), group);
             }
         return "redirect:/groups";

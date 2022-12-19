@@ -15,7 +15,7 @@ public class NotificationService {
 
     public List<Notification> getNotificationsByUser(User user)
     {
-        return notificationRepository.findNotificationsByUserAndSeenFalseOrderByDateDesc(user);
+        return notificationRepository.findNotificationsByUserOrderByDateDesc(user);
     }
 
     public Notification getNotificationById(int id)
