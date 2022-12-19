@@ -2,15 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="_header.jsp"/>
 
-<h1>Tickets</h1>
 
-<h2>${username}'s tickets:</h2>
-<div class="filter">
+<div class="main2">
+    <h1>Tickets</h1>
+    <c:if test="${!groups.isEmpty()}">
+        <form class="newtick" action="/addticket">
+            <input class="tickbut" type="submit" value="Add new ticket" />
+        </form>
+    </c:if>
     <form:form action="/tickets/filter" method="get">
-        <table>
+        <table class="filtert">
             <tr>
-                <td>
-        <label for="group">Filter by group</label>
+                <td class="filter">
+        <label for="group" class="filter">Filter by group</label>
         <select name="group" id="group">
             <option value="0">All groups</option>
             <c:forEach items="${groups}" var="group">
@@ -18,15 +22,15 @@
             </c:forEach>
         </select>
                 </td>
-                <td>
-                <label for="status">Status</label>
+                <td class="filter" >
+                <label for="status" class="filter">Status</label>
                 <select name="status" id="status">
                     <option value="active">Active</option>
                     <option value="finished">Finished</option>
                 </select>
                 </td>
-                <td>
-                    <label for="assignee">Assignees:</label>
+                <td class="filter">
+                    <label for="assignee" class="filter">Assignees:</label>
                     <select name="assignee" id="assignee">
                         <option value="all">Show all</option>
                         <option value="user">Assigned to me</option>
@@ -34,23 +38,16 @@
                         <option value="userAssigner">Created by me</option>
                     </select>
                 </td>
-            </tr>
-            <tr>
                 <td>
                     <input type="submit" value="Filter">
                 </td>
             </tr>
+            <tr>
+
+            </tr>
 
         </table>
     </form:form>
-</div>
-<c:if test="${!groups.isEmpty()}">
-<form action="/addticket">
-    <input type="submit" value="Add new ticket" />
-</form>
-</c:if>
-
-
     <table>
         <tr>
             <th>Priority</th>
@@ -81,5 +78,5 @@
             </c:forEach>
 
     </table>
-
+</div>
 <jsp:include page="_footer.jsp"/>

@@ -135,9 +135,6 @@ public class User
                 password.hashCode() +
                 name.hashCode() +
                 groups.hashCode() +
-                groupsLed.hashCode() +
-                userTimeMeasures.hashCode() +
-                currentTicket.hashCode() +
-                assignedTickets.hashCode();
+                groupsLed.hashCode();
     }
 }

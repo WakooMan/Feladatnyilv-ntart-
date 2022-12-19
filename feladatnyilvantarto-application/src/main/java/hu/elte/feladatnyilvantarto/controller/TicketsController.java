@@ -37,6 +37,7 @@ public class TicketsController extends AuthenticatedControllerBase {
         model.addAttribute("groups", groupList);
         model.addAttribute("groupHasTickets", GroupHasTicket);
         model.addAttribute("ticketList", ticketList);
+        model.addAttribute("fullname", GetAuthenticatedUser().getName());
         model.addAttribute("username",GetAuthenticatedUser().getName());
         return "tickets";
     }

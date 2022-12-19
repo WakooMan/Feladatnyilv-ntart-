@@ -1,22 +1,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="_header.jsp"/>
 <main>
-<article>
-    <h3>TaskHandler</h3>
-    <p>Task in progress:
+<article class="taskhand">
+    <h2>TaskHandler</h2>
+    <h4>Task in progress:</h4>
+        <table>
+    <tr class="taskh2">
+
+        <td class="taskh">
         <c:choose>
-        <c:when test="${currentticket != null}"><a href="${currentticket.url}"><button>${currentticket.name}</button></a>
-    <form action="/ticket/pauseaction/${currentticket.id}" method="post">
-        <input type="submit" value="Stop working">
-    </form>
+        <c:when test="${currentticket != null}"><a href="${currentticket.url}"><button class="Task">${currentticket.name}</button></a>
+            </td> <td class="taskh"><form action="/ticket/pauseaction/${currentticket.id}" method="post">
+        <input class="stop" type="submit" value="Stop working">
+    </form></td>
         </c:when>
-        <c:otherwise>There is no current ticket.</c:otherwise>
-        </c:choose></p>
-    <p>Today's working time: ${timeworkedtoday}
-    <br>Time spent working in the last 7 days: ${timeworkedlastweek}
-        <br>Time spent working in the past month: ${timeworkedlastmonth}</p>
+        <c:otherwise><h6>There is no current ticket.</h6></c:otherwise>
+        </c:choose>
+                </tr>
+</table>
+    <p>Today's working time: <span class="timedb"> ${timeworkedtoday}</span>
+    <br>Time spent working in the last 7 days: <span class="timedb">${timeworkedlastweek}</span>
+        <br>Time spent working in the past month: <span class="timedb">${timeworkedlastmonth}</span></p>
 </article>
-    <div>
+    <div class="main">
         <aside>
             <h4>Notifications</h4>
             <div id="notifications">
@@ -24,7 +30,7 @@
             </div>
         </aside>
         <section>
-            <h4>Tickets Assigned To You</h4>
+            <h3>Tickets Assigned To You</h3>
             <h5>Tickets in progress:</h5>
             <div id="started">
 

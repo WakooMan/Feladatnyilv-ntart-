@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<footer class="bg-dark">
-    <div class="container text-white">
+<footer >
+    <div class>
         <c:choose>
             <c:when test="${LocalDate.now().year == 2022}">
                 &copy; 2022 Task manager/>
