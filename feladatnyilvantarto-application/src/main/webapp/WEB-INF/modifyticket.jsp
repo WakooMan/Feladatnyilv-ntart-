@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="_header.jsp"/>
-
+<div class="main2">
 <h1>Modify a ticket</h1>
 <br><br>
 <form:form action="/ticket/modifyticket" method="post" modelAttribute="modifyticketform">
@@ -24,4 +24,5 @@
     <form:button>Modify</form:button>
 </form:form>
 <a href="/ticket/${id}"><button>Cancel</button></a>
+</div>
 <jsp:include page="_footer.jsp"/>

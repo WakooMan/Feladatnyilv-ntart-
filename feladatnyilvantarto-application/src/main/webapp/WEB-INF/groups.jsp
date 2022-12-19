@@ -23,7 +23,7 @@
                     <td>
                         <h1>Groups Led By You</h1>
                         <c:forEach items="${groupListLed}" var="group">
-                            <h2>${group.groupName}</h2>
+                            <div class="groupname"><h2>${group.groupName}</h2></div>
                             <form action="/modifygroup/${group.id}/action" method="post">
                                 New name:
                                 <input type="text"  name="name">
@@ -63,15 +63,11 @@
                                     <input type="text" name="name"><br>
                                     <input type="submit" value="Add new member">
                                 </form>
-                                <table>
-                                    <tr>
-                                        <td>
+
                                             <form:form action="/removegroup/action/${group.id}">
-                                                <button type="submit">Delete group</button>
+                                                <button class="leave" type="submit">Delete group</button>
                                             </form:form>
-                                        </td>
-                                    </tr>
-                                </table>
+
                             </div>
                         </c:forEach>
                     </td>
@@ -85,7 +81,7 @@
 
 
                 <c:forEach items="${groupListMember}" var="group">
-                    <h2>${group.groupName}</h2>
+                    <div class="groupname"><h2>${group.groupName}</h2></div>
                     <h3>Leader: ${group.leader.name}</h3>
                     <table>
                         <tr>
@@ -108,7 +104,7 @@
                         <a href="/tickets/filter?group=${group.id}&status=active&assignee=all">Active tickets</a>
                         <a href="/tickets/filter?group=${group.id}&status=active&assignee=unassigned">Unassigned tickets</a>
                         <form:form action="/leavegroup/action/${group.id}">
-                            <button type="submit">Leave group</button>
+                            <button class="leave" type="submit">Leave group</button>
                         </form:form>
 
                     </div>

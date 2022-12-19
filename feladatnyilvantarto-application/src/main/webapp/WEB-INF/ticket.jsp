@@ -44,24 +44,24 @@
 
 
     <table class="invi"><tr>
-        <c:if test="${UserHasNoCurrent && userIsAssignee}">
+        <c:if test="${UserHasNoCurrent && userIsAssignee && !ticketFinished}">
             <td>
                 <form action="/ticket/startaction/${ticket.id}" method="post">
-                    <input type="submit" value="I'm working on this ticket">
+                    <input type="submit" value="Start">
                 </form>
             </td>
         </c:if>
-        <c:if test="${userHasCurrentThis}">
+        <c:if test="${userHasCurrentThis && !ticketFinished}">
             <td>
                 <form action="/ticket/pauseaction/${ticket.id}" method="post">
                     <input type="submit" value="Pause">
                 </form>
             </td>
         </c:if>
-        <c:if test="${userIsAssigner || userIsGroupLeader || userIsAssignee}">
+        <c:if test="${(userIsAssigner || userIsGroupLeader || userIsAssignee) && !ticketFinished}">
             <td>
                 <form action="/ticket/finishaction/${ticket.id}" method="post">
-                    <input type="submit" value="I finish this ticket">
+                    <input type="submit" value="Finish">
                 </form>
             </td>
         </c:if>
@@ -72,7 +72,7 @@
                 </form>
             </td>
         </c:if>
-        <c:if test="${!unassignedEmpty && (userIsAssigner || userIsGroupLeader)}">
+        <c:if test="${!unassignedEmpty && (userIsAssigner || userIsGroupLeader) && !ticketFinished}">
             <td>
                 <button class="butty" onclick="showAdd()">Add assignee</button>
                 <div id="addassignee">
@@ -88,7 +88,7 @@
                 </div>
             </td>
         </c:if>
-        <c:if test="${userIsAssignee}">
+        <c:if test="${userIsAssignee && !ticketFinished}">
             <td>
                 <form action="/removeassignee/action/${ticket.id}" method="post">
                     <input type="hidden" name="name" value="${username}">
@@ -96,7 +96,7 @@
                 </form>
             </td>
         </c:if>
-        <c:if test="${!userIsAssignee}">
+        <c:if test="${!userIsAssignee && !ticketFinished}">
             <td>
                 <form action="/addassignee/action/${ticket.id}" method="post">
                     <input type="hidden" name="name" value="${username}">
@@ -104,7 +104,7 @@
                 </form>
             </td>
         </c:if>
-        <c:if test="${!assigneesEmpty && (userIsAssigner || userIsGroupLeader)}">
+        <c:if test="${!assigneesEmpty && (userIsAssigner || userIsGroupLeader ) && !ticketFinished}">
             <td>
                 <button class="butty" onclick="showRm()">Remove assignee</button>
                 <div id="removeassignee">

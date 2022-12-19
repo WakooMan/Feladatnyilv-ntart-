@@ -57,7 +57,7 @@ public class GroupsService {
             Group group = groupsRepository.findGroupById(groupId);
             if (user.equals(group.getLeader()) && newMember != null && !newMember.equals(group.getLeader())) {
                 group.addWorker(newMember);
-                notificationRepository.save(new NotificationFactory().createGroupNotification(user,group));
+                notificationRepository.save(new NotificationFactory().createGroupNotification(newMember,group));
                 groupsRepository.save(group);
             }
         }

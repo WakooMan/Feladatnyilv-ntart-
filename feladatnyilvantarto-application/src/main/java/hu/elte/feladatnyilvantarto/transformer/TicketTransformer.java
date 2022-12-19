@@ -13,6 +13,7 @@ public class TicketTransformer {
     public DashboardTicketResponse transformTicketToDashboardTicketResponse(Ticket ticket)
     {
         DashboardTicketResponse response = new DashboardTicketResponse();
+        response.setName(ticket.getName());
         response.setDescription(ticket.getDescription());
         response.setPriority(ticket.getPriority());
         response.setDeadline(ticket.getDeadline() != null ?ticket.getDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")):"None");

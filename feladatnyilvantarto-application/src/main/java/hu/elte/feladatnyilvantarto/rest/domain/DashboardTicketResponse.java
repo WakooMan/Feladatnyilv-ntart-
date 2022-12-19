@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 
 public class DashboardTicketResponse {
     private String description;
+
+
+    private String name;
     private int id;
     private Priority priority;
     private String deadline;
@@ -51,4 +54,12 @@ public class DashboardTicketResponse {
     public void setId(int id) {
         this.id = id;
     }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }

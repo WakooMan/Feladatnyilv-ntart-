@@ -22,7 +22,7 @@
     <br>Time spent working in the last 7 days: <span class="timedb">${timeworkedlastweek}</span>
         <br>Time spent working in the past month: <span class="timedb">${timeworkedlastmonth}</span></p>
 </article>
-    <div class="main">
+    <div class="main2">
         <aside>
             <h4>Notifications</h4>
             <div id="notifications">
@@ -77,7 +77,7 @@
             {
                 result += "<tr>" +
                     "<td>" + ticket.priority + "</td>" +
-                    "<td>" + ticket.description + "</td>" +
+                    "<td>" + ticket.name + "</td>" +
                     "<td>" + ticket.deadline + "</td>" +
                     "<td>";
                     result += (isleader)?((ticket.started)?"yes":"no"):"<a href='/ticket/" + ticket.id + "'>View</a>";

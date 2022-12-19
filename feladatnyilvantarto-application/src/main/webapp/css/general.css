@@ -316,6 +316,15 @@ td{
     background-color: rgba(119, 187, 135, 0.61);
     text-shadow: 1px 2px #9d9c9c;
 }
+.groupname{
+    background-color: #609365;
+    padding: 3px 3px 3px 3px;
+    align-content: center;
+
+}
+.leave{
+    margin-left: 70%;
+}
 .main2{
     background-color: #c2c0c4;
     color: #334433;
@@ -328,7 +337,7 @@ td{
     justify-items: center;
     align-items: center;
     padding-bottom:5%;
-    width: 100%;
+    width: 110%;
     padding-left:4%;
     padding-right:4%;
 }

@@ -8,6 +8,8 @@ import hu.elte.feladatnyilvantarto.repository.TicketRepository;
 import hu.elte.feladatnyilvantarto.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,9 +24,9 @@ public class DashboardService {
         return ticketRepository.findTicketsByAssigneesContainingAndTimeMeasuresIsNullOrderByPriorityAsc(user).stream().filter(t-> !t.getCheckbox()).toList();
     }
     public List<Ticket> dueInAWeek(User user) {
-        List<Ticket> deadlines = ticketRepository.findTicketsByAssigneesContainingOrderByDeadlineAsc(user).stream().filter(t -> !t.getCheckbox()).toList();
+        List<Ticket> deadlines = new java.util.ArrayList<>(ticketRepository.findTicketsByAssigneesContainingOrderByDeadlineAsc(user).stream().filter(t -> !t.getCheckbox()).toList());
 
-        deadlines.removeIf(ticket -> ticket.getDeadline() == null || ticket.getDeadline().isAfter(ticket.getDeadline().plusDays(7)));
+        deadlines.removeIf(ticket -> ticket.getDeadline() == null || ticket.getDeadline().isAfter(LocalDateTime.now().plusDays(7)));
         return deadlines;
     }
     public List<Ticket> usersTickets(User user){

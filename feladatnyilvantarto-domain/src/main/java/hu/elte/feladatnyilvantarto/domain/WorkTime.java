@@ -14,7 +14,7 @@ public class WorkTime {
     private int id;
 
 
-    private final ZonedDateTime startDate;
+    private ZonedDateTime startDate;
     private ZonedDateTime endDate;
     @ManyToOne
     private TimeMeasure timeMeasure;
@@ -31,6 +31,9 @@ public class WorkTime {
 
     public void setId(int id) {
         this.id = id;
+    }
+    public void setStartDate(ZonedDateTime t) {
+        this.startDate = t;
     }
 
     public int getId() {

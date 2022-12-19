@@ -175,7 +175,7 @@ public class TicketController extends AuthenticatedControllerBase{
             ticketService.closeTicket(ticket);
 
         }
-        return "redirect:/dashboard";
+        return "redirect:/tickets";
     }
 
     @PostMapping("/removeassignee/action/{tid}")
