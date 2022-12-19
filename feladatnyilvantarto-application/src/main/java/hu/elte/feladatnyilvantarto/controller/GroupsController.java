@@ -33,7 +33,7 @@ public class GroupsController extends AuthenticatedControllerBase {
     {
         List<Group> groupList = groupsService.listGroupsOfUser(GetAuthenticatedUser());
         List<Group> groupListLed = groupsService.listGroupsLedByUser(GetAuthenticatedUser().getId());
-        model.addAttribute("username",GetAuthenticatedUser().getUsername());
+        model.addAttribute("username",GetAuthenticatedUser().getName());
         boolean hasGroupsled=false;
         boolean hasGroups=false;
         if (groupListLed.size()>0){
