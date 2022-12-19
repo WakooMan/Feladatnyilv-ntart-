@@ -13,15 +13,15 @@
     <nav>
         <ul>
             <sec:authorize access="isAnonymous()">
-            <li><a href="/signin">Sign In</a></li>
-            <li><a href="/signup">Sign Up</a></li>
+            <li><a class="navb" href="/signin">Sign In</a></li>
+            <li><a class="navb" href="/signup">Sign Up</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-            <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/tickets">Tickets</a></li>
-                <li><a href="/groups">Groups</a></li>
-                <li>User: ${fullname}</li>
-            <li><a><form:form action="/logout"><input id="logout" type="submit" value="Logout"></form:form></a></li>
+            <li><a class="navb" href="/dashboard">Dashboard</a></li>
+                <li><a class="navb" href="/tickets">Tickets</a></li>
+                <li><a class="navb" href="/groups">Groups</a></li>
+                <li style="color:white">User: ${fullname}</li>
+            <li><a class="navb"><form:form action="/logout"><input id="logout" type="submit" value="Logout"></form:form></a></li>
             </sec:authorize>
         </ul>
     </nav>

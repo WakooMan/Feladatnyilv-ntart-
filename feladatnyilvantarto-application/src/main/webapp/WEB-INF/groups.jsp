@@ -1,10 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="_header.jsp"/>
-<style>#creategroup { display: none; width: 300px; height: 200px; background: #7bbfa2; position: absolute }</style><div>
-    <h1>Groups</h1>
 
-<h2>${username}'s groups:</h2>
+<div class="main2">    <h1>Groups</h1>
+
+<h3>${username}'s groups:</h3>
 <button onclick="showCreate()">Create new group</button>
 <div id="creategroup">
     <form action="/addgroup/action" method="post">
@@ -44,6 +44,7 @@
                                             <form:form action="/removemember/action/${group.id}/${worker.id}">
                                                 <button type="submit">Remove member</button>
                                             </form:form>
+
                                         </td>
 
 
@@ -58,13 +59,19 @@
 
 
                                 <form action="/${group.id}/addmember/action" method="post">
-                                    <label for="name">Username:</label>
+                                    <label class="l2" for="name">Username:</label>
                                     <input type="text" name="name"><br>
                                     <input type="submit" value="Add new member">
                                 </form>
-                                <form:form action="/removegroup/action/${group.id}">
-                                    <button type="submit">Delete group</button>
-                                </form:form>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <form:form action="/removegroup/action/${group.id}">
+                                                <button type="submit">Delete group</button>
+                                            </form:form>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </c:forEach>
                     </td>
@@ -120,6 +127,7 @@
 
 
 </table>
+</div>
 <script>
     function showCreate(){
         document.getElementById("creategroup").style.display = "block";
